@@ -1,3 +1,5 @@
+<img src="art/logo/logo.png" alt="" width="120" align="right">
+
 # M-Unbricker
 
 Bring a broken M-VAVE **FM-1** or **SMK-37** back to life with a second, working one and a USB-C
@@ -75,6 +77,7 @@ m-flasher run-ram build/m-unbricker-fm1.bin --addr 0x01C30000
 | `src/writer.c` | the plan, erase, write and verify of the rescue image |
 | `src/ui.c`, `src/lcd.c` | pages drawn in strips: 4-colour pictures, antialiased text |
 | `web/` | the page; `tools/deploy_web.sh` copies it to GitHub Pages |
+| `stage/` | the helper's screen: m-bootloader 2.3's RAM stage with M-Unbricker's logo; `tools/build_stage.sh` builds the packages in `web/assets/` from m-bootloader v2.3 |
 | `art/` | the pictures ([art/README.md](art/README.md)) |
 | `tools/` | image packing, fonts, pictures, the RAM app trailer, the page preview |
 

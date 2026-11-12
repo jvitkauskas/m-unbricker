@@ -1,0 +1,33 @@
+{
+  "device_size": [
+    480,
+    480
+  ],
+  "device_colours": [
+    "#000000",
+    "#27d68a",
+    "#a8adb0",
+    "#ff7800"
+  ],
+  "device_quantisation": "nearest RGB Euclidean distance; no dithering",
+  "device_black_border_at_least_px": 24,
+  "web_size": [
+    1024,
+    1024
+  ],
+  "web_alpha": true,
+  "icon_sizes": [
+    256,
+    32
+  ],
+  "three_pad_dividers_widened": true,
+  "nominal_feature_widths_px": {
+    "orange_body_left": 19,
+    "orange_body_right": 18,
+    "orange_pad_divider": 22,
+    "grey_cable": 25,
+    "green_pulse_lead": 21
+  },
+  "device_connector_inset": "omitted to avoid a sub-16px detail",
+  "source": "built-in imagegen; generated_source.png"
+}

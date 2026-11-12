@@ -9,7 +9,7 @@ M-Unbricker is MIT ([LICENSE](LICENSE)). It includes or builds in:
 | `rescue/` | the rescue images: m-bootloader 2.3 and [fm1-base](https://github.com/charlesvestal/fm1-base)'s template, with the parts listed in [rescue/README.md](rescue/README.md) | MIT, MPL-2.0, Apache-2.0, OFL-1.1: texts in [web/LICENSES](web/LICENSES) |
 | `src/fonts.h` | glyphs rendered from DejaVu Sans | Bitstream Vera licence / public domain ([web/LICENSES/DejaVu-fonts.txt](web/LICENSES/DejaVu-fonts.txt)) |
 | `web/lib/protocol.js`, `web/lib/formats.js` | from [M-Flasher](https://github.com/jvitkauskas/m-flasher)'s web page (`runApp` added) | MIT |
-| `web/assets/stage-*.fwsc` | m-bootloader 2.3's RAM stage packages | MIT |
+| `stage/stage.c`, `web/assets/stage-*.fwsc` | the helper: m-bootloader 2.3's RAM stage (built from its v2.3 source, `tools/build_stage.sh`), its waiting screen changed to M-Unbricker's logo | MIT |
 | `art/` | pictures made for this project | MIT |
 
 The USB host driver (`src/husb.c`) was written from register facts read in the JieLi AC79 SDK's

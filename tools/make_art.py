@@ -56,4 +56,5 @@ def main():
     print(f"src/art.h: {total} bytes of pictures")
 
 
-main()
+if __name__ == "__main__":
+    main()

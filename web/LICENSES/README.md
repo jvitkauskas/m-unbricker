@@ -13,7 +13,7 @@ Inside `assets/m-unbricker-*.bin`:
 | The rescue images: m-bootloader 2.3 and fm1-base's starter firmware (template), with the parts listed in [rescue-images.md](rescue-images.md) | MIT, MPL-2.0 ([MPL-2.0.txt](MPL-2.0.txt)), Apache-2.0 ([Apache-2.0.txt](Apache-2.0.txt)), OFL-1.1 fonts ([Barlow](OFL-1.1-Barlow.txt), [Terminus](OFL-1.1-Terminus.txt)) | [fm1-base](https://github.com/charlesvestal/fm1-base) (MPL-2.0 source: the commits named in rescue-images.md) |
 | Screen fonts, rendered from DejaVu Sans | Bitstream Vera / public domain ([DejaVu-fonts.txt](DejaVu-fonts.txt)) | DejaVu fonts |
 
-`assets/stage-*.fwsc`: m-bootloader 2.3's RAM stage packages (MIT), as on M-Flasher's web page.
+`assets/stage-*.fwsc`: m-bootloader 2.3's RAM stage (MIT), built from its source with M-Unbricker's logo on its waiting screen.
 
 The USB host driver was written from the register facts in the JieLi AC79 SDK (Apache-2.0); no SDK code
 is included.

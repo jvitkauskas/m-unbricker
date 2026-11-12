@@ -59,3 +59,4 @@ a.button:hover { background: var(--accent); color: #fff; }
 #trouble ul.tested { margin: 0.2rem 0 0.4rem; padding-left: 1.3rem; columns: 2; column-gap: 1.5rem; }
 @media (max-width: 30rem) { #trouble ul.tested { columns: 1; } }
 #trouble p.tested-model { font-weight: 600; color: var(--ink); margin: 0.5rem 0 0; }
+header img.logo { display: block; margin: 0 auto 0.25rem; width: 88px; height: 88px; }
