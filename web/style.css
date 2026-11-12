@@ -55,3 +55,6 @@ a { color: #b45300; }
 a.button { display: inline-block; text-decoration: none; font-size: 1.05rem; padding: 0.6rem 1.2rem; border-radius: 0.75rem; border: 2px solid var(--accent); color: var(--ink); font-weight: 600; }
 a.button:hover { background: var(--accent); color: #fff; }
 .step picture { display: block; }
+#trouble dd p { margin: 0.3rem 0; }
+#trouble ul.tested { margin: 0.2rem 0 0.4rem; padding-left: 1.3rem; columns: 2; column-gap: 1.5rem; }
+@media (max-width: 30rem) { #trouble ul.tested { columns: 1; } }
