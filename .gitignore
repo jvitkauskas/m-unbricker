@@ -6,3 +6,4 @@ toolchain/
 art/sources/*.png
 !art/sources/move_cable_bg.png
 art/logo/generated_source.png
+__pycache__/
