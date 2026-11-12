@@ -172,17 +172,18 @@ async function startHelper() {
   buttons();
   try {
     const variant = variantOf(modelOf(state.identity));
-    // Felucca-family firmware (numbered from 900) wants the "listed" package, M-VAVE's the other; a
-    // refusal changes nothing, so the other one can follow (as M-Flasher's page does).
-    const family = Number(/_(\d+)$/.exec(state.identity)?.[1]) >= 900;
+    // Which package a firmware takes: Felucca-family firmware (Felucca 9xx, Skiff 7xx, fm1-base 1100)
+    // wants a flash.bin listed, and newer ones (Skiff) at the board's full size; M-VAVE's (013-016) and
+    // Baud Girl's (102) refuse a blank one. A refusal changes nothing, so the next can follow.
+    const family = Number(/_(\d+)$/.exec(state.identity)?.[1]) >= 200;
     let accepted = false;
-    for (const listed of family ? [true, false] : [false, true]) {
-      const pkg = await loadStage(variant, listed);
+    for (const kind of family ? ["sized", "listed", "plain"] : ["plain", "listed", "sized"]) {
+      const { image, end } = await loadStage(variant, kind);
       try {
-        await state.unit.serveUpdate(pkg.image, {
+        await state.unit.serveUpdate(image, {
           finish: FINISH.APP,
-          idleMs: 15000,
-          onProgress: (done) => progress(Math.min(done, pkg.image.length), pkg.image.length, "Sending the helper"),
+          idleMs: 8000,
+          onProgress: (done) => progress(Math.min(done, end), end, "Sending the helper"),
         });
         accepted = true;
         break;
