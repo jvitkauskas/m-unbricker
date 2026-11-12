@@ -1,0 +1,254 @@
+[
+  {
+    "file": "web/hero.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 10,
+    "opaque": true
+  },
+  {
+    "file": "device/welcome_fm1.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "web/smk37_variant.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 11,
+    "opaque": true
+  },
+  {
+    "file": "device/welcome_smk37.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/unplug_pc_fm1.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/unplug_pc_smk37.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "web/plug_good.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 7,
+    "opaque": true
+  },
+  {
+    "file": "device/connect_fm1.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/connect_smk37.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/switch_on.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/waking.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/found_fm1.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/found_smk37.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 3,
+    "opaque": true
+  },
+  {
+    "file": "device/checking.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/press_play.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/repairing.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/success_fm1.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/success_smk37.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/error.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/retry.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/leave.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "web/sending.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 8,
+    "opaque": true
+  },
+  {
+    "file": "web/move_cable.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 10,
+    "opaque": true
+  },
+  {
+    "file": "web/switch_on.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 10,
+    "opaque": true
+  },
+  {
+    "file": "web/press_play.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 10,
+    "opaque": true
+  },
+  {
+    "file": "web/working.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 10,
+    "opaque": true
+  },
+  {
+    "file": "web/success.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 10,
+    "opaque": true
+  },
+  {
+    "file": "web/trouble.png",
+    "size": [
+      960,
+      720
+    ],
+    "colours": 10,
+    "opaque": true
+  }
+]

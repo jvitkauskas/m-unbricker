@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M-Unbricker: revive an FM-1 or SMK-37 with another one</title>
+<meta name="description" content="Bring a broken M-VAVE FM-1 or SMK-37 back to life with a second, working one and a USB-C cable. No extra hardware, nothing installed.">
+<link rel="icon" href="assets/icon-256.png">
+<link rel="stylesheet" href="style.css?v=dev">
+</head>
+<body>
+<header>
+  <h1>M-Unbricker</h1>
+  <p>Bring a broken FM-1 or SMK-37 back to life with a second, working one.</p>
+  <ol id="dots" aria-label="Steps"></ol>
+</header>
+
+<main>
+  <!-- 1 -->
+  <section class="step" data-step="intro">
+    <img src="img/hero.png" alt="A working FM-1 connected by a USB-C cable to a broken unit">
+    <h2>A unit that won't start?</h2>
+    <p>If an FM-1 or SMK-37 shows nothing, or is stuck after a failed install, another working one can repair it. The working one runs a small program, <b>M-Unbricker</b>, from its memory: nothing is installed on it, and it goes back to its own firmware afterwards.</p>
+    <h3>You need</h3>
+    <ul class="need">
+      <li>a <b>working</b> FM-1 or SMK-37 (any firmware), charged</li>
+      <li>the <b>broken</b> FM-1 or SMK-37, charged</li>
+      <li>one <b>USB-C data cable</b> that fits both units and this phone or computer</li>
+      <li><b>Chrome or Edge</b> on a computer, <b>Chrome on Android</b>, or the <b>MIDIWeb</b> app on an <b>iPhone or iPad</b> (Safari can't talk to MIDI devices)</li>
+    </ul>
+    <p class="note">It also works the other way round: an SMK-37 can repair an FM-1.</p>
+    <div class="buttons"><button class="primary" data-go="plug">Start</button></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="step" data-step="plug" hidden>
+    <img src="img/plug_good.png" alt="The working unit plugged into a phone or laptop">
+    <h2>Plug in the working unit</h2>
+    <p>Connect the <b>working</b> unit to this phone or computer with the USB-C cable, and switch it on. Close M-UPGRADE, editors and music apps first.</p>
+    <p class="note">The browser will ask to use MIDI devices: allow it.</p>
+    <div class="buttons"><button data-go="intro">Back</button><button class="primary" id="connect">Connect</button></div>
+    <p class="status" id="plug-status" role="status"></p>
+    <label id="port-row" hidden>Unit <select id="port-select"></select></label>
+  </section>
+
+  <!-- 3 -->
+  <section class="step" data-step="send" hidden>
+    <img src="img/sending.png" alt="The phone sending M-Unbricker to the working unit">
+    <h2>Starting M-Unbricker</h2>
+    <p id="send-text">Found your <span class="unit-name">unit</span>.</p>
+    <div class="buttons" id="send-buttons"></div>
+    <div id="progress" hidden><progress id="bar" max="1" value="0"></progress><span id="progress-text"></span></div>
+    <p class="status" id="send-status" role="status"></p>
+  </section>
+
+  <!-- 4 -->
+  <section class="step" data-step="follow" hidden>
+    <img src="img/move_cable.png" alt="Unplug from the phone and plug into the broken unit">
+    <h2>Now follow its screen</h2>
+    <p>M-Unbricker is running on the working unit. <b>From here, its screen guides you</b>, one step at a time: press <b class="key-go">PLAY</b> to go on. You can put this page away.</p>
+    <p class="note">In short: unplug the cable from this phone or computer, plug it into the broken unit while it's switched off, switch it on, and press <b class="key-go">PLAY</b> to repair.</p>
+
+    <details class="more">
+      <summary>Step by step, in more detail</summary>
+      <div class="more-step">
+        <img src="img/move_cable.png" alt="">
+        <h3>1. Move the cable</h3>
+        <p>Press <b class="key-go">PLAY</b> on the working unit. Unplug the cable from this phone or computer and leave it in the working unit. Plug the other end into the <b>broken</b> unit, and keep that one <b>switched off</b> for now.</p>
+      </div>
+      <div class="more-step">
+        <img src="img/switch_on.png" alt="">
+        <h3>2. Switch the broken unit on</h3>
+        <p>When the working unit says <b>Switch it on</b>, switch the broken unit on. The working unit wakes it up and connects: <i>Waking it up</i>, <i>Connecting</i>, then <i>Found an FM-1</i> or <i>Found an SMK-37</i> while it checks.</p>
+        <p class="note">If it says <i>Switch it off first</i> or <i>No answer</i>: switch the broken unit off, check the cable in both, and press <b class="key-go">PLAY</b> to try again.</p>
+      </div>
+      <div class="more-step">
+        <img src="img/press_play.png" alt="">
+        <h3>3. Press <span class="key-go">PLAY</span> to repair</h3>
+        <p>At <b>Ready to repair</b>, press <b class="key-go">PLAY</b>. The broken unit gets a fresh bootloader (m-bootloader) and a small starter firmware. On an SMK-37 its calibration is kept. To stop without changing anything, press <b class="key-no">OCT−</b> instead.</p>
+      </div>
+      <div class="more-step">
+        <img src="img/working.png" alt="">
+        <h3>4. Keep both on</h3>
+        <p>While it says <b>Repairing</b>, keep both units switched on and connected. It takes under a minute.</p>
+      </div>
+      <div class="more-step">
+        <img src="img/success.png" alt="">
+        <h3>5. Done</h3>
+        <p>At <b>Done!</b> the repaired unit restarts with a small starter firmware that plays when you press its keys. Press <b class="key-go">PLAY</b> on the working unit to send it back to its own firmware.</p>
+        <p>The repaired unit is ready for any firmware you like. Its new bootloader, m-bootloader, also has a recovery menu: hold <b>PLAY</b> (<b>SEQ PLAY</b> on the SMK-37) while switching it on.</p>
+      </div>
+    </details>
+    <div class="buttons"><button data-go="intro">Repair another one</button></div>
+  </section>
+
+  <section id="trouble">
+    <details>
+      <summary>Something not working?</summary>
+      <img src="img/trouble.png" alt="">
+      <dl>
+        <dt>No unit found</dt>
+        <dd>Use a data cable (some only charge), plug the unit in directly (no hub), switch it on and wait a few seconds. Use Chrome or Edge, and allow MIDI when asked. On an iPhone or iPad, open this page in the MIDIWeb app: Safari can't reach MIDI devices.</dd>
+        <dt>The firmware didn't accept the helper</dt>
+        <dd>If the working unit has m-bootloader, hold <b>PLAY</b> (<b>SEQ PLAY</b>) while switching it on, choose <b>MIDI MODE</b>, then press Connect again. Otherwise, try another working unit, or use M-Flasher on a computer.</dd>
+        <dt>The working unit says No answer</dt>
+        <dd>Check the cable in both units, switch the broken one off, press <b>PLAY</b> to try again, then switch it on. A cable that worked with the phone works here too.</dd>
+        <dt>It stopped while repairing</dt>
+        <dd>Nothing is lost: switch the broken unit off, and press <b>PLAY</b> on the working unit to run it again.</dd>
+        <dt>Start over</dt>
+        <dd>Switch the working unit off and on: it goes back to its own firmware. Then reload this page.</dd>
+      </dl>
+    </details>
+  </section>
+  <section id="support">
+    <h2>Support</h2>
+    <p>M-Unbricker is free, like M-Flasher and m-bootloader. If it brought your unit back, a donation helps pay for code signing certificates, so the M-Flasher apps can start without security warnings: Apple's developer program alone costs $99 every year.</p>
+    <div class="buttons"><a class="button" href="https://github.com/sponsors/jvitkauskas" target="_blank" rel="noopener">Sponsor on GitHub</a><a class="button" href="https://ko-fi.com/jvitkauskas" target="_blank" rel="noopener">Donate on Ko-fi</a></div>
+  </section>
+</main>
+<footer>
+  <p>M-Unbricker is open source (MIT). It uses <a href="https://github.com/jvitkauskas/m-bootloader">m-bootloader</a>, M-Flasher's loader and the <a href="https://github.com/charlesvestal/fm1-base">fm1-base</a> starter firmware (MPL-2.0). Not affiliated with M-VAVE. <a href="LICENSES/README.md">Licences</a>.</p>
+</footer>
+<script type="module" src="app.js?v=dev"></script>
+</body>
+</html>

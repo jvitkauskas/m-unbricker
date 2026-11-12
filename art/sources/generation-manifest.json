@@ -1,0 +1,290 @@
+[
+  {
+    "set": "web",
+    "name": "hero",
+    "prompt": "Use case: illustration-story. Asset type: web wizard illustration named hero. Create one clean flat vector-like raster illustration, landscape 4:3, intended final 960x720. Plain solid light warm background #f5f5f2, generous 48px margins. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: two synths side by side, working orange FM-1 on left with lit mint-green square screen, neutral grey unknown broken synth on right with dark screen and small white question-mark symbol. One clearly traced USB-C to USB-C cable connects their TOP-edge ports in a gentle arch above them, with a small orange heart centered on cable. Show two recognisable rounded USB-C connectors, not USB-A. Friendly calm editorial pictograms, frontal/top-down shallow view, bold rounded geometry, charcoal details, orange and mint accents. No shading, gradients, texture or shadows. No text, letters, numbers, logos, labels or watermarks anywhere; question-mark symbol is allowed. Input photo is shape/color reference only; REMOVE all writing from it. Only picture, no border or title.",
+    "source": "sources/web-hero.png"
+  },
+  {
+    "set": "device",
+    "name": "welcome_fm1",
+    "palette": [
+      "#000000",
+      "#ff7800",
+      "#a8adb0",
+      "#ffffff"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #ff7800, #a8adb0, #ffffff. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Working orange FM-1 at bottom-left with white lit square screen, grey unknown broken synth box bottom-right with pure black screen and a large white question mark. Gentle thick white curved arrow arches from the working device toward the broken one. Both devices large, no cable. Lower knobs count as needed.",
+    "source": "sources/device-welcome_fm1.png"
+  },
+  {
+    "set": "web",
+    "name": "smk37_variant",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Same scene as hero reference, but working unit on left is DARK GREY SMK-37 Pro with lit mint small screen, white/black 37-key piano bed and upper knobs and pads; broken device on right is ORANGE FM-1 with BLACK BLANK screen. They are connected top-edge port to top-edge port by one dark USB-C cable with a small orange heart at center. SMK-37 is wider and shallower than FM-1, keep recognisable scale; orange FM-1 retains four side knobs, six rounded pads and square play key. Input SMK photo shape reference only; no logos or markings.",
+    "source": "sources/web-smk37_variant.png"
+  },
+  {
+    "set": "device",
+    "name": "welcome_smk37",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#6de5a2"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #6de5a2. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Working dark grey SMK-37 keyboard at lower left with mint lit screen, simplified white/black keyboard and large controls. Same grey unknown broken synth box lower right with pure black screen and white question mark. Thick white curved arrow arches left to right. No cable. Keep keyboard recognizable with broad shallow proportions and sparse white keys.",
+    "source": "sources/device-welcome_smk37.png"
+  },
+  {
+    "set": "device",
+    "name": "unplug_pc_fm1",
+    "palette": [
+      "#000000",
+      "#ff7800",
+      "#a8adb0",
+      "#ffffff"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #ff7800, #a8adb0, #ffffff. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Working orange FM-1 with lit white screen at lower left, grey laptop with empty black screen at upper right. USB-C cable stays connected to FM-1 and its free USB-C plug is clearly separated from laptop side. Large white arrow points AWAY from laptop toward pulled plug. Visible black gap between laptop and plug; no plug touching laptop.",
+    "source": "sources/device-unplug_pc_fm1.png",
+    "correction_prompt": "Edit this ONE existing device pictogram. Keep the orange FM-1, grey laptop, detached USB-C plug, pure black background, overall composition, and all four flat colors exactly. Change ONLY the white horizontal arrow between USB-C plug and laptop: it must point LEFT, with arrowhead at LEFT end, AWAY FROM LAPTOP on right, toward disconnected plug on left. Arrow may shift slightly upward to leave room. This means PULL CABLE OUT OF LAPTOP. Do not draw a right-pointing arrow. No text, labels, logos, numbers or letters. Make the arrow and product details bold, generous >=12px at final480. No gradients/shading, square picture."
+  },
+  {
+    "set": "device",
+    "name": "unplug_pc_smk37",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#6de5a2"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #6de5a2. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Working dark grey SMK-37 keyboard with white/black keys and mint lit screen at bottom. Grey laptop above right, dark blank screen. USB-C cable connected to keyboard has free USB-C plug visibly pulled away from laptop. Large white arrow points AWAY from laptop toward pulled plug, with black separation gap.",
+    "source": "sources/device-unplug_pc_smk37.png"
+  },
+  {
+    "set": "web",
+    "name": "plug_good",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Working orange FM-1 lit mint screen on right. Large smartphone on left connected to FM-1 top-edge port by single USB-C cable. Phone screen plain mint with a simple downward arrow icon (no text). A clearly smaller laptop sits in upper-left as alternative, with its own short disconnected USB-C plug shown beside it; keep it secondary and do not show both attached simultaneously.",
+    "source": "sources/web-plug_good.png"
+  },
+  {
+    "set": "device",
+    "name": "connect_fm1",
+    "palette": [
+      "#000000",
+      "#ff7800",
+      "#a8adb0",
+      "#ffffff"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #ff7800, #a8adb0, #ffffff. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified). Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Orange working FM-1 left, lit white screen; neutral grey unknown broken synth right, dark blank black square screen. A single thick WHITE USB-C to USB-C cable arches above, physically connecting their top-edge ports, recognisable rounded USB-C ends. No arrows or other symbols. Both devices large.",
+    "source": "sources/device-connect_fm1.png"
+  },
+  {
+    "set": "device",
+    "name": "connect_smk37",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#6de5a2"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #6de5a2. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified). Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Dark grey working SMK-37 mini keyboard with white/black keys and mint lit screen bottom left. Neutral grey broken synth box right with dark blank black screen. A single thick WHITE USB-C to USB-C cable arches over and connects their top-edge ports, recognisable rounded USB-C ends. No other symbols.",
+    "source": "sources/device-connect_smk37.png"
+  },
+  {
+    "set": "device",
+    "name": "switch_on",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#6de5a2"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #6de5a2. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Flat bold safety-pictogram style, sparse large shapes. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Independent generic symbol, no synths, no product bodies, no keyboards.  Scene: Huge close-up generic horizontal slide power switch. Grey rounded mounting plate, black horizontal slot, white slider at RIGHT end. Large white arrow above pointing RIGHT shows pushing switch on; large bright mint circular indicator to right/below. Pure shapes, no ON word, no I/O labels, no model. Bold simple action.",
+    "source": "sources/device-switch_on.png"
+  },
+  {
+    "set": "device",
+    "name": "waking",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#ffbe45"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #ffbe45. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Flat bold safety-pictogram style, sparse large shapes. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Independent generic symbol, no synths, no product bodies, no keyboards.  Scene: A single huge white and grey USB-C male plug end with rounded symmetric oval metal tip, cable curves into bottom left. Large yellow lightning bolt beside tip and two big short spark rays meaning waking up. No USB-A rectangle, no tiny contacts. Sparse large shapes.",
+    "source": "sources/device-waking.png"
+  },
+  {
+    "set": "device",
+    "name": "found_fm1",
+    "palette": [
+      "#000000",
+      "#ff7800",
+      "#a8adb0",
+      "#ffffff"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #ff7800, #a8adb0, #ffffff. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified). Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Single orange FM-1 centered, all controls simple and large, square screen PURE BLACK DARK BLANK. A large white magnifier overlaps lower right edge, round lens frames dark screen without filling it, bold diagonal handle. Clearly orange pocket synth identified, no check, no lit pixels.",
+    "source": "sources/device-found_fm1.png",
+    "correction_prompt": "Edit this ONE existing device pictogram. Keep orange FM-1, white magnifying glass, four black round knobs, six bottom orange pads, play key, pure black background and composition. Change ONLY the square screen interior behind magnifying glass: fill the entire square screen with PURE BLACK #000000, including center of magnifier lens, so this synth is obviously BROKEN with DARK BLANK SCREEN. Magnifier lens is transparent; the underlying screen must stay black. Orange belongs on casing only, never inside this screen. Retain thick white magnifier ring and handle above screen. No text, labels, numbers, letters, logos, gradients, glow, shadow or texture. Flat pureblack/orangeff7800/whiteffffff palette only. Square pictogram, >=12px bold details at480."
+  },
+  {
+    "set": "device",
+    "name": "found_smk37",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#6de5a2"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #6de5a2. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified). Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Single dark grey SMK-37 wide keyboard centered, simplified broad white/black keys, top control knobs and pads, small square screen PURE BLACK DARK BLANK. A large white magnifying glass highlights screen, bold round lens and diagonal handle toward lower right. No mint lit screen, no check.",
+    "source": "sources/device-found_smk37.png"
+  },
+  {
+    "set": "device",
+    "name": "checking",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#6de5a2"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #6de5a2. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Flat bold safety-pictogram style, sparse large shapes. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Independent generic symbol, no synths, no product bodies, no keyboards.  Scene: Huge generic flash memory microchip: grey square body and four thick widely spaced white pins on each edge. Large white magnifying glass over upper-right portion, bold circular lens ring and diagonal handle. A small mint filled square on chip is enough, no tiny traces or text.",
+    "source": "sources/device-checking.png"
+  },
+  {
+    "set": "device",
+    "name": "press_play",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#ffbe45"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #ffbe45. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Flat bold safety-pictogram style, sparse large shapes. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Independent generic symbol, no synths, no product bodies, no keyboards.  Scene: Close-up one huge grey rounded-square physical button with a large WHITE right-facing PLAY triangle in center. A white stylised fingertip from lower right presses button's lower right corner while leaving play triangle visible. Two yellow bold short tap rays near touch. No other keys or text.",
+    "source": "sources/device-press_play.png"
+  },
+  {
+    "set": "device",
+    "name": "repairing",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#27d68a"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #27d68a. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Flat bold safety-pictogram style, sparse large shapes. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Independent generic symbol, no synths, no product bodies, no keyboards.  Scene: Huge grey square flash memory chip with four thick white pins each side. Bold white open-end wrench diagonally across it, simple clear open jaw at top right. Two oversized mint arrows flow from left INTO chip; simple sparse composition, no tiny circuits, no text.",
+    "source": "sources/device-repairing.png"
+  },
+  {
+    "set": "device",
+    "name": "success_fm1",
+    "palette": [
+      "#000000",
+      "#ff7800",
+      "#ffffff",
+      "#27d68a"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #ff7800, #ffffff, #27d68a. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified). Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Repaired orange FM-1 occupies lower left/center, black knobs and gutters, solid WHITE lit square screen. BIG bright MINT GREEN check mark at upper right, separate from body, communicates success. Same six orange pads, transport key, four side knobs. Sparse bold large shapes.",
+    "source": "sources/device-success_fm1.png"
+  },
+  {
+    "set": "device",
+    "name": "success_smk37",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#27d68a"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #27d68a. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Product design must match reference image but radically simplify to four colours and large readable features. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified). Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Repaired dark grey SMK-37 wide mini keyboard occupies lower center, bold white/black keys, solid WHITE lit small square screen above keys. BIG bright MINT GREEN check mark upper right, separate from keyboard. Simplify controls to big readable blocks.",
+    "source": "sources/device-success_smk37.png"
+  },
+  {
+    "set": "device",
+    "name": "error",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#ffbe45"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #ffbe45. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Flat bold safety-pictogram style, sparse large shapes. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Independent generic symbol, no synths, no product bodies, no keyboards.  Scene: Large yellow warning triangle at upper-left with a bold BLACK exclamation symbol. To lower right a large unplugged white USB-C male plug with grey inset symmetric oval tip; thick cable trails toward bottom left. Clearly disconnected, calm clean pictogram, no red, no text.",
+    "source": "sources/device-error.png"
+  },
+  {
+    "set": "device",
+    "name": "retry",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#27d68a"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #27d68a. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Flat bold safety-pictogram style, sparse large shapes. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Independent generic symbol, no synths, no product bodies, no keyboards.  Scene: Large grey horizontal slide power switch centered, black slot, chunky white slider. Around switch ONE oversized mint circular AGAIN arrow, thick circular stroke ending with triangular arrow head at upper right, shows switching off and on again. No I/O labels or letters.",
+    "source": "sources/device-retry.png"
+  },
+  {
+    "set": "device",
+    "name": "leave",
+    "palette": [
+      "#000000",
+      "#6b7278",
+      "#ffffff",
+      "#27d68a"
+    ],
+    "prompt": "Use case: infographic-diagram. Asset: ONE square device pictogram for a 120x120 screen, final 480x480 pixels. SOLID PURE BLACK #000000 background covering whole square; NO transparency. Use ONLY these FOUR FLAT SOLID colors: #000000, #6b7278, #ffffff, #27d68a. Absolutely NO gradients, shading, texture, shadows, glow, fine decoration, text, letters, numbers, logos, panel labels, borders, titles or watermarks. At final 480px all strokes, negative gaps and small details must be AT LEAST 12px thick; use sparse oversized block shapes, bold rounded silhouettes. Empty black 28px margin on all sides. Enlarge action symbol. Flat bold safety-pictogram style, sparse large shapes. Working screens solid LIGHT, broken screens pure BLACK (question mark only when specified).  Independent generic symbol, no synths, no product bodies, no keyboards.  Scene: Large generic grey flash memory chip with thick white pins around four edges. In front, an oversized CLOSED padlock with white rounded U shackle and mint rectangular lock body with simple black keyhole. Lock over chip means nothing changed, protected as it was. No arrows, no check, no text.",
+    "source": "sources/device-leave.png"
+  },
+  {
+    "set": "web",
+    "name": "sending",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Smartphone on left connected by ONE USB-C cable to working orange FM-1 on right. Three large mint square data packets and arrows along cable move FROM PHONE TO FM-1. FM-1 screen has a simple horizontal progress bar in a dark square screen; phone has simple packet symbol, no writing. Show whole devices.",
+    "source": "sources/web-sending.png"
+  },
+  {
+    "set": "web",
+    "name": "move_cable",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Two-step diagram with NO labels. Working orange FM-1 centered bottom with lit screen; smartphone upper-left; neutral grey broken synth upper-right dark blank screen. One USB-C cable remains connected to working FM-1, its free plug floats midway between phone and broken unit. Clear visible gap at phone port and one large curved directional arrow sweeps FROM PHONE toward broken unit top-edge port; free USB-C plug points toward broken port. Visually unambiguous cable transfer, no duplicate working synth.",
+    "source": "sources/web-move_cable.png"
+  },
+  {
+    "set": "web",
+    "name": "switch_on",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Working orange FM-1 on left lit mint screen, neutral grey broken synth on right dark screen, both connected top edge to top edge by a USB-C cable. Finger at right gently pushes broken synth's top-edge small slide power switch rightwards. A small mint indicator dot lights beside switch. Keep main devices complete; add a simple enlarged circular inset of the exact switch at upper right, arrow inside inset points right, no labels.",
+    "source": "sources/web-switch_on.png"
+  },
+  {
+    "set": "web",
+    "name": "press_play",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Working orange FM-1 on left with mint screen, neutral grey broken unit on right dark screen. Both joined via USB-C to USB-C cable over their top edges. Large simplified hand enters from below and fingertip presses the square transport button BELOW FM-1 screen; WHITE right-facing play triangle remains visible on button. Do not press a lower music pad. Small tap rays around pressed key, no labels.",
+    "source": "sources/web-press_play.png"
+  },
+  {
+    "set": "web",
+    "name": "working",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Two synths side by side, working orange FM-1 on left and neutral grey broken unit on right. Single USB-C cable connects their top ports. Working FM-1 screen shows simple partly filled mint progress bar on charcoal. Broken screen stays blank dark. A few mint square data packets flow along cable and two gentle orange sparks on cable arch. Both small power indicator dots lit, steady calm keep-both-on feeling. No hands, no text.",
+    "source": "sources/web-working.png"
+  },
+  {
+    "set": "web",
+    "name": "success",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Working orange FM-1 on left beside SAME repaired grey synth on right, connected via single USB-C cable. Both square screens now lit mint. Large green check floats above repaired grey synth at upper right, a few tiny celebratory rounded rays nearby. The repaired grey unit keeps same two knobs and four lower pads as hero, no face or smile drawn into product.",
+    "source": "sources/web-success.png"
+  },
+  {
+    "set": "web",
+    "name": "trouble",
+    "palette": null,
+    "prompt": "Use case: illustration-story. Asset: ONE landscape 4:3 wizard illustration, final 960x720. Flat editorial pictogram style matching reference hero exactly: bold rounded shapes, charcoal outlines, orange FM-1, mint lit screens, neutral grey unknown unit. Plain solid light background #f5f5f2 all over. No gradients, shading, texture, shadows. Generous 48px margin. No text, letters, numbers, labels, logos, watermark or panel titles anywhere. Only simple symbols (triangles, arrows, checks, question marks) when requested. Canonical product pictograms: FM-1 is an orange small low wide rectangular pocket synth with rounded corners, a square black-bezel display near upper center, two round black knobs to each side of display, a lower row of six large rounded rectangular orange pads separated by black gutters, a small square transport/play button just below screen, and top-edge USB-C port. Do not turn it into a large piano keyboard. SMK-37 Pro is a much wider shallow dark charcoal mini piano keyboard with 37 white/black keys, a small square screen in upper left control area, knobs and a two-row bank of pads in upper middle, sliders at upper right. At small device-icon size simplify key count and control count heavily to keep lines thick. Unknown broken unit: neutral grey rounded wide synth box, a dark square blank screen at upper center, two circular dark knobs and a lower row of four large grey pads, USB-C top edge; use question-mark symbol only where requested. Lit screen is a solid bright area or simple bar, no writing. Scene: Gentle troubleshooting pictogram on plain light warm background: huge dark-charcoal USB-C cable end gently curved up from lower left with disconnected rounded silver symmetric tip at center. A large softly rounded orange QUESTION MARK floats beside tip at upper right, with a small mint dot. No alarming triangle, no red, no device faces, no text.",
+    "source": "sources/web-trouble.png",
+    "correction_prompt": "Use case: illustration-story. Make ONE simple landscape 4:3 web-wizard troubleshooting illustration, intended 960x720. Solid light warm background #f5f5f2 everywhere. ONLY TWO OBJECTS: (1) a large unplugged USB-C cable end with a thick black cable gently curving in from lower LEFT, rounded white connector body and silver rounded symmetric oval USB-C male tip pointed upper right, and (2) a large rounded orange QUESTION-MARK symbol floating beside the tip at upper right, with mint-green dot. Gentle friendly tone. Spacious clean flat vector pictogram, solid black/orange/white/silver/mint shapes, bold rounded contours. ABSOLUTELY NO synthesizers, keyboards, phones, screens, computers, extra devices, characters, alarming triangles, hearts, logos, labels, text, letters, numbers, gradients, texture or shadows. The cable plug and question mark are the entire illustration. Keep everything except entering cable inside a 50px margin."
+  }
+]

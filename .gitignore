@@ -1,0 +1,7 @@
+build/
+toolchain
+toolchain/
+*.tar.xz
+# the image generator's full-size masters (art/sources/generation-manifest.json has the prompts)
+art/sources/*.png
+!art/sources/move_cable_bg.png
