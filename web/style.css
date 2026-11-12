@@ -54,3 +54,4 @@ a { color: #b45300; }
 #support .buttons { justify-content: flex-start; margin-top: 0.75rem; }
 a.button { display: inline-block; text-decoration: none; font-size: 1.05rem; padding: 0.6rem 1.2rem; border-radius: 0.75rem; border: 2px solid var(--accent); color: var(--ink); font-weight: 600; }
 a.button:hover { background: var(--accent); color: #fff; }
+.step picture { display: block; }
