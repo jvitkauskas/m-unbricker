@@ -32,6 +32,9 @@ Edge on a computer, Chrome on Android, or the MIDIWeb app on an iPhone or iPad.
 Either model can repair either model. Tested on an FM-1 and an SMK-37 Pro, both ways, including
 an FM-1 bricked with firmware that hangs at start (stock bootloader, no USB at all).
 
+The page's helper has started on an FM-1 running M-VAVE stock V15 and V16, Baud Girl FM-1+VA 102,
+SLOOP 2.8.5, JIANT FM 10.7.17, Skiff 2.5.1, Felucca 1.8.2 beta and Melodee 1.6.1.
+
 ## Build
 
 You need GNU Make, Python 3 and the [pi32v2 LLVM toolchain](https://github.com/jvitkauskas/pi32v2-llvm)
