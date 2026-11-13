@@ -24,11 +24,11 @@ Edge on a computer, Chrome on Android, or the MIDIWeb app on an iPhone or iPad.
    into its USB download mode, whatever is in its flash.
 4. It then works as a **USB host**: it talks to that ROM over mass storage, starts M-Flasher's
    flash loader on it, identifies the model, and compares its flash with the rescue image.
-5. After PLAY (SEQ PLAY on the SMK-37) it writes a clean install, verifies it with the chip's
-   CRC32 and restarts the unit: **m-bootloader** and fm1-base's small starter firmware, ready for
-   any other firmware. Unused sectors up to `0xFEFFF` are erased; `0xFF000`+ (and on the SMK-37
-   its Bluetooth pairing and calibration at `0xC0000`-`0xC1FFF`) are never written. See
-   [rescue/README.md](rescue/README.md).
+5. After PLAY (SEQ PLAY on the SMK-37) it writes a fresh **m-bootloader**, erases everything else
+   up to `0xFEFFF`, verifies it with the chip's CRC32 and restarts the unit. `0xFF000`+ (and on the
+   SMK-37 its Bluetooth pairing and calibration at `0xC0000`-`0xC1FFF`) are never written. With no
+   firmware, m-bootloader opens its MIDI mode by itself, and the unit takes a firmware from that
+   firmware's own browser installer. See [rescue/README.md](rescue/README.md).
 6. PLAY at the end restarts the working unit into its own firmware.
 
 Either model can repair either model. Tested on an FM-1 and an SMK-37 Pro, both ways, including

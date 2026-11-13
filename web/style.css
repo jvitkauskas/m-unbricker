@@ -60,6 +60,3 @@ a.button:hover { background: var(--accent); color: #fff; }
 @media (max-width: 30rem) { #trouble ul.tested { columns: 1; } }
 #trouble p.tested-model { font-weight: 600; color: var(--ink); margin: 0.5rem 0 0; }
 header img.logo { display: block; margin: 0 auto 0.25rem; width: 88px; height: 88px; }
-
-.test-banner { background: #fea000; color: #000; padding: .5em .8em; border-radius: 8px; font-size: .9em; }
-.test-banner a { color: #000; }

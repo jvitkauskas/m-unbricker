@@ -8,9 +8,9 @@
  *   unplug from the phone / computer, connect the broken unit, switch it on;
  *   then the JieLi USB_KEY and the calibration pulses wake its ROM, this unit
  *   talks to that ROM as a USB host (M-Flasher's loader), identifies the
- *   model, compares the flash with the rescue image (m-bootloader + the
- *   fm1-base template), and after PLAY (SEQ PLAY on the SMK-37) writes,
- *   verifies and restarts it. PLAY at the end restarts this unit into its
+ *   model, compares the flash with the rescue image (m-bootloader, the rest
+ *   erased), and after PLAY (SEQ PLAY on the SMK-37) writes, verifies and
+ *   restarts it: it then waits in m-bootloader's MIDI mode for a firmware. PLAY at the end restarts this unit into its
  *   own firmware. */
 #include "hw.h"
 #include "usbio.h"
@@ -23,7 +23,7 @@
 #include "lcd.h"
 #include "pages.h"
 
-#define VERSION "0.5 test"
+#define VERSION "0.5"
 
 #if BOARD_ID == 2
 #define THIS_BOARD BRD_SMK
