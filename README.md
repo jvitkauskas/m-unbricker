@@ -32,7 +32,9 @@ Edge on a computer, Chrome on Android, or the MIDIWeb app on an iPhone or iPad.
 6. PLAY at the end restarts the working unit into its own firmware.
 
 Either model can repair either model. Tested on an FM-1 and an SMK-37 Pro, both ways, including
-an FM-1 bricked with firmware that hangs at start (stock bootloader, no USB at all).
+an FM-1 bricked with firmware that hangs at start (stock bootloader, no USB at all). After a repair
+(0.5), the FM-1 waited in MIDI mode and took stock V15 and V16 from M-VAVE's M-UPGRADE and SLOOP
+from its installer.
 
 The page's helper has started on an FM-1 running M-VAVE stock V15 and V16, Baud Girl FM-1+VA 102,
 SLOOP 2.8.5, JIANT FM 10.7.17, Skiff 2.5.1, Felucca 1.8.2 beta and Melodee 1.6.1. On an SMK-37: M-VAVE stock V16,

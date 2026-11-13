@@ -38,8 +38,9 @@ installed m-bootloader 2.3 there; they come from
 ## What installs a firmware afterwards
 
 m-bootloader's MIDI mode was tested with SLOOP's, Felucca's, Melodee's and ChoralRoot's installers, and on
-the SMK-37 Pro with ChoralRoot's and Felucca's SMK-37 installers. Baud Girl's installer and M-VAVE's
-updater refuse it: they update a running M-VAVE firmware. An SMK-37 Elite installed from MIDI mode reports
+the SMK-37 Pro with ChoralRoot's and Felucca's SMK-37 installers. After an M-Unbricker repair, an FM-1
+took stock V15 and V16 from M-VAVE's M-UPGRADE and SLOOP from its installer, from MIDI mode. Baud
+Girl's installer refuses MIDI mode: it needs a firmware running on the unit. An SMK-37 Elite installed from MIDI mode reports
 itself as a Pro.
 
 ## Licences
