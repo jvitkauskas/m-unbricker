@@ -5,7 +5,7 @@
 Bring a broken M-VAVE **FM-1** or **SMK-37** back to life with a second, working one and a USB-C
 cable. No dongle, no extra hardware, and nothing installed on the working unit.
 
-**Start here: <https://jvitkauskas.github.io/m-unbricker/>**: a step-by-step page for Chrome or
+**Start here: <https://jvitkauskas.github.io/m-apps/unbricker/>**: a step-by-step page for Chrome or
 Edge on a computer, Chrome on Android, or the MIDIWeb app on an iPhone or iPad.
 
 ![A working FM-1 repairing a broken unit over a USB-C cable](art/web/hero.png)
