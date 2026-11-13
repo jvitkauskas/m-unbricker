@@ -233,4 +233,14 @@ $("port-select").addEventListener("change", () => {
   const port = findPorts(state.access)[Number($("port-select").value)];
   if (port) open(port);
 });
+// Links into the troubleshooting notes open the collapsed section first (Safari doesn't by itself).
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('a[href^="#"]');
+  const target = link && document.getElementById(link.getAttribute("href").slice(1));
+  if (!target) return;
+  const details = target.closest("details");
+  if (details) details.open = true;
+  event.preventDefault();
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 go("intro");
