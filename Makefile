@@ -25,7 +25,7 @@ BOARD_smk37 := 2
 all: build/m-unbricker-fm1.bin build/m-unbricker-smk37.bin
 
 # The rescue images, packed (tools/make_images.py): generated, as they are large.
-build/rescue_img.h: tools/make_images.py rescue/fm1/boot.bin rescue/fm1/app.bin rescue/smk37/boot.bin rescue/smk37/app.bin
+build/rescue_img.h: tools/make_images.py rescue/fm1/boot.bin rescue/smk37/boot.bin $(wildcard rescue/*/app.bin)
 	@mkdir -p build
 	@python3 tools/make_images.py rescue $@
 

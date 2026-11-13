@@ -23,7 +23,7 @@
 #include "lcd.h"
 #include "pages.h"
 
-#define VERSION "0.4"
+#define VERSION "0.5 test"
 
 #if BOARD_ID == 2
 #define THIS_BOARD BRD_SMK

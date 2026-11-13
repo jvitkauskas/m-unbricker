@@ -36,12 +36,12 @@ PAGE(PG_connecting, PIC_waking, C_ACCENT, "Connecting", "Talking to it…", 0)
 /* found, the repair */
 PAGE(PG_found_fm1, PIC_found_fm1, C_INFO, "Found an FM-1", "Checking what needs repairing…", 0)
 PAGE(PG_found_smk37, PIC_found_smk37, C_INFO, "Found an SMK-37", "Checking what needs repairing…", 0)
-PAGE(PG_ready_fm1, PIC_press_play, C_ACCENT, "Ready to repair", "It gets a fresh bootloader and a starter firmware.", HINT_REPAIR)
-PAGE(PG_ready_smk37, PIC_press_play, C_ACCENT, "Ready to repair", "A fresh bootloader and a starter firmware. Its calibration stays.", HINT_REPAIR)
-PAGE(PG_nothing, PIC_press_play, C_GOOD, "Nothing to repair", "It already has the rescue firmware. Restart it?", HINT_REPAIR)
+PAGE(PG_ready_fm1, PIC_press_play, C_ACCENT, "Ready to repair", "A fresh bootloader. Its old firmware and settings are erased.", HINT_REPAIR)
+PAGE(PG_ready_smk37, PIC_press_play, C_ACCENT, "Ready to repair", "A fresh bootloader. Old firmware is erased; calibration stays.", HINT_REPAIR)
+PAGE(PG_nothing, PIC_press_play, C_GOOD, "Nothing to repair", "It's already waiting for a firmware. Restart it?", HINT_REPAIR)
 PAGE(PG_repairing, PIC_repairing, C_ACCENT, "Repairing", "Keep both units switched on and connected.", 0)
-PAGE(PG_done_fm1, PIC_success_fm1, C_GOOD, "Done!", "It's starting with a starter firmware. Now install any firmware you like.", HINT_RESTART)
-PAGE(PG_done_smk37, PIC_success_smk37, C_GOOD, "Done!", "It's starting with a starter firmware. Now install any firmware you like.", HINT_RESTART)
+PAGE(PG_done_fm1, PIC_success_fm1, C_GOOD, "Done!", "It's in MIDI mode now, ready for a firmware from your phone or computer.", HINT_RESTART)
+PAGE(PG_done_smk37, PIC_success_smk37, C_GOOD, "Done!", "It's in MIDI mode now, ready for a firmware from your phone or computer.", HINT_RESTART)
 PAGE(PG_left, PIC_leave, C_INFO, "Left as it was", "Nothing was written. You can switch it off.", HINT_RESTART)
 
 /* trouble */

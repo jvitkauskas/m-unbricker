@@ -10,7 +10,7 @@ Inside `assets/m-unbricker-*.bin`:
 |---|---|---|
 | M-Unbricker's own code; display, key and runtime code from m-bootloader | MIT | m-unbricker; [m-bootloader](https://github.com/jvitkauskas/m-bootloader) |
 | M-Flasher's flash loader 1.3 (uploaded to the broken unit) | MIT ([MIT-m-bootloader.txt](MIT-m-bootloader.txt)) | m-bootloader |
-| The rescue images: m-bootloader 2.3 and fm1-base's starter firmware (template), with the parts listed in [rescue-images.md](rescue-images.md) | MIT, MPL-2.0 ([MPL-2.0.txt](MPL-2.0.txt)), Apache-2.0 ([Apache-2.0.txt](Apache-2.0.txt)), OFL-1.1 fonts ([Barlow](OFL-1.1-Barlow.txt), [Terminus](OFL-1.1-Terminus.txt)) | [fm1-base](https://github.com/charlesvestal/fm1-base) (MPL-2.0 source: the commits named in rescue-images.md) |
+| The rescue images: m-bootloader 2.3's boot areas, see [rescue-images.md](rescue-images.md) | MIT ([MIT-m-bootloader.txt](MIT-m-bootloader.txt)) | m-bootloader |
 | Screen fonts, rendered from DejaVu Sans | Bitstream Vera / public domain ([DejaVu-fonts.txt](DejaVu-fonts.txt)) | DejaVu fonts |
 
 `assets/stage-*.fwsc`: m-bootloader 2.3's RAM stage (MIT), built from its source with M-Unbricker's logo on its waiting screen.

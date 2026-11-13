@@ -12,6 +12,7 @@
 </head>
 <body>
 <header>
+  <p class="test-banner">Test version: the repaired unit gets only the bootloader and waits in MIDI mode for a firmware. The regular page is <a href="../m-unbricker/">here</a>.</p>
   <img class="logo" src="img/logo-256.png" alt="" width="88" height="88">
   <h1>M-Unbricker</h1>
   <p>Bring a broken FM-1 or SMK-37 back to life with a second, working one.</p>
@@ -79,7 +80,7 @@
       <div class="more-step">
         <img src="img/press_play.png" alt="">
         <h3>3. Press <span class="key-go">PLAY</span> to repair</h3>
-        <p>At <b>Ready to repair</b>, press <b class="key-go">PLAY</b>. The broken unit gets a fresh bootloader (m-bootloader) and a small starter firmware. On an SMK-37 its calibration is kept. To stop without changing anything, press <b class="key-no">OCT−</b> instead.</p>
+        <p>At <b>Ready to repair</b>, press <b class="key-go">PLAY</b>. The broken unit gets a fresh bootloader (m-bootloader), and its old firmware and settings are erased. On an SMK-37 its calibration is kept. To stop without changing anything, press <b class="key-no">OCT−</b> instead.</p>
       </div>
       <div class="more-step">
         <img src="img/working.png" alt="">
@@ -89,8 +90,8 @@
       <div class="more-step">
         <img src="img/success.png" alt="">
         <h3>5. Done</h3>
-        <p>At <b>Done!</b> the repaired unit restarts with a small starter firmware that plays when you press its keys. Press <b class="key-go">PLAY</b> on the working unit to send it back to its own firmware.</p>
-        <p>The repaired unit is ready for any firmware you like. Its new bootloader, m-bootloader, also has a recovery menu: hold <b>PLAY</b> (<b>SEQ PLAY</b> on the SMK-37) while switching it on.</p>
+        <p>At <b>Done!</b> the repaired unit restarts into <b>MIDI mode</b>: its screen says there is no firmware, and it waits for one. Press <b class="key-go">PLAY</b> on the working unit to send it back to its own firmware.</p>
+        <p>Plug the repaired unit into your phone or computer and install a firmware with that firmware's own installer. Leave the unit's keys alone meanwhile: a key press leaves MIDI mode for the recovery menu, where <b>MIDI MODE</b> takes you back. That menu is also there later: hold <b>PLAY</b> (<b>SEQ PLAY</b> on the SMK-37) while switching it on.</p>
       </div>
     </details>
     <div class="buttons"><button data-go="intro">Repair another one</button></div>
@@ -130,6 +131,8 @@
         <dd>Check the cable in both units, switch the broken one off, press <b>PLAY</b> to try again, then switch it on. A cable that worked with the phone works here too.</dd>
         <dt>It stopped while repairing</dt>
         <dd>Nothing is lost: switch the broken unit off, and press <b>PLAY</b> on the working unit to run it again.</dd>
+        <dt>The installer doesn't find the repaired unit</dt>
+        <dd>The unit has to show <b>MIDI MODE</b>; if it shows the menu, choose <b>MIDI MODE</b>. It appears as <b>FM-1 Update</b> or <b>SMK-37 Update</b>. Installers that only update a running M-VAVE firmware (M-VAVE's own, Baud Girl's) can't install from MIDI mode: install another firmware first.</dd>
         <dt>Start over</dt>
         <dd>Switch the working unit off and on: it goes back to its own firmware. Then reload this page.</dd>
       </dl>
@@ -142,7 +145,7 @@
   </section>
 </main>
 <footer>
-  <p>M-Unbricker is <a href="https://github.com/jvitkauskas/m-unbricker">open source</a> (MIT). It uses <a href="https://github.com/jvitkauskas/m-bootloader">m-bootloader</a>, M-Flasher's loader and the <a href="https://github.com/charlesvestal/fm1-base">fm1-base</a> starter firmware (MPL-2.0). Not affiliated with M-VAVE. <a href="LICENSES/README.md">Licences</a>.</p>
+  <p>M-Unbricker is <a href="https://github.com/jvitkauskas/m-unbricker">open source</a> (MIT). It uses <a href="https://github.com/jvitkauskas/m-bootloader">m-bootloader</a> and M-Flasher's loader. Not affiliated with M-VAVE. <a href="LICENSES/README.md">Licences</a>.</p>
 </footer>
 <script type="module" src="app.js?v=dev"></script>
 </body>
