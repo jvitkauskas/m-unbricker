@@ -94,3 +94,5 @@ M-Unbricker is free, like M-Flasher and m-bootloader. A donation helps pay for c
 certificates for the M-Flasher apps:
 [Sponsor on GitHub](https://github.com/sponsors/jvitkauskas) ·
 [Donate on Ko-fi](https://ko-fi.com/jvitkauskas)
+
+Related: try FM-1 firmwares in the browser with the free community [FM-1 Emulator](https://fm1-emulator.atst.tools/).
