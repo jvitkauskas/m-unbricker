@@ -85,7 +85,7 @@ m-flasher run-ram build/m-unbricker-fm1.bin --addr 0x01C30000
 | `src/ui.c`, `src/lcd.c` | pages drawn in strips: 4-colour pictures, antialiased text |
 | `src/board.c`, `src/keys_any.c` | the build for both boards: which board, from the flash, and both boards' keys |
 | `web/` | the page; `tools/deploy_web.sh` copies it to GitHub Pages |
-| `stage/` | the helper's screen: m-bootloader 2.3's RAM stage with M-Unbricker's logo; `tools/build_stage.sh` builds the packages in `web/assets/` from m-bootloader v2.3 |
+| `stage/` | the helper's screen: m-bootloader 2.4's RAM stage with M-Unbricker's logo; `tools/build_stage.sh` builds the packages in `web/assets/` from m-bootloader v2.4 |
 | `art/` | the pictures ([art/README.md](art/README.md)) |
 | `tools/` | image packing, fonts, pictures, the RAM app trailer, the page preview |
 

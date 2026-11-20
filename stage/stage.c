@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: MIT */
-/* M-Unbricker's helper: m-bootloader 2.3's src/stage.c (MIT, Julius Vitkauskas), with its waiting
+/* M-Unbricker's helper: m-bootloader 2.4's src/stage.c (MIT, Julius Vitkauskas; the same as 2.3's), with its waiting
  * screen showing M-Unbricker's logo and no text: the page tells the user what to do. Everything
  * else is as in m-bootloader.
  *

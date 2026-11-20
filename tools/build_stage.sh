@@ -1,17 +1,19 @@
 #!/bin/sh
 # SPDX-License-Identifier: MIT
-# Builds M-Unbricker's helper: m-bootloader 2.3's RAM stage with stage/stage.c (its logo screen), in
-# a checkout of m-bootloader at tag v2.3 (build/m-bootloader), with m-bootloader's own Makefile and
+# Builds M-Unbricker's helper: m-bootloader 2.4's RAM stage with stage/stage.c (its logo screen), in
+# a checkout of m-bootloader at tag v2.4 (build/m-bootloader), with m-bootloader's own Makefile and
 # package tool. Writes web/assets/stage-{fm1,smk37-pro,smk37-elite}{,-listed}.fwsc.
 #   tools/build_stage.sh [TOOLCHAIN]   (default: toolchain/, as for `make`)
+# v2.4 was built with pi32v2 LLVM 23.1.5-5: with that toolchain, m-bootloader's own stage.c gives its release's
+# stage packages byte for byte.
 set -e
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 TC=$(cd "${1:-$ROOT/toolchain}" && pwd)
 MB=$ROOT/build/m-bootloader
 if [ ! -d "$MB" ]; then
-	git clone -q --depth 1 --branch v2.3 https://github.com/jvitkauskas/m-bootloader "$MB"
+	git clone -q --depth 1 --branch v2.4 https://github.com/jvitkauskas/m-bootloader "$MB"
 fi
-test "$(git -C "$MB" rev-parse --short HEAD)" = 6bc8f45 || { echo "build/m-bootloader is not v2.3 (6bc8f45)"; exit 1; }
+test "$(git -C "$MB" rev-parse --short HEAD)" = 395e6cc || { echo "build/m-bootloader is not v2.4 (395e6cc)"; exit 1; }
 python3 "$ROOT/tools/make_logo.py"
 git -C "$MB" checkout -q -- src/stage.c
 cp "$ROOT/stage/stage.c" "$ROOT/stage/logo.h" "$MB/src/"
