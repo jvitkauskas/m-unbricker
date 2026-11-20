@@ -16,7 +16,8 @@ MB=$ROOT/build/m-bootloader
 if [ ! -d "$MB" ]; then
 	git clone -q --depth 1 --branch v2.4 https://github.com/jvitkauskas/m-bootloader "$MB"
 fi
-test "$(git -C "$MB" rev-parse --short HEAD)" = 395e6cc || { echo "build/m-bootloader is not v2.4 (395e6cc)"; exit 1; }
+test "$(git -C "$MB" rev-parse --short HEAD)" = 395e6cc || {
+	echo "build/m-bootloader is not v2.4 (395e6cc): remove it (rm -rf build/m-bootloader) and run this again"; exit 1; }
 python3 "$ROOT/tools/make_logo.py"
 git -C "$MB" checkout -q -- src/stage.c
 cp "$ROOT/stage/stage.c" "$ROOT/stage/logo.h" "$MB/src/"
