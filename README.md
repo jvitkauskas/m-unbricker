@@ -53,7 +53,12 @@ make
 ```
 
 `make TOOLCHAIN=<directory>` uses a toolchain unpacked elsewhere. Outputs:
-`build/m-unbricker-fm1.bin` and `build/m-unbricker-smk37.bin`, one per board it runs on.
+`build/m-unbricker-fm1.bin` and `build/m-unbricker-smk37.bin`, one per board it runs on, and
+`build/m-unbricker-any.bin`, one file for both (board 0 in its trailer). That one reads which board it's
+on from the unit's own flash, as m-apps' universal apps do (`src/board.c`): an SMK-37 by its
+calibration (`trimdat` at `0xC1224`, or its copy `TRIMCOPY` at `0xFF000`), an FM-1 by its flash chip.
+On anything else it touches no pin and restarts the unit. The page uses the per-board files; the card's
+launcher (m-apps) uses the one for both.
 
 Other targets: `make preview` renders every on-screen page with the app's own renderer
 (`build/preview/`, needs gcc and Pillow); `make fonts` and `make art` regenerate `src/fonts.h`
@@ -78,6 +83,7 @@ m-flasher run-ram build/m-unbricker-fm1.bin --addr 0x01C30000
 | `src/bot.c`, `src/jl.c` | mass storage (bulk-only) and the JieLi / M-Flasher loader protocol |
 | `src/writer.c` | the plan, erase, write and verify of the rescue image |
 | `src/ui.c`, `src/lcd.c` | pages drawn in strips: 4-colour pictures, antialiased text |
+| `src/board.c`, `src/keys_any.c` | the build for both boards: which board, from the flash, and both boards' keys |
 | `web/` | the page; `tools/deploy_web.sh` copies it to GitHub Pages |
 | `stage/` | the helper's screen: m-bootloader 2.3's RAM stage with M-Unbricker's logo; `tools/build_stage.sh` builds the packages in `web/assets/` from m-bootloader v2.3 |
 | `art/` | the pictures ([art/README.md](art/README.md)) |

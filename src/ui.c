@@ -235,6 +235,28 @@ static void draw_rows(s32 y0, s32 y1, u32 first_status_line)
 }
 
 static u32 status_line = MAX_LINES; /* index of the status text line */
+static const char *key_go = "PLAY", *key_no = "OCT−";
+static char hint_buf[48];
+
+/* A hint with UI_KEY_GO / UI_KEY_NO in it, with this unit's key names. */
+static const char *key_names(const char *s)
+{
+	const char *k;
+	char *d = hint_buf;
+
+	for (; *s; s++) {
+		k = *s == UI_KEY_GO[0] ? key_go : *s == UI_KEY_NO[0] ? key_no : 0;
+		if (!k) {
+			if (d < hint_buf + sizeof hint_buf - 1)
+				*d++ = *s;
+			continue;
+		}
+		while (*k && d < hint_buf + sizeof hint_buf - 1)
+			*d++ = *k++;
+	}
+	*d = 0;
+	return hint_buf;
+}
 
 static void layout(const struct page *p)
 {
@@ -244,7 +266,7 @@ static void layout(const struct page *p)
 	if (p->body)
 		add_wrapped(&font_body, p->body, BODY_Y, 3, C_TEXT);
 	if (p->hint)
-		add_line(&font_small, p->hint, 0xFFFF, HINT_Y, C_ACCENT);
+		add_line(&font_small, key_names(p->hint), 0xFFFF, HINT_Y, C_ACCENT);
 	status_line = nlines;
 	if (status_buf[0] && bar < 0)
 		add_line(&font_small, status_buf, 0xFFFF, STATUS_Y, status_col);
@@ -252,7 +274,14 @@ static void layout(const struct page *p)
 
 static const struct page *cur;
 
-void ui_init(u32 board) { lcd_init(board); }
+void ui_init(u32 board)
+{
+	if (board == BRD_SMK) {
+		key_go = "SEQ PLAY";
+		key_no = "<";
+	}
+	lcd_init(board);
+}
 
 void ui_show(const struct page *p)
 {

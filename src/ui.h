@@ -42,6 +42,10 @@ struct page {
 	const char *hint;  /* bottom line, e.g. "PLAY: next" */
 };
 
+/* In a hint, where this unit's key names go (the build for both boards):
+ * PLAY or SEQ PLAY, and OCT− or <. */
+#define UI_KEY_GO "\x01"
+#define UI_KEY_NO "\x02"
 void ui_init(u32 board);
 void ui_show(const struct page *p);
 /* The line above the hint: a short status text, or a progress bar

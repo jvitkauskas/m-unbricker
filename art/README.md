@@ -4,15 +4,17 @@ Made for **m-unbricker**, which lets one working synthesizer repair another over
 
 ## Making the pictures
 
-All 28 illustrations were drawn with the built-in OpenAI image generation tool, one generation per requested picture, with targeted image-generation corrections after review. No API/CLI fallback was used. The orange FM-1 was based on the supplied photograph. The SMK-37 shape was checked against [product reference pictures](https://vietmusic.vn/id/products/midi-keyboard-controller-m-vave-smk-37-pro), then rendered dark grey as requested. Third-party reference photographs are not included or relicensed here.
+The first 28 illustrations were drawn with the built-in OpenAI image generation tool, one generation per requested picture, with targeted image-generation corrections after review. No API/CLI fallback was used. The orange FM-1 was based on the supplied photograph. The SMK-37 shape was checked against [product reference pictures](https://vietmusic.vn/id/products/midi-keyboard-controller-m-vave-smk-37-pro), then rendered dark grey as requested. Third-party reference photographs are not included or relicensed here.
 
 The brief was a clean, friendly, flat pictogram system: an orange pocket FM-1 with a square screen, side knobs and lower rounded pads; a wider dark SMK-37 keyboard with upper controls; a consistent grey unknown-synth silhouette; and rounded USB-C connectors. Lit screens indicate working/repaired devices, blank dark screens indicate bricked devices. Pictures have no words, numbers, branding or labels. Question marks, play triangles, arrows, checks and warning symbols carry the action. Names appear only outside the illustrations on the contact sheet.
+
+The five device scenes that showed a model (welcome, unplug_pc, connect, found, success) were then redrawn with one generic unit, so one app file can run on either model: a grey rounded box with a square screen (mint when working, black when broken), a knob each side and a short row of piano keys. They were made with GPT-6.2 Sol's built-in image generation, one generation per picture, with the same colour and size rules; their prompts are in the manifest.
 
 The generated hero and keyboard variant served as visual references for later generations. Generic switch, chip and plug symbols were generated independently to avoid unwanted product bodies. The unplug arrow was corrected to point away from the laptop; the identified FM-1 screen was corrected to stay black behind the magnifier.
 
 ## Production files
 
-- `device/*.png`: 18 opaque **480 × 480** indexed PNGs, black plus at most three additional colours, encoded with a 2-bit palette. Each has at least a 24 px empty black margin. `device/palette.json` is the exact per-picture palette.
+- `device/*.png`: 13 opaque **480 × 480** indexed PNGs, black plus at most three additional colours, encoded with a 2-bit palette. Each has at least a 24 px empty black margin. `device/palette.json` is the exact per-picture palette.
 - `web/*.png`: 10 opaque **960 × 720** PNGs on **#f5f5f2**, flattened to a small consistent full-colour palette.
 - `contact_sheet.png`: all production pictures with their filenames; every device picture appears both enlarged for review and at its actual **120 × 120** display size. Those device previews use nearest-neighbour reduction to preserve the shipped colours.
 - `sources/*.png`: the 28 selected, unquantised image-generation masters (about 1 MB each). They are not in the repository; the production files above are what the device and the web wizard use.
@@ -24,13 +26,13 @@ Device export crops the occupied source bounds, fits them within 432 × 432 on b
 
 ## Review limits
 
-The main actions and device silhouettes remain readable at 120 × 120. The paired SMK-37 welcome/connect scenes are the most crowded. **Some secondary key gaps, small controls and connector details remain thinner than the requested 12 px minimum at 480 px.** Dimensions, colour limits, black margins and opacity are checked by the script; minimum feature width is not a passed check.
+The main actions and device silhouettes remain readable at 120 × 120. The paired welcome/connect scenes are the most crowded. **Some secondary key gaps, small controls and connector details remain thinner than the requested 12 px minimum at 480 px.** Dimensions, colour limits, black margins and opacity are checked by the script; minimum feature width is not a passed check.
 
 These are separate generated pictograms using common references, so tiny control counts, spacing and contours vary slightly between scenes; they are not pixel-identical reusable product drawings. The SMK-37 keys and control bank are deliberately abbreviated for legibility, rather than an exact drawing of all 37 keys. The locked chip in `leave` conveys leaving memory unchanged, but its accompanying wizard text should supply the precise meaning.
 
 ## File inventory
 
-Device: `welcome_fm1.png`, `welcome_smk37.png`, `unplug_pc_fm1.png`, `unplug_pc_smk37.png`, `connect_fm1.png`, `connect_smk37.png`, `switch_on.png`, `waking.png`, `found_fm1.png`, `found_smk37.png`, `checking.png`, `press_play.png`, `repairing.png`, `success_fm1.png`, `success_smk37.png`, `error.png`, `retry.png`, `leave.png`.
+Device: `welcome.png`, `unplug_pc.png`, `connect.png`, `switch_on.png`, `waking.png`, `found.png`, `checking.png`, `press_play.png`, `repairing.png`, `success.png`, `error.png`, `retry.png`, `leave.png`.
 
 Web: `hero.png`, `plug_good.png`, `sending.png`, `move_cable.png`, `switch_on.png`, `press_play.png`, `working.png`, `success.png`, `trouble.png`, `smk37_variant.png`.
 

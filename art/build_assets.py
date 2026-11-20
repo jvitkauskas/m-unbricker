@@ -75,10 +75,8 @@ def font(size):
     path = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
     return ImageFont.truetype(path, size)
 
-DEVICE_ORDER = ['welcome_fm1','welcome_smk37','unplug_pc_fm1','unplug_pc_smk37',
-                'connect_fm1','connect_smk37','switch_on','waking','found_fm1',
-                'found_smk37','checking','press_play','repairing','success_fm1',
-                'success_smk37','error','retry','leave']
+DEVICE_ORDER = ['welcome','unplug_pc','connect','switch_on','waking','found',
+                'checking','press_play','repairing','success','error','retry','leave']
 WEB_ORDER = ['hero','plug_good','sending','move_cable','switch_on','press_play',
              'working','success','trouble','smk37_variant']
 

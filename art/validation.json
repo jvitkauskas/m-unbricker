@@ -9,15 +9,6 @@
     "opaque": true
   },
   {
-    "file": "device/welcome_fm1.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
-    "opaque": true
-  },
-  {
     "file": "web/smk37_variant.png",
     "size": [
       960,
@@ -27,57 +18,12 @@
     "opaque": true
   },
   {
-    "file": "device/welcome_smk37.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
-    "opaque": true
-  },
-  {
-    "file": "device/unplug_pc_fm1.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
-    "opaque": true
-  },
-  {
-    "file": "device/unplug_pc_smk37.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
-    "opaque": true
-  },
-  {
     "file": "web/plug_good.png",
     "size": [
       960,
       720
     ],
     "colours": 7,
-    "opaque": true
-  },
-  {
-    "file": "device/connect_fm1.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
-    "opaque": true
-  },
-  {
-    "file": "device/connect_smk37.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
     "opaque": true
   },
   {
@@ -96,24 +42,6 @@
       480
     ],
     "colours": 4,
-    "opaque": true
-  },
-  {
-    "file": "device/found_fm1.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
-    "opaque": true
-  },
-  {
-    "file": "device/found_smk37.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 3,
     "opaque": true
   },
   {
@@ -136,24 +64,6 @@
   },
   {
     "file": "device/repairing.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
-    "opaque": true
-  },
-  {
-    "file": "device/success_fm1.png",
-    "size": [
-      480,
-      480
-    ],
-    "colours": 4,
-    "opaque": true
-  },
-  {
-    "file": "device/success_smk37.png",
     "size": [
       480,
       480
@@ -249,6 +159,51 @@
       720
     ],
     "colours": 10,
+    "opaque": true
+  },
+  {
+    "file": "device/welcome.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/unplug_pc.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/connect.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
+    "opaque": true
+  },
+  {
+    "file": "device/found.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 3,
+    "opaque": true
+  },
+  {
+    "file": "device/success.png",
+    "size": [
+      480,
+      480
+    ],
+    "colours": 4,
     "opaque": true
   }
 ]

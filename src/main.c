@@ -1,7 +1,8 @@
 /* SPDX-License-Identifier: MIT */
 /* m-unbricker: a working unit unbricks another (FM-1 or SMK-37, either way).
  *
- * A RAM app (m-bootloader docs/SPEC.md 11.8), one build per board it runs on.
+ * A RAM app (m-bootloader docs/SPEC.md 11.8), one build per board it runs on,
+ * and one for both (BOARD_ID 0), which reads which board it's on from its flash.
  * It is started on the working unit by the m-unbricker web page (through
  * m-bootloader's MIDI mode or the RAM stage) or by `m-flasher run-ram`, and
  * installs nothing there. Guided pages take the user through it:
@@ -22,13 +23,16 @@
 #include "ui.h"
 #include "lcd.h"
 #include "pages.h"
+#include "board.h"
 
 #define VERSION "0.5"
 
 #if BOARD_ID == 2
 #define THIS_BOARD BRD_SMK
-#else
+#elif BOARD_ID == 1
 #define THIS_BOARD BRD_FM1
+#else /* one build for both: found at the start (src/board.c) */
+#define THIS_BOARD rk_board
 #endif
 
 extern char rk_bss_start[], rk_bss_end[];
@@ -300,6 +304,17 @@ void rk_main(u32 arg)
 		tb_calibrate_sof(1000, &seen);
 	usb_take_pins(); /* the host sees the unit go */
 
+#if BOARD_ID == 0
+	rk_board = board_detect(0);
+	if (!rk_board) {
+		/* Its screen and keys aren't known, so none of their pins are touched:
+		 * the unit restarts into its own firmware. */
+		csync();
+		((void (*)(void))(unsigned long)restart_prog)();
+		for (;;)
+			;
+	}
+#endif
 	ui_init(THIS_BOARD);
 	if (a == b) {
 		ui_show(&PG_err_timer);

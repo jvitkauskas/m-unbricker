@@ -8,9 +8,8 @@ import json, pathlib
 from PIL import Image
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-NAMES = ["welcome_fm1", "welcome_smk37", "unplug_pc_fm1", "unplug_pc_smk37", "connect_fm1", "connect_smk37",
-         "switch_on", "waking", "found_fm1", "found_smk37", "checking", "press_play", "repairing",
-         "success_fm1", "success_smk37", "error", "retry", "leave"]
+NAMES = ["welcome", "unplug_pc", "connect", "switch_on", "waking", "found", "checking", "press_play", "repairing",
+         "success", "error", "retry", "leave"]
 SIZE = 120
 
 

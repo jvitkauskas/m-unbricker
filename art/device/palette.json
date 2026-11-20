@@ -1,35 +1,17 @@
 {
-  "welcome_fm1": [
-    "#000000",
-    "#ff7800",
-    "#a8adb0",
-    "#ffffff"
-  ],
-  "welcome_smk37": [
+  "welcome": [
     "#000000",
     "#6b7278",
     "#ffffff",
     "#27d68a"
   ],
-  "unplug_pc_fm1": [
-    "#000000",
-    "#ff7800",
-    "#a8adb0",
-    "#ffffff"
-  ],
-  "unplug_pc_smk37": [
+  "unplug_pc": [
     "#000000",
     "#6b7278",
     "#ffffff",
     "#27d68a"
   ],
-  "connect_fm1": [
-    "#000000",
-    "#ff7800",
-    "#a8adb0",
-    "#ffffff"
-  ],
-  "connect_smk37": [
+  "connect": [
     "#000000",
     "#6b7278",
     "#ffffff",
@@ -47,13 +29,7 @@
     "#ffffff",
     "#ffbe45"
   ],
-  "found_fm1": [
-    "#000000",
-    "#ff7800",
-    "#a8adb0",
-    "#ffffff"
-  ],
-  "found_smk37": [
+  "found": [
     "#000000",
     "#6b7278",
     "#ffffff",
@@ -77,13 +53,7 @@
     "#ffffff",
     "#27d68a"
   ],
-  "success_fm1": [
-    "#000000",
-    "#ff7800",
-    "#ffffff",
-    "#27d68a"
-  ],
-  "success_smk37": [
+  "success": [
     "#000000",
     "#6b7278",
     "#ffffff",
