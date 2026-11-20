@@ -6,10 +6,10 @@ M-Unbricker is MIT ([LICENSE](LICENSE)). It includes or builds in:
 |---|---|---|
 | `src/mbl/`, `src/lcd.c` | keys, hardware access, runtime and the panel driver from [m-bootloader](https://github.com/jvitkauskas/m-bootloader) | MIT |
 | `src/mflr_loader.h` | M-Flasher's flash loader 1.3 (m-bootloader's program B), uploaded to the broken unit | MIT |
-| `rescue/` | the rescue images: m-bootloader 2.3's boot areas, see [rescue/README.md](rescue/README.md) | MIT |
+| `rescue/` | the rescue images: m-bootloader 2.4's boot areas, see [rescue/README.md](rescue/README.md) | MIT |
 | `src/fonts.h` | glyphs rendered from DejaVu Sans | Bitstream Vera licence / public domain ([web/LICENSES/DejaVu-fonts.txt](web/LICENSES/DejaVu-fonts.txt)) |
 | `web/lib/protocol.js`, `web/lib/formats.js` | from [M-Flasher](https://github.com/jvitkauskas/m-flasher)'s web page (`runApp` added) | MIT |
-| `stage/stage.c`, `web/assets/stage-*.fwsc` | the helper: m-bootloader 2.3's RAM stage (built from its v2.3 source, `tools/build_stage.sh`), its waiting screen changed to M-Unbricker's logo | MIT |
+| `stage/stage.c`, `web/assets/stage-*.fwsc` | the helper: m-bootloader 2.4's RAM stage (built from its v2.4 source, `tools/build_stage.sh`), its waiting screen changed to M-Unbricker's logo | MIT |
 | `art/` | pictures made for this project | MIT |
 
 The USB host driver (`src/husb.c`) was written from register facts read in the JieLi AC79 SDK's

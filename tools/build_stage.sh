@@ -9,6 +9,9 @@
 set -e
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 TC=$(cd "${1:-$ROOT/toolchain}" && pwd)
+# 23.1.5-2 (the one `make` asks for) builds it too, but not to the same bytes as the release's.
+"$TC/bin/clang" --version | grep -q 60b0340f47083cf088903030a9b55d8a65525dde || {
+	echo "$TC is not pi32v2 LLVM 23.1.5-5, which web/assets/ are built with"; exit 1; }
 MB=$ROOT/build/m-bootloader
 if [ ! -d "$MB" ]; then
 	git clone -q --depth 1 --branch v2.4 https://github.com/jvitkauskas/m-bootloader "$MB"

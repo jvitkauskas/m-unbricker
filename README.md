@@ -57,7 +57,8 @@ make
 `build/m-unbricker-any.bin`, one file for both (board 0 in its trailer). That one reads which board it's
 on from the unit's own flash, as m-apps' universal apps do (`src/board.c`): an SMK-37 by its
 calibration (`trimdat` at `0xC1224`, or its copy `TRIMCOPY` at `0xFF000`), an FM-1 by its flash chip.
-On anything else it touches no pin and restarts the unit. The page uses the per-board files; the card's
+On anything else it restarts the unit without starting the screen or the keys and without writing
+anything: only the flash's pins, which it read by, and USB have been set up by then. The page uses the per-board files; the card's
 launcher (m-apps) uses the one for both.
 
 Other targets: `make preview` renders every on-screen page with the app's own renderer
