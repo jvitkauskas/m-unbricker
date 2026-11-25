@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 // M-Unbricker's page: a wizard that starts M-Unbricker on a working FM-1 or SMK-37 over USB MIDI, then
 // guides the user while the working unit repairs the broken one (it shows its own steps on screen).
-import { FINISH, Link, Unit, UnitLost, findPorts } from "./lib/protocol.js?v=dev";
-import { hasOwnUpdater, loadStage, loadUnbricker, variantOf } from "./lib/assets.js?v=dev";
+import { FINISH, Link, Unit, UnitLost, findPorts, portNames } from "./lib/protocol.js?v=dev";
+import { boardFrom, hasOwnUpdater, loadStage, loadUnbricker, modelOf, variantOf } from "./lib/assets.js?v=dev";
 
 const $ = (id) => document.getElementById(id);
 const STEPS = [...document.querySelectorAll(".step")].map((s) => s.dataset.step);
-const state = { access: null, link: null, unit: null, identity: null, info: null, board: null, busy: false };
+const state = { access: null, ports: [], link: null, unit: null, identity: null, info: null, board: null, busy: false };
 
 // ---- steps ----
 
@@ -61,27 +61,68 @@ function closeLink() {
   state.unit = null;
 }
 
+/** The browser's MIDI ports, asked for afresh: Chrome on macOS (and iOS) doesn't add a device that appears later
+ * to a list it has given, such as the unit restarting into the helper or into MIDI mode. */
+async function midiAccess() {
+  state.access = await navigator.requestMIDIAccess({ sysex: true });
+  return state.access;
+}
+
+/** What a port answers, if it's a unit: its identity and info. */
+async function probe(port, ms = 800) {
+  const link = new Link(port.input, port.output);
+  try {
+    const unit = new Unit(link);
+    const identity = await unit.identity(ms, 1);
+    return { identity, info: identity ? await unit.info(600) : null };
+  } catch {
+    return { identity: null, info: null };
+  } finally {
+    link.close();
+  }
+}
+
+const seen = (access) => {
+  const names = portNames(access);
+  return names.length ? ` MIDI ports seen: ${names.join(", ")}.` : " The browser sees no MIDI ports at all.";
+};
+
 async function connect() {
   if (state.busy) return;
   if (!navigator.requestMIDIAccess) {
     say("plug-status", "This browser can't reach MIDI devices. Use Chrome or Edge on a computer, Chrome on Android, or the MIDIWeb app on an iPhone or iPad.", "error");
     return;
   }
+  closeLink();
+  state.busy = true;
+  let access;
   try {
-    state.access ??= await navigator.requestMIDIAccess({ sysex: true });
+    access = await midiAccess();
+    let ports = findPorts(access);
+    if (!ports.length) {
+      // None is named like a unit: ask each port what it is.
+      say("plug-status", "Looking for the unit…");
+      ports = [];
+      for (const port of findPorts(access, { any: true })) {
+        const { identity, info } = await probe(port);
+        if (identity && (info || boardFrom(identity, info))) ports.push(port);
+      }
+    }
+    state.ports = ports;
   } catch (cause) {
     say("plug-status", `The browser didn't allow MIDI (${cause.message}). Allow it, then press Connect again.`, "error");
     return;
+  } finally {
+    state.busy = false;
   }
-  const ports = findPorts(state.access);
   const select = $("port-select");
-  select.replaceChildren(...ports.map((p, i) => new Option(p.name, i)));
-  $("port-row").hidden = ports.length < 2;
-  if (!ports.length) {
-    say("plug-status", "No FM-1 or SMK-37 found. Is it switched on, and plugged in with a data cable? Wait a few seconds after switching it on.", "error");
+  select.replaceChildren(...state.ports.map((p, i) => new Option(p.name, i)));
+  $("port-row").hidden = state.ports.length < 2;
+  if (!state.ports.length) {
+    say("plug-status", `No FM-1 or SMK-37 found. Is it switched on, and plugged in with a data cable? Wait a few seconds after switching it on.${seen(access)}`, "error");
     return;
   }
-  await open(ports[Number(select.value) || 0]);
+  await open(state.ports[Number(select.value) || 0]);
 }
 
 async function open(port) {
@@ -103,15 +144,6 @@ async function open(port) {
   } finally {
     state.busy = false;
   }
-}
-
-const modelOf = (identity) => /^(?:ota-)?(.+)_\d+$/.exec(identity)?.[1] ?? null;
-
-function boardFrom(identity, info) {
-  if (info?.jedec === 0xeb6014) return "smk37";
-  if (info?.jedec === 0x856014 || info?.jedec === 0xb36014) return "fm1";
-  const model = modelOf(identity) ?? "";
-  return model.startsWith("SMK") ? "smk37" : model === "FM-1" || model === "MiniFM" ? "fm1" : null;
 }
 
 /** What the connected unit is, and the next step for it. */
@@ -148,18 +180,19 @@ function decide() {
 
 // ---- the helper (m-bootloader's RAM stage), for a unit running firmware ----
 
-/** Waits for a unit to come back after a restart; returns its port. */
+/** Waits for a unit to come back after a restart; returns its port. Every port is asked: the helper's port can
+ * have any name (findPorts). */
 async function reconnect(seconds, wanted) {
   closeLink();
   const end = Date.now() + seconds * 1000;
   while (Date.now() < end) {
     await new Promise((r) => setTimeout(r, 1000));
-    for (const port of findPorts(state.access)) {
-      const link = new Link(port.input, port.output);
-      const unit = new Unit(link);
-      const identity = await unit.identity(800);
-      const info = identity ? await unit.info(600) : null;
-      link.close();
+    let access = state.access;
+    try {
+      access = await midiAccess();
+    } catch {}
+    for (const port of findPorts(access, { any: true })) {
+      const { identity, info } = await probe(port);
       if (identity && wanted(identity, info)) return port;
     }
   }
@@ -176,6 +209,8 @@ async function startHelper() {
     // wants a flash.bin listed, and newer ones (Skiff) at the board's full size; M-VAVE's (013-016) and
     // Baud Girl's (102) refuse a blank one. A refusal changes nothing, so the next can follow.
     const family = Number(/_(\d+)$/.exec(state.identity)?.[1]) >= 200;
+    // A firmware can also restart at once into its bootloader's own update mode, which with m-bootloader is its MIDI
+    // mode (Baud Girl 102 on m-bootloader 3.0): that runs M-Unbricker itself, so the page goes on with it.
     let accepted = false;
     for (const kind of family ? ["sized", "listed", "plain"] : ["plain", "listed", "sized"]) {
       const { image, end } = await loadStage(variant, kind);
@@ -189,18 +224,24 @@ async function startHelper() {
         break;
       } catch (cause) {
         if (!(cause instanceof UnitLost)) throw cause;
+        // Gone rather than refusing: it restarted.
+        if (state.link.lost || !(await state.unit.identity(800, 1).catch(() => null))) {
+          accepted = true;
+          break;
+        }
       }
     }
     if (!accepted) throw new Error("The firmware didn't accept the helper, and keeps running. See \"Something not working?\" below.");
-    progress(1, 1, "The unit is restarting into the helper…");
-    const port = await reconnect(45, (identity, info) => info?.kind === "stage");
-    if (!port) throw new Error("The helper didn't appear within 45 seconds. Switch the unit off and on, and start again.");
+    progress(1, 1, "The unit is restarting…");
+    const port = await reconnect(45, (identity, info) => info?.canRun);
+    if (!port) throw new Error(`The helper didn't appear within 45 seconds. Switch the unit off and on, and start again.${seen(state.access)}`);
     state.busy = false;
     await open(port);
     if (state.info?.canRun) await sendApp(); // straight on: the helper is what was asked for
   } catch (cause) {
     say("send-status", cause.message, "error");
-    buttons(["Try again", startHelper, true]);
+    // Waiting for the helper drops the connection: with none left, find the unit again first.
+    buttons(state.unit ? ["Try again", startHelper, true] : ["Connect again", () => { go("plug"); connect(); }, true]);
   } finally {
     state.busy = false;
   }
@@ -230,7 +271,7 @@ async function sendApp() {
 
 $("connect").addEventListener("click", connect);
 $("port-select").addEventListener("change", () => {
-  const port = findPorts(state.access)[Number($("port-select").value)];
+  const port = state.ports[Number($("port-select").value)];
   if (port) open(port);
 });
 // Links into the troubleshooting notes open the collapsed section first (Safari doesn't by itself).
