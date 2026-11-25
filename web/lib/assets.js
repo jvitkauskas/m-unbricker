@@ -11,6 +11,21 @@ const STAGE = { fm1: "stage-fm1", "smk37-pro": "stage-smk37-pro", "smk37-elite":
 
 export const variantOf = (model) => VARIANTS[model] ?? null;
 
+/** The model in a firmware's identity ("FM-1_015", "ota-SMK-37 Pro_900"). */
+export const modelOf = (identity) => /^(?:ota-)?(.+)_\d+$/.exec(identity)?.[1] ?? null;
+
+/** Which board: by the model's name first, as every firmware, m-bootloader's MIDI mode and the helper give it;
+ * by the flash chip only when the name is unknown. The flash chip alone can't tell: some SMK-37 Pro units have
+ * 0x856014, as FM-1 units do (issue #1). */
+export function boardFrom(identity, info) {
+  const model = modelOf(identity) ?? "";
+  if (model.startsWith("SMK")) return "smk37";
+  if (model === "FM-1" || model === "MiniFM") return "fm1";
+  if (info?.jedec === 0xeb6014) return "smk37";
+  if (info?.jedec === 0x856014 || info?.jedec === 0xb36014) return "fm1";
+  return null;
+}
+
 /** ChanceTheMaker's SMK firmware: an update request starts its own updater, which only takes its own
  * kind of package. Tested on SMK-37_930 (M-Flasher web). */
 export const hasOwnUpdater = (identity) => /^(ota-)?SMK-37_9\d\d$/.test(identity ?? "");

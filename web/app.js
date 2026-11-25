@@ -2,7 +2,7 @@
 // M-Unbricker's page: a wizard that starts M-Unbricker on a working FM-1 or SMK-37 over USB MIDI, then
 // guides the user while the working unit repairs the broken one (it shows its own steps on screen).
 import { FINISH, Link, Unit, UnitLost, findPorts } from "./lib/protocol.js?v=dev";
-import { hasOwnUpdater, loadStage, loadUnbricker, variantOf } from "./lib/assets.js?v=dev";
+import { boardFrom, hasOwnUpdater, loadStage, loadUnbricker, modelOf, variantOf } from "./lib/assets.js?v=dev";
 
 const $ = (id) => document.getElementById(id);
 const STEPS = [...document.querySelectorAll(".step")].map((s) => s.dataset.step);
@@ -105,15 +105,6 @@ async function open(port) {
   }
 }
 
-const modelOf = (identity) => /^(?:ota-)?(.+)_\d+$/.exec(identity)?.[1] ?? null;
-
-function boardFrom(identity, info) {
-  if (info?.jedec === 0xeb6014) return "smk37";
-  if (info?.jedec === 0x856014 || info?.jedec === 0xb36014) return "fm1";
-  const model = modelOf(identity) ?? "";
-  return model.startsWith("SMK") ? "smk37" : model === "FM-1" || model === "MiniFM" ? "fm1" : null;
-}
-
 /** What the connected unit is, and the next step for it. */
 function decide() {
   const { identity, info } = state;
@@ -200,7 +191,8 @@ async function startHelper() {
     if (state.info?.canRun) await sendApp(); // straight on: the helper is what was asked for
   } catch (cause) {
     say("send-status", cause.message, "error");
-    buttons(["Try again", startHelper, true]);
+    // Waiting for the helper drops the connection: with none left, find the unit again first.
+    buttons(state.unit ? ["Try again", startHelper, true] : ["Connect again", () => { go("plug"); connect(); }, true]);
   } finally {
     state.busy = false;
   }
