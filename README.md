@@ -42,28 +42,50 @@ Baud Girl SMK-37+VA 102, Erik37 1.2, Snoop37 2.7.2 and Melodee 1.4.5.
 
 ## Build
 
-You need GNU Make, Python 3 and the [pi32v2 LLVM toolchain](https://github.com/jvitkauskas/pi32v2-llvm)
-release `pi32v2-23.1.5-2`. On Linux x86-64:
+M-Unbricker is Rust, on [m-bootloader](https://github.com/jvitkauskas/m-bootloader)'s Rust crate (`mboot`) for the
+chip's common drivers, which comes in as the `m-bootloader` submodule. You need:
+- the [pi32v2 LLVM toolchain](https://github.com/jvitkauskas/pi32v2-llvm), release `pi32v2-23.1.6-2`;
+- the [pi32v2 Rust compiler](https://github.com/jvitkauskas/pi32v2-rust), release `pi32v2-1.100.0-1`, built on that
+  LLVM, as the linker makes the code from its bitcode;
+- `cargo` and a recent `rustc` for the computer: the build makes Rust's `core` once with cargo, and the preview and
+  the tests run on the computer;
+- GNU Make and Python 3.
+
+On Linux x86-64:
 
 ```sh
-curl -fLo toolchain.tar.xz https://github.com/jvitkauskas/pi32v2-llvm/releases/download/pi32v2-23.1.5-2/pi32v2-llvm-23.1.5-2-linux-x64.tar.xz
-echo 'cb896562418a2be93edb9bac26af4bc81a106a32974002a78e6b9fc203c93990  toolchain.tar.xz' | sha256sum -c
+git clone --recurse-submodules https://github.com/jvitkauskas/m-unbricker
+cd m-unbricker
+curl -fLo toolchain.tar.xz https://github.com/jvitkauskas/pi32v2-llvm/releases/download/pi32v2-23.1.6-2/pi32v2-llvm-23.1.6-2-linux-x64.tar.xz
+echo 'b9aa6878a3e9863d54f7dea96ec5dd2e4f438b02a1503f7b042fa601bb5e4c22  toolchain.tar.xz' | sha256sum -c
 mkdir toolchain && tar -xJf toolchain.tar.xz -C toolchain --strip-components=1
+curl -fLo pi32v2-rust.tar.xz https://github.com/jvitkauskas/pi32v2-rust/releases/download/pi32v2-1.100.0-1/pi32v2-rust-1.100.0-1-linux-x64.tar.xz
+echo 'efc89e3cd13b38a22d6698b3d965c0a754bda31c0299afc9b4d73f0a73595690  pi32v2-rust.tar.xz' | sha256sum -c
+mkdir pi32v2-rust && tar -xJf pi32v2-rust.tar.xz -C pi32v2-rust --strip-components=1
 make
 ```
 
-`make TOOLCHAIN=<directory>` uses a toolchain unpacked elsewhere. Outputs:
+`make TOOLCHAIN=<directory> PI32V2_RUST=<directory>` uses a toolchain and a compiler unpacked elsewhere. Outputs:
 `build/m-unbricker-fm1.bin` and `build/m-unbricker-smk37.bin`, one per board it runs on, and
 `build/m-unbricker-any.bin`, one file for both (board 0 in its trailer). That one reads which board it's
-on from the unit's own flash, as m-apps' universal apps do (`src/board.c`): an SMK-37 by its
+on from the unit's own flash, as m-apps' universal apps do (`src/board.rs`): an SMK-37 by its
 calibration (`trimdat` at `0xC1224`, or its copy `TRIMCOPY` at `0xFF000`), an FM-1 by its flash chip.
 On anything else it restarts the unit without starting the screen or the keys and without writing
 anything: only the flash's pins, which it read by, and USB have been set up by then. The page uses the per-board files; the card's
 launcher (m-apps) uses the one for both.
 
-Other targets: `make preview` renders every on-screen page with the app's own renderer
-(`build/preview/`, needs gcc and Pillow); `make fonts` and `make art` regenerate `src/fonts.h`
-(DejaVu Sans, Pillow) and `src/art.h` (from `art/device/`).
+- **How it's built:** `src/main.rs` is one crate, built for a board with `--cfg board="fm1"` (`"smk37"`, `"any"`).
+  rustc writes LLVM bitcode, and the linker optimises the app as one program with m-bootloader's crate and `core`, at
+  `opt-level=z`.
+- **No `core::fmt`:** formatting would cost kilobytes; nothing here formats with it.
+
+Other targets:
+- `make preview` renders every on-screen page with the app's own renderer (`tools/preview.rs`, a program for the
+  computer) into `build/preview/<board>/`, and contact sheets of them (those need Pillow).
+- `make test` compares the Rust with M-Unbricker's last C, on the computer: the pages' pixels, the image packing, and
+  on a simulated chip the panel's, the keys', the USB host's and the pins' register accesses, the board detection, and
+  whole repairs with what the mass storage and the loader protocol send ([tests/README.md](tests/README.md)).
+- `make fonts` and `make art` regenerate `src/fonts.rs` (DejaVu Sans, Pillow) and `src/art.rs` (from `art/device/`).
 
 ## Running it without the page
 
@@ -78,17 +100,23 @@ m-flasher run-ram build/m-unbricker-fm1.bin --addr 0x01C30000
 
 | Path | What |
 |---|---|
-| `src/main.c`, `src/pages.h` | the flow and every page's picture and text |
-| `src/usbio.c` | timebase, the USB pins as GPIO, USB_KEY, calibration pulses |
-| `src/husb.c` | USB0 as a full-speed host, polled ([docs/husb-notes.md](docs/husb-notes.md)) |
-| `src/bot.c`, `src/jl.c` | mass storage (bulk-only) and the JieLi / M-Flasher loader protocol |
-| `src/writer.c` | the plan, erase, write and verify of the rescue image |
-| `src/ui.c`, `src/lcd.c` | pages drawn in strips: 4-colour pictures, antialiased text |
-| `src/board.c`, `src/keys_any.c` | the build for both boards: which board, from the flash, and both boards' keys |
+| `src/flow.rs`, `src/pages.rs` | the flow and every page's picture and text |
+| `src/usbio.rs` | timebase, the USB pins as GPIO, USB_KEY, calibration pulses |
+| `src/husb.rs` | USB0 as a full-speed host, polled ([docs/husb-notes.md](docs/husb-notes.md)) |
+| `src/bot.rs`, `src/jl.rs` | mass storage (bulk-only) and the JieLi / M-Flasher loader protocol |
+| `src/writer.rs` | the plan, erase, write and verify of the rescue image |
+| `src/ui.rs`, `src/lcd.rs` | pages drawn in strips: 4-colour pictures, antialiased text |
+| `src/board.rs`, `src/keys.rs` | which board, from the flash, for the build for both; both boards' keys |
+| `m-bootloader/` | m-bootloader, a submodule: its Rust crate's registers, pins, P33 bridge, clock and flash drivers |
 | `web/` | the page; `tools/deploy_web.sh` copies it to GitHub Pages |
-| `stage/` | the helper's screen: m-bootloader 2.4's RAM stage with M-Unbricker's logo; `tools/build_stage.sh` builds the packages in `web/assets/` from m-bootloader v2.4 |
+| `stage/` | the helper: m-bootloader 3.0's RAM stage (`stage/stage.rs`) with M-Unbricker's logo; `tools/build_stage.sh` builds the packages in `web/assets/` from m-bootloader v3.0 |
 | `art/` | the pictures ([art/README.md](art/README.md)) |
 | `tools/` | image packing, fonts, pictures, the RAM app trailer, the page preview |
+| `tests/` | the Rust against the C, on the computer ([tests/README.md](tests/README.md)) |
+
+**Not on units yet:** this Rust build and the 3.0 helper in `web/assets/stage-*.fwsc` haven't been tried on a unit.
+Don't deploy the page with them (`tools/deploy_web.sh`) until both boards have repaired each other with them, from
+the page and from the card. The page deployed now has the 2.4 helper and the C builds of the app.
 
 ## Licence
 

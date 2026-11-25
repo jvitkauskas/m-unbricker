@@ -1,10 +1,10 @@
 # Rescue images: FM-1 and SMK-37
 
-What M-Unbricker writes to the broken unit (`src/writer.c`): a fresh bootloader and nothing else.
+What M-Unbricker writes to the broken unit (`src/writer.rs`): a fresh bootloader and nothing else.
 Everything else it may write is erased, so m-bootloader finds no firmware at the next start and opens its
 recovery menu in **MIDI mode** by itself (m-bootloader SPEC.md §11.6, start step 12). The unit then shows
 up as `FM-1 Update` / `SMK-37 Update` and takes a firmware from a browser installer over USB MIDI.
-`tools/make_images.py` packs the boot areas into the app (`build/rescue_img.h`); the app picks the one
+`tools/make_images.py` packs the boot areas into the app (`build/rescue_img.rs`); the app picks the one
 for the unit it identified. (An `app.bin` next to a `boot.bin` would be written at `0x4000` too; there is none.)
 
 ## FM-1 (`fm1/`)

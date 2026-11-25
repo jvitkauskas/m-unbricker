@@ -13,7 +13,7 @@ Inside `assets/m-unbricker-*.bin`:
 | The rescue images: m-bootloader 2.4's boot areas, see [rescue-images.md](rescue-images.md) | MIT ([MIT-m-bootloader.txt](MIT-m-bootloader.txt)) | m-bootloader |
 | Screen fonts, rendered from DejaVu Sans | Bitstream Vera / public domain ([DejaVu-fonts.txt](DejaVu-fonts.txt)) | DejaVu fonts |
 
-`assets/stage-*.fwsc`: m-bootloader 2.4's RAM stage (MIT), built from its source with M-Unbricker's logo on its waiting screen.
+`assets/stage-*.fwsc`: m-bootloader 3.0's RAM stage (MIT), built from its source with M-Unbricker's logo on its waiting screen.
 
 The USB host driver was written from the register facts in the JieLi AC79 SDK (Apache-2.0); no SDK code
 is included.

@@ -1,6 +1,7 @@
 # USB0 host mode on the AC791N / WL82 (polled, bare metal)
 
-Register-level notes for a small host driver on USB0 (the full-speed MUSB-derived core at 0x11800).
+Register-level notes for a small host driver on USB0 (the full-speed MUSB-derived core at 0x11800): M-Unbricker's
+`src/husb.rs`. The sequences below are written as C, as they were read.
 Target: JieLi mask ROM in download mode (MSC bulk-only, VID 4C4A PID 8057, FS).
 
 ## Sources and how they are cited
