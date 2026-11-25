@@ -24,7 +24,8 @@ def build(source, out, board="fm1", env=(), chip=False):
         obj = lib.with_suffix(".o")
         src = ROOT / "tests" / "chip" / "chip.c"
         if not lib.exists() or lib.stat().st_mtime < src.stat().st_mtime:
-            subprocess.run([os.environ.get("CC", "cc"), "-O2", "-c", "-fno-pie", str(src), "-o", str(obj)], check=True)
+            subprocess.run([os.environ.get("CC", "clang"), "-std=gnu11", "-O2", "-fno-pie", "-c", str(src), "-o",
+                            str(obj)], check=True)
             subprocess.run(["ar", "rcs", str(lib), str(obj)], check=True)
         cmd += ["-C", "relocation-model=static", "-C", "link-arg=-no-pie", "-l", "static=chip"]
     subprocess.run(cmd, check=True, env={**os.environ, **dict(e.split("=", 1) for e in env)})

@@ -1,0 +1,501 @@
+scenario panel-fm1
+-- ui_init fb=d8b443032200e143 @28392
+-- PG_welcome fb=749381524d61def8 @28688
+-- PG_unplug fb=b97b156110181677 @28906
+-- PG_connect fb=ce755e2812927b44 @29124
+-- PG_switch_on fb=9fbefeca9d47f2a4 @29420
+-- PG_already_on fb=738db2ea993f3dfd @29638
+-- PG_no_answer fb=daafef30b1108e16 @29856
+-- PG_waking fb=f7abd8388763e428 @30074
+-- PG_connecting fb=fc04d171e3ce3858 @30292
+-- PG_found_fm1 fb=3011c8e2fa4f8267 @30588
+-- PG_found_smk37 fb=7c808b612836d619 @30884
+-- PG_ready_fm1 fb=3d35fb7c3ce5b580 @31180
+-- PG_ready_smk37 fb=e94c56284a74c0ca @31476
+-- PG_nothing fb=c3a8c7e178a9e58f @31694
+-- PG_repairing fb=edb9bb90d59b622f @31990
+-- PG_done_fm1 fb=551b525ca28fc5f6 @32208
+-- PG_done_smk37 fb=551b525ca28fc5f6 @32426
+-- PG_left fb=1c68b84c5b7a6fde @32644
+-- PG_err_connect fb=730d4da8696beec0 @32940
+-- PG_err_other fb=6272138e68e5989c @33158
+-- PG_err_unknown fb=e51f26dc6dddb501 @33454
+-- PG_err_image fb=e21bfd034338280d @33672
+-- PG_err_read fb=5e7afc29fee93ddb @33890
+-- PG_err_write fb=6d4261d7ef7c5500 @34186
+-- PG_err_timer fb=30e6325ab6f4ffd8 @34404
+trace 34404 f6dee7036f80da947250f1fc3788e84ea6cacc0545f1550ea1783ee441423407
+panel fb 30e6325ab6f4ffd87849464da6effcfb7f1c1059967b8c089b555c9c238e69f7 on 1 commands 112 pixels 1478400
+
+scenario panel-smk37
+-- ui_init fb=d8b443032200e143 @23646
+-- PG_welcome fb=d6cc95584562ef0a @23942
+-- PG_unplug fb=816fa7a111e590d5 @24160
+-- PG_connect fb=85bcae81ad94c232 @24378
+-- PG_switch_on fb=9fbefeca9d47f2a4 @24674
+-- PG_already_on fb=10813c585ffd1b33 @24892
+-- PG_no_answer fb=c45190e384cbe36c @25110
+-- PG_waking fb=f7abd8388763e428 @25328
+-- PG_connecting fb=fc04d171e3ce3858 @25546
+-- PG_found_fm1 fb=3011c8e2fa4f8267 @25842
+-- PG_found_smk37 fb=7c808b612836d619 @26138
+-- PG_ready_fm1 fb=84049b3ef944fe4e @26434
+-- PG_ready_smk37 fb=e69ffa983d175fec @26730
+-- PG_nothing fb=814054fb3d14061c @26948
+-- PG_repairing fb=edb9bb90d59b622f @27244
+-- PG_done_fm1 fb=0bae46d6505b39ae @27462
+-- PG_done_smk37 fb=0bae46d6505b39ae @27680
+-- PG_left fb=a6457af2f3b020a1 @27898
+-- PG_err_connect fb=e9f878ab68d1b118 @28194
+-- PG_err_other fb=76cd0c415628c7d1 @28412
+-- PG_err_unknown fb=0f6cf3979d5e0a7e @28708
+-- PG_err_image fb=862d8d5858292a06 @28926
+-- PG_err_read fb=581b7518de3f4a2a @29144
+-- PG_err_write fb=1154cf26e3d46331 @29440
+-- PG_err_timer fb=30e6325ab6f4ffd8 @29658
+trace 29658 602bcc26701b0ea06c940a6e69c119f4c748fe36a69ed5b342bffef5e61774f7
+panel fb 30e6325ab6f4ffd87849464da6effcfb7f1c1059967b8c089b555c9c238e69f7 on 1 commands 120 pixels 1478400
+
+scenario keys-fm1
+-- wait_key(0,0) 1 @6071
+-- wait_key(1,0) 0 @22274
+-- wait_key(1,0) 1 @37753
+trace 37753 5083b678015d2da771a90266b00da19b38a3381011bb09d3b95a6b28bb0c7cdc
+keys sessions 3 latches 210 pressed-reads 11
+
+scenario keys-smk37
+-- wait_key(0,0) 1 @6484
+-- wait_key(1,0) 0 @25018
+-- wait_key(1,0) 1 @41543
+trace 41543 f3b0a834a3020d8ef5e868532f6927c8f887093e692d0cb83c106ee585d48f13
+keys sessions 3 latches 146 pressed-reads 13
+
+scenario wake-ack-fm1
+-- ui_init @28392
+-- wake_it @200717
+trace 200717 b6a917c9798199a01c8eea7cd54c89c5a2661f64514ba3db059b9edf29c0ff8b
+panel fb f7abd8388763e4287c79059ad62db1d3c6e3a4741a2c5be245879956cd0a8c9c on 1 commands 19 pixels 176640
+usbkey packets 3 other 0 false-acks 0 state dropped ack-at-us 803300 cal-pulses 1200 drop-at-us 2006850
+
+scenario wake-ack-smk37
+-- ui_init @23646
+-- wake_it @200755
+trace 200755 e30b6fb89613ec0bba86cc59bf4eb6494934ee778e74213d64ebbcf2805c6f7f
+panel fb f7abd8388763e4287c79059ad62db1d3c6e3a4741a2c5be245879956cd0a8c9c on 1 commands 27 pixels 176640
+usbkey packets 3 other 0 false-acks 0 state dropped ack-at-us 803680 cal-pulses 1200 drop-at-us 2007230
+
+scenario wake-dpanswer-fm1
+-- ui_init @28392
+-- wake_it @200609
+trace 200609 96529fcb218953e41ba05f37aa73031333835c0b34b1af91025840b74d299f34
+panel fb f7abd8388763e4287c79059ad62db1d3c6e3a4741a2c5be245879956cd0a8c9c on 1 commands 19 pixels 176640
+usbkey packets 3 other 0 false-acks 0 state dropped ack-at-us 803300 cal-pulses 1200 drop-at-us 2005770
+
+scenario wake-dpstart-fm1
+-- ui_init @28392
+-- key_send dp-at-start packets 0 false_acks 0 alive 0 @29116
+-- page @29337
+trace 29337 0abbdb711584b12e378dcbcf9fe1f00414d5149e1811b3f5082cbc6ff662fa93
+panel fb 738db2ea993f3dfdccc207141e7968d5a011c2a93071c2aa07b69fad6fe39f3f on 1 commands 16 pixels 172800
+usbkey packets 0 other 0 false-acks 0 state running cal-pulses 0
+
+scenario wake-dpstart-smk37
+-- ui_init @23646
+-- key_send dp-at-start packets 0 false_acks 0 alive 0 @24370
+-- page @24591
+trace 24591 1e168c07bd53b730f1e882d555c07998993324372a2eeb3bdf683095d7e5a1da
+panel fb 10813c585ffd1b3355e12df20de7764ee4e5c1ac3fd69abf4b7760266b134bd1 on 1 commands 24 pixels 172800
+usbkey packets 0 other 0 false-acks 0 state running cal-pulses 0
+
+scenario wake-none-fm1
+-- ui_init @28392
+-- key_send timeout packets 962 false_acks 0 alive 0 @129251
+-- page @129472
+trace 129472 21795f7ea000e30490ccf6591267d5d45c640db75d0371bb5683fde09b61b31e
+panel fb daafef30b1108e160fdd02b4b32f76ffc010d1f1c06bf9e7bfd68958e91b7e71 on 1 commands 19 pixels 176640
+usbkey packets 0 other 0 false-acks 0 state off cal-pulses 0
+
+scenario wake-none-smk37
+-- ui_init @23646
+-- key_send timeout packets 962 false_acks 0 alive 0 @124505
+-- page @124726
+trace 124726 96e7e4aeef27718d642735cf8e0bd10455cb63bab1e9099f655cb040a86930af
+panel fb c45190e384cbe36c19183bf1d86b925a098bd5da419706989d3a427351dad961 on 1 commands 27 pixels 176640
+usbkey packets 0 other 0 false-acks 0 state off cal-pulses 0
+
+scenario wake-false-fm1
+-- ui_init @28392
+-- key_send ack packets 494 false_acks 1 alive 1 @130730
+-- cal_pulses pulse_ms 1200 drop_ms 1200 pulses 1201 @250993
+trace 250993 9235b2dc8241634d4617effac586dceb8bbb40b381064c2d1aa810a55435535f
+panel fb f7abd8388763e4287c79059ad62db1d3c6e3a4741a2c5be245879956cd0a8c9c on 1 commands 22 pixels 180480
+usbkey packets 5 other 0 false-acks 1 state dropped ack-at-us 1306060 cal-pulses 1200 drop-at-us 2509610
+
+scenario wake-false-smk37
+-- ui_init @23646
+-- key_send ack packets 540 false_acks 1 alive 1 @130768
+-- cal_pulses pulse_ms 1200 drop_ms 1200 pulses 1201 @251031
+trace 251031 00832ef6ea85f87a34bd978a084c76da700da19b4c0cf21f42f9dd1d5e82493b
+panel fb f7abd8388763e4287c79059ad62db1d3c6e3a4741a2c5be245879956cd0a8c9c on 1 commands 30 pixels 180480
+usbkey packets 5 other 0 false-acks 1 state dropped ack-at-us 1306440 cal-pulses 1200 drop-at-us 2509990
+
+scenario sof-present
+-- tb_calibrate_sof 1 seen 1000 tps 48000480 measured 1 @100104
+trace 100104 f87cc05267bf55a16a93db75a252a338f4b678af304998ea3dc762eba9f34ae7
+sof clears 1002
+
+scenario sof-absent
+-- tb_calibrate_sof 0 seen 0 tps 48000000 measured 0 @2009
+trace 2009 1604f1cc6b32d709fa40f060bbf57dfd6dfdd9b457af660c2ad164078e21d4d3
+
+scenario sof-fast
+-- tb_calibrate_sof 1 seen 1000 tps 49999200 measured 1 @104274
+trace 104274 4efe3aad69aba296b0a65e7c81c9d8c02f5816e96554352aad90ab9d68232157
+sof clears 1002
+
+scenario sof-reject
+-- tb_calibrate_sof 0 seen 1000 tps 48000000 measured 0 @125128
+trace 125128 565e60bda3b3ffc60e165f828c5807b84565a548e875438a961ac5b2e7b07941
+sof clears 1002
+
+scenario detect-fm1-856014
+-- board 1 jedec 856014 @276
+trace 276 5df0b8f7fc3327421662dbc41d993004e6f7e0e7b65cfff51498dde599617b53
+own-flash bytes 30 dma 0
+
+scenario detect-fm1-b36014
+-- board 1 jedec B36014 @276
+trace 276 cb554b98b6c80f5e248bad815efab7664b93a3f46baa8be66e072fbeaa13fffc
+own-flash bytes 30 dma 0
+
+scenario detect-smk37-trimdat
+-- board 2 jedec EB6014 @186
+trace 186 6c0f8b045b3645fa0bf97dc58c1055d4d93999d86ec7ce2f950efbea5a2e8a82
+own-flash bytes 18 dma 0
+
+scenario detect-smk37-trimcopy
+-- board 2 jedec EB6014 @276
+trace 276 91947663b8faf81435e841f23aedb2cbece98a7e0bf61a05b165e112a8393c1d
+own-flash bytes 30 dma 0
+
+scenario detect-unknown
+-- board 0 jedec C84017 @276
+trace 276 8eb98594320115a081d40b3ab75ccc2fc5e3d9d008c579dd70600df2648bb076
+own-flash bytes 30 dma 0
+
+scenario detect-fm1chip-smkmark
+-- board 2 jedec 856014 @186
+trace 186 fe3b85e6b10156fe340ad488639047587be6a9d759e1873d8b9922f50a6e30da
+own-flash bytes 18 dma 0
+
+scenario detect-none
+-- board 0 jedec FFFFFF @276
+trace 276 54c48536c3dcc992d35c67812c656f342d7268cd1f391ddb1223eb7752a49f7a
+own-flash bytes 30 dma 0
+
+scenario session-repair-fm1
+-- ui_init @28392
+-- session 1 @463324
+-- plan write 4 erase 92 runs 1 @463324
+-- loader 1.3 key 980F flash 856014 io 4096 retries 0 @463324
+trace 463324 a19f152e6b8a1ac6cd38c5aa8d153e21af4cf09ddfbdd36cd5b7b81fe1399cb9
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
+keys sessions 1 latches 610 pressed-reads 1
+usb setups 8 address 1 config 1 commands 295 mode restarted loader ok bad-cbw 0
+jl reads 257 writes 4 bad-crc 0 faults 0
+flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+flash expect repaired ok
+
+scenario session-repair-smk37
+-- ui_init @23646
+-- session 1 @352675
+-- plan write 4 erase 124 runs 1 @352675
+-- loader 1.3 key 980F flash EB6014 io 4096 retries 0 @352675
+trace 352675 49d51f7439fc4d6c008be10ecea4720fa35fe9a32a9c444dd91f8bff2fb9b1e8
+panel fb 0bae46d6505b39ae53bea50670274a62fade8f4fabab342b7e01f379dd75512f on 1 commands 90 pixels 418560
+keys sessions 1 latches 23 pressed-reads 2
+usb setups 8 address 1 config 1 commands 297 mode restarted loader ok bad-cbw 0
+jl reads 255 writes 4 bad-crc 0 faults 0
+flash sha256 752822f38ed929ab8015bf6a89a3993991447b2ad19392ff49b310bc69ea25b9
+flash erased 00000-7FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-7FFFF:F 80000-FFFFF:=
+flash expect repaired ok
+
+scenario session-cross-fm1
+-- ui_init @28392
+-- session 1 @357013
+-- plan write 4 erase 124 runs 1 @357013
+-- loader 1.3 key 980F flash EB6014 io 4096 retries 0 @357013
+trace 357013 9b137af11b1e4eb0a7c5ffec316d65481c4f4c1b40bc88c8ee9ca3b69a64afbf
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 8 address 1 config 1 commands 297 mode restarted loader ok bad-cbw 0
+jl reads 255 writes 4 bad-crc 0 faults 0
+flash sha256 752822f38ed929ab8015bf6a89a3993991447b2ad19392ff49b310bc69ea25b9
+flash erased 00000-7FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-7FFFF:F 80000-FFFFF:=
+flash expect repaired ok
+
+scenario session-cross-smk37
+-- ui_init @23646
+-- session 1 @354532
+-- plan write 4 erase 92 runs 1 @354532
+-- loader 1.3 key 980F flash 856014 io 4096 retries 0 @354532
+trace 354532 ec9071f66a400f493f3001517d0428042592e85061a0fa748f6ff9b0f9f94e33
+panel fb 0bae46d6505b39ae53bea50670274a62fade8f4fabab342b7e01f379dd75512f on 1 commands 90 pixels 418560
+keys sessions 1 latches 23 pressed-reads 2
+usb setups 8 address 1 config 1 commands 294 mode restarted loader ok bad-cbw 0
+jl reads 257 writes 4 bad-crc 0 faults 0
+flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+flash expect repaired ok
+
+scenario session-nothing-fm1
+-- ui_init @28392
+-- session 1 @355184
+-- plan write 0 erase 0 runs 0 @355184
+-- loader 1.3 key 980F flash B36014 io 4096 retries 0 @355184
+trace 355184 04100a3b16569142d1e13b0d0db7106e4c79f6202c60eb9513a981b680d2ebe8
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 70 pixels 349440
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 8 address 1 config 1 commands 280 mode restarted loader ok bad-cbw 0
+jl reads 257 writes 0 bad-crc 0 faults 0
+flash sha256 9ad9056986dcdca6fefc58be246c3cde1cb21b0cd509b756060b4221fb47497e
+flash erased none
+flash programmed none
+flash state 00000-FFFFF:=
+flash expect unchanged ok
+
+scenario session-leave-fm1
+-- ui_init @28392
+-- session -1 @355163
+-- plan write 4 erase 92 runs 1 @355163
+-- loader 1.3 key 980F flash 856014 io 4096 retries 0 @355163
+trace 355163 f1a8bb6d6683727f26158827760911fd5c6ef124b7bc48c35ff35e4e230a105c
+panel fb 1c68b84c5b7a6fdeb9cc98cfa00c65808bc789ad05864efc33daafdb54bf008d on 1 commands 73 pixels 353280
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 8 address 1 config 1 commands 278 mode loader loader ok bad-cbw 0
+jl reads 257 writes 0 bad-crc 0 faults 0
+flash sha256 a8286cfeb9053a9aa34d5dc3adb87506321540a0b913f44f143edb0f640a3976
+flash erased none
+flash programmed none
+flash state 00000-FFFFF:=
+flash expect unchanged ok
+
+scenario session-leave-smk37
+-- ui_init @23646
+-- session -1 @350713
+-- plan write 4 erase 124 runs 1 @350713
+-- loader 1.3 key 980F flash EB6014 io 4096 retries 0 @350713
+trace 350713 ddb4ea83c9c79fa52196bb48cee54d07b5869c60ea4c27253690755b3a692bd4
+panel fb a6457af2f3b020a1aba50a8e227c08e52be2e2edc30913e4040c92993a7314e5 on 1 commands 81 pixels 353280
+keys sessions 1 latches 30 pressed-reads 3
+usb setups 8 address 1 config 1 commands 276 mode loader loader ok bad-cbw 0
+jl reads 255 writes 0 bad-crc 0 faults 0
+flash sha256 9593aa1a9150b5d9f5606187d4045573bd1eaddaefaafacc9fedac3a9e3607ac
+flash erased none
+flash programmed none
+flash state 00000-FFFFF:=
+flash expect unchanged ok
+
+scenario session-unknown-fm1
+-- ui_init @28392
+-- session -1 @82917
+-- plan write 0 erase 0 runs 0 @82917
+-- loader 1.3 key 980F flash C84017 io 4096 retries 0 @82917
+trace 82917 5ffbc6b885e9748d01a646c7f04bb2fefd228f6add06ab8672ea1647c9a85f73
+panel fb e156c03a301c85381514451efe5ff44543b2692bc3ccbb00cf83ff54b7c628a0 on 1 commands 19 pixels 176640
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 8 address 1 config 1 commands 23 mode loader loader ok bad-cbw 0
+jl reads 2 writes 0 bad-crc 0 faults 0
+flash sha256 a8286cfeb9053a9aa34d5dc3adb87506321540a0b913f44f143edb0f640a3976
+flash erased none
+flash programmed none
+flash state 00000-FFFFF:=
+flash expect unchanged ok
+
+scenario session-otherid-fm1
+-- ui_init @28392
+-- session 0 @70885
+-- plan write 0 erase 0 runs 0 @70885
+-- loader  key 0000 flash 000000 io 0 retries 0 @70885
+trace 70885 72f430ca8544e72dd7db7875e532a9f8de56162b9640fd2bcbd7acf1a9dd097a
+panel fb ec1d2e42a478cba36197a42b2b612ec04fea7c58cdf69aebfd17b5d0fedf30e1 on 1 commands 19 pixels 176640
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 6 address 1 config 1 commands 0 mode rom loader - bad-cbw 0
+jl reads 0 writes 0 bad-crc 0 faults 0
+flash sha256 a8286cfeb9053a9aa34d5dc3adb87506321540a0b913f44f143edb0f640a3976
+flash erased none
+flash programmed none
+flash state 00000-FFFFF:=
+flash expect unchanged ok
+
+scenario session-noattach-fm1
+-- ui_init @28392
+-- session 0 @537467
+-- plan write 0 erase 0 runs 0 @537467
+-- loader  key 0000 flash 000000 io 0 retries 0 @537467
+trace 537467 b5a9972c7a5c10e99af8519a0d9f31968f4423d396361f8895de2785df6758ac
+panel fb 2f42d28b1c5f452a6a16eb6cc3f690f7e96d6b9d9ac8f124bc9acc611b758ed0 on 1 commands 19 pixels 176640
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 0 address 0 config 0 commands 0 mode rom loader - bad-cbw 0
+jl reads 0 writes 0 bad-crc 0 faults 0
+flash sha256 a8286cfeb9053a9aa34d5dc3adb87506321540a0b913f44f143edb0f640a3976
+flash erased none
+flash programmed none
+flash state 00000-FFFFF:=
+flash expect unchanged ok
+
+scenario session-stall-fm1
+-- ui_init @28392
+-- session 1 @383962
+-- plan write 4 erase 92 runs 1 @383962
+-- loader 1.3 key 980F flash 856014 io 4096 retries 1 @383962
+trace 383962 8eb18f7a7b11240cfe3e5633d13926702e11438566228f3ddae642a2367b050b
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 9 address 1 config 1 commands 295 mode restarted loader ok bad-cbw 0
+jl reads 258 writes 4 bad-crc 0 faults 1
+flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+flash expect repaired ok
+
+scenario session-early-fm1
+-- ui_init @28392
+-- session 1 @383788
+-- plan write 4 erase 92 runs 1 @383788
+-- loader 1.3 key 980F flash 856014 io 4096 retries 1 @383788
+trace 383788 95f2fd352cf896c5aac30c143402583099632ed4aa037e9b4efdfa75bc5c8841
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 6 address 1 config 1 commands 295 mode restarted loader ok bad-cbw 0
+jl reads 258 writes 4 bad-crc 0 faults 1
+flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+flash expect repaired ok
+
+scenario session-odd-fm1
+-- ui_init @28392
+-- session 1 @358794
+-- plan write 4 erase 92 runs 1 @358794
+-- loader 1.3 key 980F flash 856014 io 4096 retries 0 @358794
+trace 358794 8031a5fa16c46bc1c6eef4d781343aceef4cccfe212d7ca428b5275e9b443c50
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 6 address 1 config 1 commands 294 mode restarted loader ok bad-cbw 0
+jl reads 257 writes 4 bad-crc 0 faults 0
+flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+flash expect repaired ok
+
+scenario session-crc-fm1
+-- ui_init @28392
+-- session 1 @361945
+-- plan write 4 erase 92 runs 1 @361945
+-- loader 1.3 key 980F flash 856014 io 4096 retries 0 @361945
+trace 361945 505eb7dd5d33fed3408786fb8f9d326ad533f9f8e8ec975ba3246976575d36f8
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 8 address 1 config 1 commands 305 mode restarted loader ok bad-cbw 0
+jl reads 257 writes 8 bad-crc 0 faults 1
+flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+flash expect repaired ok
+
+scenario session-writefail-fm1
+-- ui_init @28392
+-- session 0 @367807
+-- plan write 4 erase 92 runs 1 @367807
+-- loader 1.3 key 980F flash 856014 io 4096 retries 0 @367807
+trace 367807 7484850ff6a5effece93f1c7f0f301b5325d818aeeec08c508c604394c68697a
+panel fb 9a5a5a0804236b62d51cd5f51f9cbf780b5a3f3815a6907acb57488b44d08650 on 1 commands 82 pixels 418560
+keys sessions 2 latches 68 pressed-reads 2
+usb setups 8 address 1 config 1 commands 301 mode loader loader ok bad-cbw 0
+jl reads 257 writes 8 bad-crc 0 faults 8
+flash sha256 68452a4905fdfcf2b0f57a8eb22ec9788275dca82c6a4631c6724eee0567ce52
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+
+scenario session-readerr-fm1
+-- ui_init @28392
+-- session 0 @271928
+-- plan write 4 erase 28 runs 1 @271928
+-- loader 1.3 key 980F flash 856014 io 4096 retries 3 @271928
+trace 271928 30a537554888edc6d00d78801e2502caedfbb48b3f626e4c0ab45a886b639165
+panel fb 96397f3ada3d3919fa87574a451d3ccd58333e8e4c3d588f90ce345b22ebef73 on 1 commands 31 pixels 245760
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 20 address 1 config 1 commands 59 mode loader loader ok bad-cbw 0
+jl reads 38 writes 0 bad-crc 0 faults 4
+flash sha256 a8286cfeb9053a9aa34d5dc3adb87506321540a0b913f44f143edb0f640a3976
+flash erased none
+flash programmed none
+flash state 00000-FFFFF:=
+flash expect unchanged ok
+
+scenario session-otherloader-fm1
+-- ui_init @28392
+-- session 0 @71082
+-- plan write 0 erase 0 runs 0 @71082
+-- loader  key 0000 flash 000000 io 0 retries 0 @71082
+trace 71082 1034cb9d329d8578c6f17b3d5401ed6b346fc6b16d2139e00390bebf4ac26de0
+panel fb c9adfea8de492224d2f9a05a45b68d3ca6788b80b80ac0b5e00a30a3fe063456 on 1 commands 19 pixels 176640
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 7 address 1 config 1 commands 3 mode other-loader loader - bad-cbw 0
+jl reads 0 writes 0 bad-crc 0 faults 0
+flash sha256 a8286cfeb9053a9aa34d5dc3adb87506321540a0b913f44f143edb0f640a3976
+flash erased none
+flash programmed none
+flash state 00000-FFFFF:=
+flash expect unchanged ok
+
+scenario session-noisy-fm1
+-- ui_init @28392
+-- session 1 @363180
+-- plan write 4 erase 92 runs 1 @363180
+-- loader 1.3 key 980F flash 856014 io 4096 retries 0 @363180
+trace 363180 dd034ccf7babdb72f69014f6949416f5fd332a704a4bdb5f2b50277a4fd7dfb5
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
+keys sessions 1 latches 34 pressed-reads 1
+usb setups 8 address 1 config 1 commands 294 mode restarted loader ok bad-cbw 0
+jl reads 257 writes 4 bad-crc 0 faults 433
+flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+flash expect repaired ok
+
+scenario full-fm1
+-- ui_init @28395
+-- pages @47328
+-- wake_it @270695
+-- session 1 @603542
+-- plan write 4 erase 92 runs 1 @603542
+-- loader 1.3 key 980F flash 856014 io 4096 retries 0 @603542
+trace 603542 ab62adc32eaa94d0824bd31c6ecfb4e3ee42f2424a995e550073fad70825bb6e
+panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 106 pixels 718080
+keys sessions 4 latches 136 pressed-reads 4
+usbkey packets 3 other 0 false-acks 0 state gone ack-at-us 1503080 cal-pulses 1200 drop-at-us 2706630
+usb setups 8 address 1 config 1 commands 294 mode restarted loader ok bad-cbw 0
+jl reads 257 writes 4 bad-crc 0 faults 0
+flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash erased 00000-5FFFF
+flash programmed 00000-03FFF
+flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
+flash expect repaired ok
+

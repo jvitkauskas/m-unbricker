@@ -111,24 +111,28 @@ fn stopped(app: &mut App, pg: &'static Page, stop: Stop) {
 
 // ---- the key ----
 
+/// Sends the key (`usbio::key_send`), showing on the status line how long it has waited.
+pub fn send_key(ui: &mut Ui<Lcd>, ks: &mut KeyStats, timeout_ms: u32) -> KeyResult {
+    let key_t0 = now();
+    let mut key_shown = u32::MAX;
+    usbio::key_send(ks, timeout_ms, &mut |_: &KeyStats| {
+        let sec = ms_since(key_t0) / 1000;
+        if sec == key_shown {
+            return;
+        }
+        key_shown = sec;
+        let mut text = Line::new();
+        text.push("Waiting for it… ".as_bytes()).num(sec).push(b" s");
+        ui.status(text.as_bytes(), C_DIM);
+    })
+}
+
 /// Until the other unit's ROM answers the key.
 pub fn wake_it(app: &mut App) {
     let mut ks = KeyStats::default();
     loop {
         app.ui.show(&SWITCH_ON);
-        let key_t0 = now();
-        let mut key_shown = u32::MAX;
-        let ui = &mut app.ui;
-        let kr = usbio::key_send(&mut ks, 60_000, &mut |_: &KeyStats| {
-            let sec = ms_since(key_t0) / 1000;
-            if sec == key_shown {
-                return;
-            }
-            key_shown = sec;
-            let mut text = Line::new();
-            text.push("Waiting for it… ".as_bytes()).num(sec).push(b" s");
-            ui.status(text.as_bytes(), C_DIM);
-        });
+        let kr = send_key(&mut app.ui, &mut ks, 60_000);
         if kr == KeyResult::Ack || kr == KeyResult::DpAnswer {
             break;
         }

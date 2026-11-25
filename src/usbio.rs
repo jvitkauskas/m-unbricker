@@ -32,6 +32,8 @@ const UIO_DIE: u32 = bit(9) | bit(10);
 /// it.
 pub static TPS: Global<u32> = Global::new(0);
 pub const NOMINAL_TPS: u32 = 48_000_000;
+/// The rate was measured.
+pub static MEASURED: Global<bool> = Global::new(false);
 
 pub fn start() {
     TMR0.write(0x4000);
@@ -113,6 +115,7 @@ pub fn calibrate_sof(frames: u32, seen: &mut u32) -> bool {
         return false;
     }
     TPS.set(t1);
+    MEASURED.set(true);
     true
 }
 

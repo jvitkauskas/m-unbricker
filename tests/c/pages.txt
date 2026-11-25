@@ -1,0 +1,30 @@
+# The page each scenario ends on (the framebuffer at chip_finish), checked by tests/c/reference.sh against
+# tools/preview.c's raw page of the rescuing unit's board, outside the status line.
+wake-ack-fm1            PG_waking
+wake-ack-smk37          PG_waking
+wake-dpanswer-fm1       PG_waking
+wake-dpstart-fm1        PG_already_on
+wake-dpstart-smk37      PG_already_on
+wake-none-fm1           PG_no_answer
+wake-none-smk37         PG_no_answer
+wake-false-fm1          PG_waking
+wake-false-smk37        PG_waking
+session-repair-fm1      PG_done_fm1
+session-repair-smk37    PG_done_smk37
+session-cross-fm1       PG_done_smk37
+session-cross-smk37     PG_done_fm1
+session-nothing-fm1     PG_done_fm1
+session-leave-fm1       PG_left
+session-leave-smk37     PG_left
+session-unknown-fm1     PG_err_unknown
+session-otherid-fm1     PG_err_other
+session-noattach-fm1    PG_err_connect
+session-stall-fm1       PG_done_fm1
+session-early-fm1       PG_done_fm1
+session-odd-fm1         PG_done_fm1
+session-crc-fm1         PG_done_fm1
+session-writefail-fm1   PG_err_write
+session-readerr-fm1     PG_err_read
+session-otherloader-fm1 PG_err_connect
+session-noisy-fm1       PG_done_fm1
+full-fm1                PG_done_fm1

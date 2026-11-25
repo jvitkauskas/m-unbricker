@@ -19,6 +19,12 @@ pub fn get() -> u32 {
     known(FOUND.read())
 }
 
+/// For the tests on this computer: the board the build for both would have found.
+#[cfg(not(target_arch = "pi32v2"))]
+pub fn assume(board: u32) {
+    FOUND.set(board);
+}
+
 /// This board, from what was found at run time when the build doesn't say.
 #[inline(always)]
 pub fn known(found: u32) -> u32 {
@@ -40,10 +46,12 @@ pub fn decide(jedec: u32, trimdat: Option<&[u8; 8]>, trimcopy: Option<&[u8; 8]>)
 /// This unit's board from its own flash: FM1, SMK, or 0 if it isn't known. `jedec` gets the flash chip's ID.
 pub fn detect(jedec: &mut u32) -> u32 {
     let (mut a, mut b) = ([0u8; 8], [0u8; 8]);
-    if !flash_init(1, 1) {
+    let ok = flash_init(1, 1);
+    // (After a failure the chip reads as 0xFF, as the C's did.)
+    *jedec = flash_jedec() & 0xff_ffff;
+    if !ok {
         return 0;
     }
-    *jedec = flash_jedec() & 0xff_ffff;
     let trimdat = read(0xc1224, &mut a).then_some(&a);
     let trimcopy = match trimdat {
         Some(t) if t != b"trimdat\0" => read(0xff000, &mut b).then_some(&b),

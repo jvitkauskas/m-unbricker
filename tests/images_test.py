@@ -61,7 +61,7 @@ def rust(name, rescue):
 
 def c(name, rescue):
     sys.path.insert(0, str(ROOT / "tests" / "c"))
-    import reference
+    import csource as reference
     src = reference.extract()
     out = WORK / ("c-" + name)
     out.mkdir(parents=True, exist_ok=True)

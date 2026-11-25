@@ -49,7 +49,7 @@ def rust(board, init=None):
 
 def c():
     sys.path.insert(0, str(ROOT / "tests" / "c"))
-    import reference
+    import csource as reference
     src = reference.extract()
     lines = []
     for board, bid in (("fm1", 1), ("smk37", 2)):
@@ -61,7 +61,7 @@ def c():
                         f"-I{src}/src/mbl", "-o", str(exe), str(src / "tools" / "preview.c"), str(src / "src" / "ui.c")],
                        check=True)
         subprocess.run([str(exe)], check=True)
-        for raw in sorted(out.glob("*.raw"), key=lambda p: p.stat().st_mtime_ns):
+        for raw in sorted(out.glob("*.raw")):
             lines.append(f"{board} {raw.stem} {hashlib.sha256(rgb888(raw.read_bytes())).hexdigest()}")
     REF.parent.mkdir(exist_ok=True)
     REF.write_text("\n".join(lines) + "\n")

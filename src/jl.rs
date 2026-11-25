@@ -47,8 +47,12 @@ pub struct Info {
     pub flash_id: u32,
     /// The loader's buffer: what a write sends at a time.
     pub io: u32,
-    // (The C also kept the disk's vendor and product, the loader's version, address and clock, the unit's ID and a
-    // count of retries, which nothing read.)
+    /// The loader's version, such as "1.3", NUL-terminated.
+    pub loader: [u8; 4],
+    /// Commands sent again, over all sessions.
+    pub retries: u32,
+    // (The C also kept the disk's vendor and product, the loader's address and clock and the unit's ID, which nothing
+    // read.)
 }
 
 /// The session with the other unit: its disk, and what its loader said.
@@ -91,7 +95,7 @@ pub type Step = u32;
 
 impl Jl {
     pub const fn new() -> Jl {
-        Jl { bot: Bot::new(), info: Info { chip_key: 0, flash_id: 0, io: 0 } }
+        Jl { bot: Bot::new(), info: Info { chip_key: 0, flash_id: 0, io: 0, loader: [0; 4], retries: 0 } }
     }
 
     fn attempts(&mut self, c: &[u8; 16], data: &mut Data, moved: &mut u32, refusal_answers: bool) -> BotRes {
@@ -106,6 +110,7 @@ impl Jl {
                 return r;
             }
             if a < RETRIES {
+                self.info.retries += 1;
                 wait_ms(250 * a);
             }
         }
@@ -127,13 +132,13 @@ impl Jl {
         BotRes::Ok
     }
 
-    /// The loader's answer to IDENTIFY, if it runs: its address and clock.
-    fn identify(&mut self) -> Option<(u32, u8)> {
+    /// The loader's answer to IDENTIFY, if it runs: its version and its address.
+    fn identify(&mut self) -> Option<([u8; 3], u32)> {
         let mut r = [0u8; 16];
         if self.call16(IDENTIFY, &[], &mut r, true) != BotRes::Ok || &r[2..6] != b"MFLR" {
             return None;
         }
-        Some((bd32(&r[10..]), r[15]))
+        Some(([r[6], r[7], r[8]], bd32(&r[10..])))
     }
 
     fn upload(&mut self, addr: u32, img: &[u8]) -> bool {
@@ -164,7 +169,7 @@ impl Jl {
                 return true;
             }
             wait_ms(250 * a);
-            if self.identify().is_some_and(|(at, _)| at == addr) {
+            if self.identify().is_some_and(|(_, at)| at == addr) {
                 return true;
             }
         }
@@ -197,9 +202,10 @@ impl Jl {
         if !self.upload(MFLR_ADDR_A, &MFLR_A) {
             return Err(3);
         }
-        if !self.jump(MFLR_ADDR_A) || self.identify().is_none() {
+        let Some((version, _)) = (if self.jump(MFLR_ADDR_A) { self.identify() } else { None }) else {
             return Err(4);
-        }
+        };
+        self.info.loader = [version[0], version[1], version[2], 0];
         if self.call16(READ_KEY, &[0x00, 0xac, 0x69, 0x00], &mut resp, false) != BotRes::Ok {
             return Err(5);
         }
@@ -237,6 +243,7 @@ impl Jl {
                     ok = true;
                     break;
                 } else if a < RETRIES {
+                    self.info.retries += 1;
                     wait_ms(250 * a);
                 }
             }
