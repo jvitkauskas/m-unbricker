@@ -106,8 +106,13 @@ impl Jl {
                 Data::Out(b) => Data::Out(b),
             };
             r = self.bot.execute(c, d, moved);
-            if r == BotRes::Ok || (r == BotRes::Refused && refusal_answers) {
+            // A short answer is tried again, as a failed one is (the C took it as read, the rest zeros).
+            let short = matches!(data, Data::In(b) if (*moved as usize) < b.len());
+            if (r == BotRes::Ok && !short) || (r == BotRes::Refused && refusal_answers) {
                 return r;
+            }
+            if r == BotRes::Ok {
+                r = BotRes::Failed;
             }
             if a < RETRIES {
                 self.info.retries += 1;
@@ -125,7 +130,8 @@ impl Jl {
         if r != BotRes::Ok {
             return r;
         }
-        if bd16(resp) != cmd as u32 {
+        // (attempts() has tried a short one again)
+        if moved != 16 || bd16(resp) != cmd as u32 {
             // an unexpected answer
             return if probe { BotRes::Refused } else { BotRes::Failed };
         }

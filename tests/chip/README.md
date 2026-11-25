@@ -125,12 +125,15 @@ A full trace for diffing: `CHIP_TRACE=/tmp/c.txt build/c-drive/drive-fm1 session
 
 ## Linking a Rust driver
 
-The Rust driver is `tests/drive.rs`, built by `tests/host.py --chip` and run by `tests/chip_test.py`. By hand:
+The Rust driver is `tests/drive.rs`, built by `tests/host.py --chip` and run by `tests/chip_test.py`. By hand, after
+`make build/host/libmboot.rlib build/rescue_img.rs` (m-bootloader's crate for this computer, and the rescue images):
 
 ```sh
-rustc --edition 2021 -C relocation-model=static -C link-arg=-no-pie \
-      -L native=build/chip -l static=chip drive.rs -o build/rust-drive
+python3 tests/host.py tests/drive.rs build/test/chip/drive-fm1 --board fm1 --chip
+CHIP_RESCUE=rescue build/test/chip/drive-fm1 session-repair-fm1
 ```
+
+(host.py builds `tests/chip/chip.c` into `build/host/libchip.a` and links it, with the edition and the crate.)
 
 `extern "C" { fn chip_start(s: *const c_char); fn chip_mark(s: *const c_char); fn chip_mark_panel(s: *const c_char); fn chip_finish(); }`
 

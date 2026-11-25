@@ -47,18 +47,21 @@ python3 -I - "$T" "$B/preview-ref" "$ROOT/tests/c/pages.txt" <<'EOF' || fail=1
 import pathlib, sys
 run, ref, pages = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2]), sys.argv[3]
 bad = 0
+ROW = 240 * 2
+ends = [l.split("#")[0].split() for l in open(pages)]
+ends = [l for l in ends if l]
 for board in ("fm1", "smk37"):
+    # Every page a scenario ends on, and the first, has to be there: a glob of nothing would check nothing.
+    have = {raw.stem for raw in (ref / board).glob("*.raw")}
+    want = {"PG_welcome"} | {page for scen, page in ends if ("smk37" if scen.endswith("-smk37") else "fm1") == board}
+    for page in sorted(want - have):
+        print(f"PANEL tools/preview.c made no {page} for {board}", file=sys.stderr); bad = 1
     for raw in sorted((ref / board).glob("*.raw")):
         got = run / f"panel-{board}" / raw.name
         if not got.exists() or got.read_bytes() != raw.read_bytes():
             print(f"PANEL panel-{board} {raw.stem} differs from tools/preview.c", file=sys.stderr); bad = 1
     print(f"panel-{board}: {len(list((ref / board).glob('*.raw')))} pages checked against tools/preview.c", file=sys.stderr)
-ROW = 240 * 2
-for line in open(pages):
-    line = line.split("#")[0].split()
-    if not line:
-        continue
-    scen, page = line
+for scen, page in ends:
     board = "smk37" if scen.endswith("-smk37") else "fm1"
     a = (run / scen / "fb.raw").read_bytes()
     b = (ref / board / f"{page}.raw").read_bytes()
@@ -70,5 +73,11 @@ for line in open(pages):
         print(f"{scen}: ends on {page}{'' if exact else ' (its own status line)'}", file=sys.stderr)
 sys.exit(bad)
 EOF
-mv "$OUT.tmp" "$OUT"
-[ $fail = 0 ] && echo "reference: $OUT, all checks passed" >&2 || { echo "reference: $OUT, CHECKS FAILED" >&2; exit 1; }
+# Only a reference whose checks all passed replaces the one there; a failed one stays in $OUT.tmp to look at.
+if [ $fail = 0 ]; then
+	mv "$OUT.tmp" "$OUT"
+	echo "reference: $OUT, all checks passed" >&2
+else
+	echo "reference: CHECKS FAILED, $OUT left as it was (this run's: $OUT.tmp)" >&2
+	exit 1
+fi

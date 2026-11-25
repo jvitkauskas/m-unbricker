@@ -86,8 +86,11 @@ def main():
         got, want = rust(name, rescue), ref.read_text()
         if got != want:
             failed += 1
-            first = next(i for i, (a, b) in enumerate(zip(got.splitlines(), want.splitlines())) if a != b)
-            print(f"FAIL images {name}: line {first + 1}: {got.splitlines()[first]!r}, the C {want.splitlines()[first]!r}")
+            # (with their line ends, and through the longer: a missing line or final newline counts)
+            g, w = got.splitlines(keepends=True), want.splitlines(keepends=True)
+            first = next(i for i in range(max(len(g), len(w))) if i >= len(g) or i >= len(w) or g[i] != w[i])
+            line = lambda l: repr(l[first]) if first < len(l) else "(none)"
+            print(f"FAIL images {name}: line {first + 1}: {line(g)}, the C {line(w)}")
         else:
             print(f"ok   images {name}: {len(got.splitlines())} lines as the C's")
     sys.exit(1 if failed else 0)

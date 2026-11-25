@@ -23,7 +23,8 @@ def build(source, out, board="fm1", env=(), chip=False):
         lib = ROOT / "build" / "host" / "libchip.a"
         obj = lib.with_suffix(".o")
         src = ROOT / "tests" / "chip" / "chip.c"
-        if not lib.exists() or lib.stat().st_mtime < src.stat().st_mtime:
+        deps = (src, src.with_suffix(".h"))
+        if not lib.exists() or any(lib.stat().st_mtime < d.stat().st_mtime for d in deps):
             subprocess.run([os.environ.get("CC", "clang"), "-std=gnu11", "-O2", "-fno-pie", "-c", str(src), "-o",
                             str(obj)], check=True)
             subprocess.run(["ar", "rcs", str(lib), str(obj)], check=True)

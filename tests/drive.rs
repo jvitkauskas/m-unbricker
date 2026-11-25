@@ -210,6 +210,10 @@ fn after(r: &mut Run, o: Outcome) {
     ));
     let p = &r.app.writer.plan;
     mark(&format!("plan write {} erase {} runs {}", p.to_write, p.to_erase, p.runs));
+    // Not in the summary, which is the C's: on stderr, for tests/chip_test.py's OUTCOME_ONLY.
+    if let Some(what) = r.app.writer.stopped {
+        eprintln!("stop {} {:05X}", String::from_utf8_lossy(what), r.app.writer.err_addr);
+    }
     let i = &r.app.jl.info;
     let loader: String = i.loader.iter().take_while(|&&c| c != 0).map(|&c| c as char).collect();
     mark(&format!(
@@ -255,7 +259,7 @@ fn sc_full(r: &mut Run) {
 
 type Scenario = (&'static str, fn(&mut Run));
 
-const SC: [Scenario; 44] = [
+const SC: [Scenario; 47] = [
     ("panel-fm1", sc_panel),
     ("panel-smk37", sc_panel),
     ("keys-fm1", sc_keys),
@@ -297,6 +301,9 @@ const SC: [Scenario; 44] = [
     ("session-writefail-fm1", sc_session),
     ("session-readerr-fm1", sc_session),
     ("session-idfail-fm1", sc_session),
+    ("session-topcrc-fm1", sc_session),
+    ("session-shortcrc-fm1", sc_session),
+    ("session-siestuck-fm1", sc_session),
     ("session-otherloader-fm1", sc_session),
     ("session-noisy-fm1", sc_session),
     ("full-fm1", sc_full),

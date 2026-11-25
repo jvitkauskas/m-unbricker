@@ -231,6 +231,12 @@ struct scen {
 	int f_read_stall, f_read_early, f_write_flaky; /* the Nth READ_FLASH / WRITE_FLASH, 1-based */
 	int f_write_bad; /* every WRITE_FLASH leaves a byte unprogrammed */
 	u32 f_read_fail; /* address + 1: READ_FLASH there always ends in a phase error */
+	u32 f_crc_fail; /* address + 1: from the f_crc_from'th CRC32 starting there (1-based), a phase error */
+	int f_crc_from;
+	int f_crc_short; /* the Nth CRC32 (1-based) answers with only its first 4 bytes */
+	/* the Nth bulk OUT packet (1-based) is sent late: the next read of TXCSR1 through USB_CON1 never completes, and the
+	 * packet goes (from its buffer as it is then) at the next access to TXCSR1 */
+	int f_sie_stuck;
 	int no_trimcopy; /* an SMK-37's flash without the TRIMCOPY copy at 0xFF000 */
 	int noisy; /* bus errors now and then (bulk OUT 0x04/0x80, bulk IN 0x08, one EP0 error) */
 	int expect; /* EXP_* for the device's flash */
@@ -312,6 +318,15 @@ static const struct scen SCEN[] = {
 	 * it for an FM-1 and erased its calibration), so it's checked by its result alone (tests/chip_test.py). */
 	{ .name = "session-idfail-fm1", .board = 1, .tpa = 480, DEV(2, FL_OLD_SMK, 0x856014), .no_trimcopy = 1,
 	  .f_read_fail = 0xC1224 + 1, .expect = EXP_SAME },
+	/* The CRC of the area kept above 0xFF000 can't be read after the write (it could before): the Rust says so,
+	 * PROTECTED CRC, where the C said PROTECTED CHANGED; checked by its result alone. */
+	{ .name = "session-topcrc-fm1", .board = 1, .tpa = 480, FM1_OLD, .f_crc_fail = 0xFF000 + 1, .f_crc_from = 2,
+	  .expect = EXP_FIXED },
+	/* The first CRC32 answers with 4 of its 16 bytes: the Rust asks again, where the C took the rest for zeros. */
+	{ .name = "session-shortcrc-fm1", .board = 1, .tpa = 480, FM1_OLD, .f_crc_short = 1, .expect = EXP_FIXED },
+	/* A bulk OUT packet in a flash write goes late, and the read of TXCSR1 after it gets no answer: the Rust waits for
+	 * it, where the C took the read's 0 for an ACK and wrote the next packet over it. */
+	{ .name = "session-siestuck-fm1", .board = 1, .tpa = 480, FM1_OLD, .f_sie_stuck = 100, .expect = EXP_FIXED },
 	{ .name = "session-otherloader-fm1", .board = 1, .tpa = 480, FM1_OLD, .other_loader = 1, .expect = EXP_SAME },
 	{ .name = "session-noisy-fm1", .board = 1, .tpa = 480, FM1_OLD, .noisy = 1, .expect = EXP_FIXED },
 	/* rk_main's flow from ui_init to the done page: three pages, the key, the pulses, session() */
@@ -787,7 +802,7 @@ static u8 sie[16], epr[4][16]; /* SIE 0x00-0x0F; 0x10-0x1F per INDEX */
 #define RXTYPE epr[1][10]
 static u64 sof_clr, sof_clears;
 static int dev_addr, dev_cfg, in_halt, out_halt;
-static u64 n_setup, n_out, n_in, n_cmd, n_read, n_write, n_crc_bad, n_bad_cbw, n_fault;
+static u64 n_setup, n_out, n_in, n_cmd, n_read, n_write, n_crc_bad, n_bad_cbw, n_fault, n_crc_at, n_crc, n_sie_rd;
 
 enum { M_ROM, M_LOADER, M_OTHER, M_RESTARTED, M_CRASHED };
 static const char *const M_NAME[] = { "rom", "loader", "other-loader", "restarted", "crashed" };
@@ -940,7 +955,8 @@ static void reply(const u8 *d, u32 n, u8 status)
 {
 	if (n > dlen)
 		n = dlen;
-	memcpy(inq, d, n);
+	if (n)
+		memcpy(inq, d, n); /* (d is null for a reply with no data) */
 	in_pos = 0, in_dend = in_len = n;
 	q_csw(dlen - n, status);
 }
@@ -1080,6 +1096,17 @@ static void command(void)
 		break;
 	case 0xFC41: { /* CRC32 */
 		u32 n = bd32(cb + 6);
+		if (S->f_crc_short && ++n_crc == (u64)S->f_crc_short) {
+			n_fault++;
+			bs32(r + 2, crc32z(dflash + a, n));
+			reply(r, 4, 0); /* half the CRC: the C took the rest for zeros */
+			return;
+		}
+		if (S->f_crc_fail && a == S->f_crc_fail - 1 && ++n_crc_at >= (u64)S->f_crc_from) {
+			n_fault++;
+			reply(r, 16, 2); /* phase error */
+			return;
+		}
 		bs32(r + 2, a < (1u << 20) && n <= (1u << 20) - a ? crc32z(dflash + a, n) : 0);
 		break;
 	}
@@ -1180,6 +1207,18 @@ static int bot_in(u8 *p)
 	return (int)n;
 }
 
+static int tx_late; /* 1: a packet is still to go, and the next TXCSR1 read times out; 2: it goes at the next one */
+
+static void tx_send(void)
+{
+	u32 n = REG(0x1180C) & 0x3FF;
+	u8 *p = resolve(REG(0x1181C), n);
+	log_dma(0x1181C, p, n);
+	bot_out(p, n);
+	TXCSR = 0;
+	tx_late = 0;
+}
+
 static void tx_w(u32 v)
 {
 	if (!(v & 0x01)) {
@@ -1199,13 +1238,15 @@ static void tx_w(u32 v)
 		TXCSR = (n_out / 37) & 1 ? 0x84 : 0x04; /* not delivered: sent again */
 		return;
 	}
-	{
-		u32 n = REG(0x1180C) & 0x3FF;
-		u8 *p = resolve(REG(0x1181C), n);
-		log_dma(0x1181C, p, n);
-		bot_out(p, n);
-		TXCSR = 0;
+	if (tx_late)
+		tx_send(); /* written over while it was still going: it goes as the buffer is now */
+	if (S->f_sie_stuck && ++n_sie_rd == (u64)S->f_sie_stuck) {
+		n_fault++;
+		tx_late = 1;
+		TXCSR = 0x01; /* still going */
+		return;
 	}
+	tx_send();
 }
 
 static void rx_poll(void)
@@ -1318,6 +1359,14 @@ static void con1_w(u32 v)
 		return;
 	}
 	if (v & 0x4000) {
+		if (((v >> 8) & 0x3F) == 17 && sie[14] == 1 && tx_late) {
+			if (tx_late == 1) {
+				tx_late = 2;
+				REG(0x11804) = v & ~0x8000u; /* no answer: the read times out */
+				return;
+			}
+			tx_send();
+		}
 		REG(0x11804) = (v & 0xFFFF00u) | sie_read((v >> 8) & 0x3F) | 0x8000u;
 	} else {
 		sie_write((v >> 8) & 0xFF, v & 0xFF);
@@ -1667,7 +1716,8 @@ void chip_start(const char *name)
 	memset(sie, 0, sizeof sie);
 	memset(epr, 0, sizeof epr);
 	dev_addr = dev_cfg = in_halt = out_halt = ep0_err = 0;
-	n_setup = n_out = n_in = n_cmd = n_read = n_write = n_crc_bad = n_bad_cbw = n_fault = 0;
+	n_setup = n_out = n_in = n_cmd = n_read = n_write = n_crc_bad = n_bad_cbw = n_fault = n_crc_at = n_crc = n_sie_rd = 0;
+	tx_late = 0;
 	mode = S->other_loader ? M_OTHER : M_ROM, loader_ok = -1, gone_after = 0;
 	bot_reset();
 	memset(ram, 0, sizeof ram);

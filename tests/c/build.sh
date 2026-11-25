@@ -47,12 +47,12 @@ for k in fm1:1 smk:2; do
 done
 build any 0 "$S/keys_any.c" "$B/c-drive/keys_fm1.o" "$B/c-drive/keys_smk.o"
 
-# tools/preview.c, as tools/preview.py builds it (gcc -O1 -w), keeping the raw pages
+# tools/preview.c, as tools/preview.py builds it (-O1 -w), keeping the raw pages
 for p in fm1:1 smk37:2; do
 	n=${p%:*} id=${p#*:}
 	rm -rf "$B/preview-ref/$n"
 	mkdir -p "$B/preview-ref/$n"
-	gcc -O1 -w -DBOARD_ID=$id -DOUTDIR="\"$B/preview-ref/$n\"" -I$S -I$S/mbl -I$B/c-ref/gen \
+	$CC -O1 -w -DBOARD_ID=$id -DOUTDIR="\"$B/preview-ref/$n\"" -I$S -I$S/mbl -I$B/c-ref/gen \
 		-o "$B/preview-ref/$n/preview" "$B/c-ref/tools/preview.c" "$S/ui.c"
 	"$B/preview-ref/$n/preview"
 done

@@ -103,8 +103,8 @@ impl Bot {
 
     fn find_bulk(&mut self, total: u32) -> bool {
         let p = &self.cfg.0;
-        // (A descriptor that runs off the end reads as zeros.)
-        let at = |i: u32| p.get(i as usize).copied().unwrap_or(0);
+        // (A descriptor that runs off the end of what was received reads as zeros.)
+        let at = |i: u32| if i < total { p.get(i as usize).copied().unwrap_or(0) } else { 0 };
         let (mut cur, mut found) = (-1, -1);
         let (mut ep_in, mut ep_out, mut mps) = (0, 0, 64u16);
         let mut i = 0;

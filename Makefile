@@ -96,7 +96,11 @@ $(foreach b,$(BOARDS),$(eval $(call BOARD_RULES,$(b))))
 
 # The programs for this computer: the preview and the tests, with m-bootloader's crate built for it.
 HOST_FLAGS := --edition 2024 -C opt-level=1 -C debuginfo=1 -C overflow-checks=on -C debug-assertions=on
-build/host/libmboot.rlib: $(MB_SRC) Makefile
+# What changes it without changing a file: another HOST_RUSTC.
+build/host/options: FORCE
+	@mkdir -p $(@D)
+	@$(HOST_RUSTC) -vV > $@.new 2>&1; cmp -s $@.new $@ && rm $@.new || mv $@.new $@
+build/host/libmboot.rlib: $(MB_SRC) Makefile build/host/options
 	@mkdir -p $(@D)
 	$(HOST_RUSTC) $(HOST_FLAGS) --crate-name mboot --crate-type rlib $(MB)/rust/src/lib.rs -o $@
 # build/host/<board>/<program>: tools/preview.rs, or tests/<program>.rs, for one board's build.

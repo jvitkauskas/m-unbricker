@@ -134,6 +134,12 @@ impl Husb {
     }
 
     fn sie_rd(&mut self, r: u32) -> u32 {
+        self.sie_try_rd(r).unwrap_or(0)
+    }
+
+    /// A register's value, or None if the read timed out. Where a clear bit means done (a packet sent, a SETUP
+    /// taken), a timed-out read must not count as one: the C's 0 for it did.
+    fn sie_try_rd(&mut self, r: u32) -> Option<u32> {
         let mut n = 20001;
         CON1.write(r << 8 & 0xff_bf00 | 0x4000);
         sync_cpu();
@@ -141,10 +147,10 @@ impl Husb {
             n -= 1;
             if n == 0 {
                 self.sie_timeouts += 1;
-                return 0;
+                return None;
             }
         }
-        CON1.read() & 0xff
+        Some(CON1.read() & 0xff)
     }
 
     fn snapshot(&mut self, code: u32, csr: u32) {
@@ -248,11 +254,6 @@ impl Husb {
 
     // ---- control ----
 
-    fn csr0(&mut self) -> u32 {
-        self.sie_wr(INDEX, 0);
-        self.sie_rd(CSR0)
-    }
-
     fn csr0_w(&mut self, v: u32) {
         self.sie_wr(INDEX, 0);
         self.sie_wr(CSR0, v);
@@ -261,20 +262,25 @@ impl Husb {
     /// Waits until (csr & mask) == want; a STALL, an error or a timeout ends it.
     fn ep0_wait(&mut self, mask: u32, want: u32, stage: u32) -> Res {
         let t0 = now();
+        let mut c = 0;
         loop {
-            let c = self.csr0();
-            if c & 0x04 != 0 {
-                self.snapshot(0x10 + stage, c);
-                self.csr0_w(0);
-                return Res::Stall;
-            }
-            if c & 0x10 != 0 {
-                self.snapshot(0x20 + stage, c);
-                self.csr0_w(0);
-                return Res::Error;
-            }
-            if c & mask == want {
-                return Res::Ok;
+            self.sie_wr(INDEX, 0);
+            // (a read that timed out: only the time limit ends the wait)
+            if let Some(v) = self.sie_try_rd(CSR0) {
+                c = v;
+                if c & 0x04 != 0 {
+                    self.snapshot(0x10 + stage, c);
+                    self.csr0_w(0);
+                    return Res::Stall;
+                }
+                if c & 0x10 != 0 {
+                    self.snapshot(0x20 + stage, c);
+                    self.csr0_w(0);
+                    return Res::Error;
+                }
+                if c & mask == want {
+                    return Res::Ok;
+                }
             }
             if ms_since(t0) > 1000 {
                 self.snapshot(0x30 + stage, c);
@@ -401,26 +407,30 @@ impl Husb {
                 EP1_CNT.write(n as u32);
                 sync_cpu();
                 self.sie_wr(TXCSR1, 0x01);
+                let mut c = 0;
                 loop {
-                    let c = self.sie_rd(TXCSR1);
-                    if c & 0x20 != 0 {
-                        self.snapshot(0x40, c);
-                        self.sie_wr(TXCSR1, c & !0x21);
-                        return Res::Stall;
-                    }
-                    if c & 0x84 != 0 {
-                        // NAK timeout or 3 errors: send it again
-                        self.sie_wr(TXCSR1, c & !0x85);
-                        errs += 1;
-                        if errs > 5 {
-                            self.snapshot(0x41, c);
-                            return Res::Error;
+                    // (a read that timed out: only the time limit ends the wait)
+                    if let Some(v) = self.sie_try_rd(TXCSR1) {
+                        c = v;
+                        if c & 0x20 != 0 {
+                            self.snapshot(0x40, c);
+                            self.sie_wr(TXCSR1, c & !0x21);
+                            return Res::Stall;
                         }
-                        continue 'resend;
-                    }
-                    if c & 0x01 == 0 {
-                        // ACKed
-                        break 'resend;
+                        if c & 0x84 != 0 {
+                            // NAK timeout or 3 errors: send it again
+                            self.sie_wr(TXCSR1, c & !0x85);
+                            errs += 1;
+                            if errs > 5 {
+                                self.snapshot(0x41, c);
+                                return Res::Error;
+                            }
+                            continue 'resend;
+                        }
+                        if c & 0x01 == 0 {
+                            // ACKed
+                            break 'resend;
+                        }
                     }
                     if ms_since(t0) > timeout_ms {
                         self.snapshot(0x42, c);

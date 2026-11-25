@@ -8,7 +8,7 @@ repository's history, built with the computer's clang. Needs a recent `rustc`, `
 |---|---|
 | `images_test.py` (`images.rs`, `c/images.c`) | The image packing: `tools/make_images.py` and `src/writer.rs` against the C's `make_images.py` and `writer.c`, sector by sector (each sector's CRC-32, which are protected, the image's own check), for `rescue/` and for made-up images with an app area, which exercise the stored blocks and the regenerated padding. |
 | `preview_test.py` | The pages: every page `tools/preview.rs` draws, for each board's build and for the build for both with each board's key names, against the C preview's pixels. |
-| `chip_test.py` (`drive.rs`, `c/drive.c`) | The rest, on a simulated chip ([chip/README.md](chip/README.md)): 43 scenarios, each on its board's build and on the build for both. A scenario's summary is compared line for line: the count and SHA-256 of every register access in order, the data moved by DMA and through the USB endpoints, the panel's framebuffer, what the other unit's flash holds at the end, and the marks. |
+| `chip_test.py` (`drive.rs`, `c/drive.c`) | The rest, on a simulated chip ([chip/README.md](chip/README.md)): 47 scenarios, each on its board's build and on the build for both. A scenario's summary is compared line for line with the C's: the count and SHA-256 of every register access in order, the data moved by DMA and through the USB endpoints, the panel's framebuffer, what the other unit's flash holds at the end, and the marks. Four scenarios are faults the C handled wrongly (`OUTCOME_ONLY` in chip_test.py): only their outcome is checked. A scenario in neither fails the test. |
 
 The scenarios on the chip:
 

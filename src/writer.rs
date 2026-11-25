@@ -82,12 +82,14 @@ pub struct Stop {
     pub addr: u32,
 }
 
-/// The writer's buffers, its CRC-32 table (made the first time it's needed) and the last stop's address.
+/// The writer's buffers, its CRC-32 table (made the first time it's needed) and the last stop's address and what.
 pub struct Writer {
     tgt: Aligned<{ SECTOR as usize }>,
     rd: Aligned<{ SECTOR as usize }>,
     crc_tab: [u32; 256],
-    err_addr: u32,
+    pub err_addr: u32,
+    /// (None, not an empty slice: zeros, so the app's state stays in .bss.)
+    pub stopped: Option<&'static [u8]>,
     pub plan: Plan,
 }
 
@@ -152,6 +154,7 @@ impl Writer {
             rd: Aligned([0; SECTOR as usize]),
             crc_tab: [0; 256],
             err_addr: 0,
+            stopped: None,
             plan: Plan::new(),
         }
     }
@@ -174,6 +177,7 @@ impl Writer {
 
     fn stop(&mut self, what: &'static [u8], addr: u32) -> Stop {
         self.err_addr = addr;
+        self.stopped = Some(what);
         Stop { what, addr }
     }
 
@@ -292,15 +296,19 @@ impl Writer {
         if keep {
             self.check_written(img, jl, 0, img.keep_lo)?;
             self.check_written(img, jl, img.keep_hi, W_END)?;
-            if jl.crc32(img.keep_lo, img.keep_hi - img.keep_lo) != Some(kept) {
-                return Err(self.stop(b"PROTECTED CHANGED", img.keep_lo));
+            match jl.crc32(img.keep_lo, img.keep_hi - img.keep_lo) {
+                None => return Err(self.stop(b"PROTECTED CRC", img.keep_lo)),
+                Some(crc) if crc != kept => return Err(self.stop(b"PROTECTED CHANGED", img.keep_lo)),
+                Some(_) => {}
             }
         } else {
             self.check_written(img, jl, 0, W_END)?;
         }
-        if jl.crc32(W_END, FLASH_SIZE - W_END) != Some(top) {
-            return Err(self.stop(b"PROTECTED CHANGED", W_END));
+        // (A CRC that couldn't be read isn't a change: the messages tell them apart, as CRC and VERIFY do.)
+        match jl.crc32(W_END, FLASH_SIZE - W_END) {
+            None => Err(self.stop(b"PROTECTED CRC", W_END)),
+            Some(crc) if crc != top => Err(self.stop(b"PROTECTED CHANGED", W_END)),
+            Some(_) => Ok(()),
         }
-        Ok(())
     }
 }
