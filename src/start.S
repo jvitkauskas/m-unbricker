@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: MIT */
-/* Entry: the ROM calls the first byte of the image like a C function
- * (r0 -> its API table, unused). Interrupts off, our own stacks (well above
- * the image, below the retained area at 0x01C7FD80), then C. Never returns. */
+/* Entry: the ROM, the card's launcher or a MIDI-mode route calls the first byte of the image like a C function, with
+ * one argument (src/flow.rs). Interrupts off, this program's own stacks (below the image, after .bss: src/ram.ld), then
+ * rk_main (src/main.rs). It never returns. */
 	.section .text.start, "ax"
 	.global rk_start
 rk_start:
