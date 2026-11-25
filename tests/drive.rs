@@ -255,7 +255,7 @@ fn sc_full(r: &mut Run) {
 
 type Scenario = (&'static str, fn(&mut Run));
 
-const SC: [Scenario; 43] = [
+const SC: [Scenario; 44] = [
     ("panel-fm1", sc_panel),
     ("panel-smk37", sc_panel),
     ("keys-fm1", sc_keys),
@@ -296,6 +296,7 @@ const SC: [Scenario; 43] = [
     ("session-crc-fm1", sc_session),
     ("session-writefail-fm1", sc_session),
     ("session-readerr-fm1", sc_session),
+    ("session-idfail-fm1", sc_session),
     ("session-otherloader-fm1", sc_session),
     ("session-noisy-fm1", sc_session),
     ("full-fm1", sc_full),

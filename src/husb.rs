@@ -2,9 +2,9 @@
 //! USB0 in host mode, full speed, polled: one device, control and bulk only. Register sequences: docs/husb-notes.md
 //! (read from the JieLi AC79 SDK's USB library, Apache-2.0, and the fm1-base device driver). EP0 for control, hardware
 //! EP1 TX + RX for bulk.
-use crate::regs::{Reg, USB_CON0 as CON0, USB_CON1 as CON1, bit, dma, sync_cpu, sync_data};
+use core::cell::UnsafeCell;
+use crate::regs::{Reg, USB_CON0 as CON0, USB_CON1 as CON1, bit, sync_cpu, sync_data};
 use crate::usbio::{ms_since, now, wait_ms};
-use mboot::Aligned;
 
 const EP0_CNT: Reg = Reg::at::<0x11808>();
 const EP1_CNT: Reg = Reg::at::<0x1180c>();
@@ -51,11 +51,54 @@ pub enum Res {
     // (The C had a fifth, "gone", which nothing returned.)
 }
 
-/// The controller's state and its DMA buffers.
+/// A buffer the controller's DMA reads or writes, which no reference ever covers: it's apart from the controller's
+/// state, which the code borrows, and its bytes are reached only through pointers, volatile, when the DMA has finished
+/// with them.
+#[repr(C, align(4))]
+struct DmaBuf<const N: usize>(UnsafeCell<[u8; N]>);
+
+// Safety: one thread; the controller is the only other party, and only pointers reach the bytes.
+unsafe impl<const N: usize> Sync for DmaBuf<N> {}
+
+impl<const N: usize> DmaBuf<N> {
+    const fn new() -> Self {
+        DmaBuf(UnsafeCell::new([0; N]))
+    }
+
+    fn bytes(&self) -> *mut u8 {
+        self.0.get().cast()
+    }
+
+    fn address(&self) -> u32 {
+        mboot::hw::dma_address(self.bytes())
+    }
+
+    /// Bytes for the DMA to send.
+    fn put(&self, data: &[u8]) {
+        assert!(data.len() <= N);
+        for (i, &b) in data.iter().enumerate() {
+            // Safety: byte i, inside the buffer as checked.
+            unsafe { self.bytes().add(i).write_volatile(b) };
+        }
+    }
+
+    /// The first `out.len()` bytes the DMA wrote.
+    fn take(&self, out: &mut [u8]) {
+        assert!(out.len() <= N);
+        for (i, o) in out.iter_mut().enumerate() {
+            // Safety: byte i, inside the buffer as checked.
+            *o = unsafe { self.bytes().add(i).read_volatile() };
+        }
+    }
+}
+
+// The controller's DMA writes past a full packet when receiving, so the receive buffers have room to spare.
+static EP0BUF: DmaBuf<72> = DmaBuf::new();
+static TXBUF: DmaBuf<64> = DmaBuf::new();
+static RXBUF: DmaBuf<72> = DmaBuf::new();
+
+/// The controller's state. Its DMA buffers are EP0BUF, TXBUF and RXBUF.
 pub struct Husb {
-    ep0buf: Aligned<72>,
-    txbuf: Aligned<64>,
-    rxbuf: Aligned<72>,
     b_addr: u8,
     b_in: u8,
     b_out: u8,
@@ -68,9 +111,6 @@ pub struct Husb {
 impl Husb {
     pub const fn new() -> Husb {
         Husb {
-            ep0buf: Aligned([0; 72]),
-            txbuf: Aligned([0; 64]),
-            rxbuf: Aligned([0; 72]),
             b_addr: 0,
             b_in: 0,
             b_out: 0,
@@ -133,7 +173,7 @@ impl Husb {
         // PHY on, SIE out of reset, VBUS valid; ID 0 = host
         CON0.set(0x25);
         wait_ms(2);
-        EP0_ADR.write(dma(&self.ep0buf.0));
+        EP0_ADR.write(EP0BUF.address());
         self.sie_timeouts = 0;
     }
 
@@ -255,7 +295,7 @@ impl Husb {
             mps0 = 8;
         }
         self.sie_wr(FADDR, addr as u32);
-        self.ep0buf.0[..8].copy_from_slice(setup);
+        EP0BUF.put(setup);
         sync_cpu();
         EP0_CNT.write(8);
         // SETUP
@@ -276,8 +316,8 @@ impl Husb {
                 let n = self.sie_rd(COUNT0).min(left);
                 sync_data();
                 // (The buffer holds 72 bytes: a longer packet than that can't come at full speed.)
-                let k = (n as usize).min(self.ep0buf.0.len());
-                data[got as usize..][..k].copy_from_slice(&self.ep0buf.0[..k]);
+                let k = (n as usize).min(72);
+                EP0BUF.take(&mut data[got as usize..][..k]);
                 got += n;
                 left -= n;
                 if n < mps0 as u32 {
@@ -288,7 +328,7 @@ impl Husb {
         } else if want != 0 {
             while left != 0 {
                 let n = left.min(mps0 as u32);
-                self.ep0buf.0[..n as usize].copy_from_slice(&data[got as usize..][..n as usize]);
+                EP0BUF.put(&data[got as usize..][..n as usize]);
                 sync_cpu();
                 EP0_CNT.write(n);
                 self.csr0_w(0x02);
@@ -323,8 +363,8 @@ impl Husb {
         self.b_in = ep_in;
         self.b_out = ep_out;
         self.b_mps = if mps != 0 && mps <= 64 { mps as u32 } else { 64 };
-        EP1_RADR.write(dma(&self.rxbuf.0));
-        EP1_TADR.write(dma(&self.txbuf.0));
+        EP1_RADR.write(RXBUF.address());
+        EP1_TADR.write(TXBUF.address());
         self.sie_wr(INDEX, 1);
         self.sie_wr(RXMAXP, 0xff);
         // toggle DATA0, flush
@@ -353,7 +393,7 @@ impl Husb {
         self.sie_wr(FADDR, self.b_addr as u32);
         while !buf.is_empty() {
             let n = buf.len().min(self.b_mps as usize);
-            self.txbuf.0[..n].copy_from_slice(&buf[..n]);
+            TXBUF.put(&buf[..n]);
             sync_cpu();
             'resend: loop {
                 self.sie_wr(INDEX, 1);
@@ -413,8 +453,8 @@ impl Husb {
                 sync_data();
                 let m = n.min(left);
                 // (As for EP0: no full-speed packet is longer than the buffer.)
-                let k = (m as usize).min(self.rxbuf.0.len());
-                buf[*got as usize..][..k].copy_from_slice(&self.rxbuf.0[..k]);
+                let k = (m as usize).min(72);
+                RXBUF.take(&mut buf[*got as usize..][..k]);
                 // release the buffer
                 self.sie_wr(RXCSR1, 0x10);
                 *got += m;

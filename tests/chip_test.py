@@ -20,6 +20,14 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 WORK = ROOT / "build" / "test" / "chip"
 
 
+# Where the Rust is meant to differ from the C, which had a bug there: only the outcome is checked, against what these
+# say. session-idfail-fm1: a failed read of the SMK-37's trimdat refuses the unit (flow.rs which_unit), where the C took
+# it for an FM-1 and erased its calibration.
+OUTCOME_ONLY = {
+    "session-idfail-fm1": ["-- session -1", "flash expect unchanged ok"],
+}
+
+
 def reference():
     blocks = {}
     for block in (ROOT / "tests" / "c-reference.txt").read_text().split("\n\n"):
@@ -46,7 +54,7 @@ def main():
     exes = {b: host.build(ROOT / "tests" / "drive.rs", WORK / f"drive-{b}", board=b, chip=True)
             for b in ("fm1", "smk37", "any")}
     ref = reference()
-    names = sys.argv[1:] or list(ref)
+    names = sys.argv[1:] or list(ref) + [n for n in OUTCOME_ONLY if n not in ref]
     jobs = []
     for name in names:
         board = "smk37" if name.endswith("-smk37") else "fm1"
@@ -58,6 +66,14 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(os.cpu_count()) as pool:
         results = list(pool.map(lambda j: (j, run(exes[j[0]], j[1])), jobs))
     for (board, name), (code, out, err) in results:
+        if name in OUTCOME_ONLY:
+            missing = [w for w in OUTCOME_ONLY[name] if not any(l.startswith(w) for l in out)]
+            if code or missing:
+                failed += 1
+                print(f"FAIL {name} ({board}): exit {code}; missing {missing}")
+            else:
+                print(f"ok   {name} ({board}): refused, as it should be (the C wasn't)")
+            continue
         want = compared(name, ref[name])
         got = compared(name, out)
         if code or got != want:

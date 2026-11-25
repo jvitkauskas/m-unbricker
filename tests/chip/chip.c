@@ -231,6 +231,7 @@ struct scen {
 	int f_read_stall, f_read_early, f_write_flaky; /* the Nth READ_FLASH / WRITE_FLASH, 1-based */
 	int f_write_bad; /* every WRITE_FLASH leaves a byte unprogrammed */
 	u32 f_read_fail; /* address + 1: READ_FLASH there always ends in a phase error */
+	int no_trimcopy; /* an SMK-37's flash without the TRIMCOPY copy at 0xFF000 */
 	int noisy; /* bus errors now and then (bulk OUT 0x04/0x80, bulk IN 0x08, one EP0 error) */
 	int expect; /* EXP_* for the device's flash */
 	/* this unit's own flash (SPI0) */
@@ -307,6 +308,10 @@ static const struct scen SCEN[] = {
 	{ .name = "session-writefail-fm1", .board = 1, .tpa = 480, FM1_OLD, .f_write_bad = 1 },
 	{ .name = "session-readerr-fm1", .board = 1, .tpa = 480, FM1_OLD, .f_read_fail = 0x20000 + 1,
 	  .expect = EXP_SAME },
+	/* An SMK-37 with a flash chip an FM-1 has, no TRIMCOPY, and its trimdat unreadable: the Rust refuses it (the C took
+	 * it for an FM-1 and erased its calibration), so it's checked by its result alone (tests/chip_test.py). */
+	{ .name = "session-idfail-fm1", .board = 1, .tpa = 480, DEV(2, FL_OLD_SMK, 0x856014), .no_trimcopy = 1,
+	  .f_read_fail = 0xC1224 + 1, .expect = EXP_SAME },
 	{ .name = "session-otherloader-fm1", .board = 1, .tpa = 480, FM1_OLD, .other_loader = 1, .expect = EXP_SAME },
 	{ .name = "session-noisy-fm1", .board = 1, .tpa = 480, FM1_OLD, .noisy = 1, .expect = EXP_FIXED },
 	/* rk_main's flow from ui_init to the done page: three pages, the key, the pulses, session() */
@@ -1591,7 +1596,8 @@ static void dev_flash_init(void)
 	if (fl == FL_OLD_SMK || fl == FL_FIXED_SMK) {
 		random_fill(dflash, 0xC0000, 0xC2000); /* pairing, calibration */
 		memcpy(dflash + 0xC1224, "trimdat", 8);
-		memcpy(dflash + 0xFF000, "TRIMCOPY", 8);
+		if (!S->no_trimcopy)
+			memcpy(dflash + 0xFF000, "TRIMCOPY", 8);
 		random_fill(dflash, 0xFF008, 0xFF200);
 	}
 	if (fl == FL_OLD_FM1 || fl == FL_FIXED_FM1)

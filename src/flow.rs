@@ -153,8 +153,14 @@ pub fn which_unit(jl: &mut Jl) -> Option<Which> {
     if jl.info.chip_key != 0x980f {
         return None;
     }
-    let trimdat = jl.read(0xc1220, &mut a) && &a[4..12] == b"trimdat\0";
-    let trimcopy = jl.read(0xff000, &mut b) && &b[..8] == b"TRIMCOPY";
+    // A marker that couldn't be read isn't an absent one: taking it for absent would repair an SMK-37 whose flash chip
+    // is one an FM-1 has as an FM-1, and erase its calibration at 0xC0000. So a failed read refuses, as an unknown
+    // unit does, and the user tries again. (The C took a failed read for no marker.)
+    if !jl.read(0xc1220, &mut a) || !jl.read(0xff000, &mut b) {
+        return None;
+    }
+    let trimdat = &a[4..12] == b"trimdat\0";
+    let trimcopy = &b[..8] == b"TRIMCOPY";
     if trimdat || trimcopy || id == 0xeb_6014 {
         Some(Which::Smk37)
     } else if id == 0x85_6014 || id == 0xb3_6014 {
