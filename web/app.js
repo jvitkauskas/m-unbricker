@@ -209,6 +209,8 @@ async function startHelper() {
     // wants a flash.bin listed, and newer ones (Skiff) at the board's full size; M-VAVE's (013-016) and
     // Baud Girl's (102) refuse a blank one. A refusal changes nothing, so the next can follow.
     const family = Number(/_(\d+)$/.exec(state.identity)?.[1]) >= 200;
+    // A firmware can also restart at once into its bootloader's own update mode, which with m-bootloader is its MIDI
+    // mode (Baud Girl 102 on m-bootloader 3.0): that runs M-Unbricker itself, so the page goes on with it.
     let accepted = false;
     for (const kind of family ? ["sized", "listed", "plain"] : ["plain", "listed", "sized"]) {
       const { image, end } = await loadStage(variant, kind);
@@ -222,11 +224,16 @@ async function startHelper() {
         break;
       } catch (cause) {
         if (!(cause instanceof UnitLost)) throw cause;
+        // Gone rather than refusing: it restarted.
+        if (state.link.lost || !(await state.unit.identity(800, 1).catch(() => null))) {
+          accepted = true;
+          break;
+        }
       }
     }
     if (!accepted) throw new Error("The firmware didn't accept the helper, and keeps running. See \"Something not working?\" below.");
-    progress(1, 1, "The unit is restarting into the helper…");
-    const port = await reconnect(45, (identity, info) => info?.kind === "stage");
+    progress(1, 1, "The unit is restarting…");
+    const port = await reconnect(45, (identity, info) => info?.canRun);
     if (!port) throw new Error(`The helper didn't appear within 45 seconds. Switch the unit off and on, and start again.${seen(state.access)}`);
     state.busy = false;
     await open(port);
