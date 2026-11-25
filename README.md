@@ -84,7 +84,9 @@ Other targets:
   computer) into `build/preview/<board>/`, and contact sheets of them (those need Pillow).
 - `make test` compares the Rust with M-Unbricker's last C, on the computer: the pages' pixels, the image packing, and
   on a simulated chip the panel's, the keys', the USB host's and the pins' register accesses, the board detection, and
-  whole repairs with what the mass storage and the loader protocol send ([tests/README.md](tests/README.md)).
+  whole repairs with what the mass storage and the loader protocol send ([tests/README.md](tests/README.md)). It also
+  checks that the builds the page sends, `web/assets/m-unbricker-{fm1,smk37}.bin`, are this source's.
+- `make web-assets` copies fresh builds there, after a change to the app.
 - `make fonts` and `make art` regenerate `src/fonts.rs` (DejaVu Sans, Pillow) and `src/art.rs` (from `art/device/`).
 
 ## Running it without the page
