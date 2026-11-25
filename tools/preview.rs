@@ -3,9 +3,11 @@
 //! framebuffer, each written as a PNG, with the status lines and progress bars a page shows on the unit. Built for one
 //! board (`--cfg board="fm1"` or `"smk37"`) by `make preview`:
 //!
-//!   preview OUT_DIR
+//!   preview OUT_DIR [BOARD]
 //!
 //! writes OUT_DIR/<page>.png, and OUT_DIR/pages.txt with the pages in order, for tools/preview.py's contact sheet.
+//! BOARD is what the renderer is started with (Ui::init), 0 unless given: the build for both (`board="any"`) shows
+//! the FM-1's key names with 1 and the SMK-37's with 2 (tests/preview_test.py).
 #![allow(dead_code)]
 
 #[path = "../src/art.rs"]
@@ -157,7 +159,7 @@ fn main() {
         ("PG_err_timer", &ERR_TIMER, &|_| ()),
     ];
     // (Board 0, as the C's preview had it: one board's build has its key names in the pages already.)
-    ui.init(0);
+    ui.init(std::env::args().nth(2).map_or(0, |b| b.parse().expect("BOARD is a number")));
     for (name, page, extra) in shots {
         ui.show(page);
         extra(&mut ui);

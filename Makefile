@@ -111,6 +111,15 @@ preview: build/host/fm1/preview build/host/smk37/preview
 	for b in fm1 smk37; do mkdir -p build/preview/$$b && build/host/$$b/preview build/preview/$$b || exit 1; done
 	python3 tools/preview.py
 
+# make test: the Rust against the C on this computer (tests/, whose README says what each compares). The C's results
+# are in tests/c-reference/; make c-reference makes them again from the C (bd5ea96, from this repository's history,
+# with the computer's clang).
+TESTS := tests/images_test.py tests/preview_test.py
+test: build/host/libmboot.rlib
+	$(foreach t,$(TESTS),HOST_RUSTC=$(HOST_RUSTC) python3 $(t) &&) true
+c-reference:
+	$(foreach t,$(TESTS),python3 $(t) --c &&) true
+
 # Generated sources that are kept in the repository (they need DejaVu fonts and Pillow).
 fonts:
 	python3 tools/make_fonts.py
@@ -120,4 +129,4 @@ art:
 clean:
 	rm -rf build
 FORCE:
-.PHONY: all clean fonts art preview test FORCE
+.PHONY: all clean fonts art preview test c-reference FORCE

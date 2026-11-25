@@ -107,7 +107,7 @@ fn app_block(img: &Image, b: u32, out: &mut [u8]) {
 }
 
 /// The image's bytes for sector `s`: from the image, or made in `tgt`.
-fn target<'a>(img: &'static Image, s: u32, tgt: &'a mut [u8; SECTOR as usize]) -> &'a [u8; SECTOR as usize] {
+pub fn target<'a>(img: &'static Image, s: u32, tgt: &'a mut [u8; SECTOR as usize]) -> &'a [u8; SECTOR as usize] {
     let a = s * SECTOR;
     if a < BOOT_AREA {
         return img.boot[a as usize..].first_chunk().unwrap();
@@ -140,7 +140,7 @@ fn is_blank(d: &[u8]) -> bool {
     d.iter().all(|&b| b == 0xff)
 }
 
-fn is_protected(img: &Image, s: u32) -> bool {
+pub fn is_protected(img: &Image, s: u32) -> bool {
     let a = s * SECTOR;
     a >= W_END || (a >= img.keep_lo && a < img.keep_hi)
 }
