@@ -115,9 +115,19 @@ preview: build/host/fm1/preview build/host/smk37/preview
 # clang for the simulated chip. The C's results are in tests/c-reference/ and tests/c-reference.txt; make c-reference
 # makes them again from the C (bd5ea96, from this repository's history).
 TESTS := tests/images_test.py tests/preview_test.py
-test: build/rescue_img.rs build/host/libmboot.rlib
+test: build/rescue_img.rs build/host/libmboot.rlib web-check
 	$(foreach t,$(TESTS),HOST_RUSTC=$(HOST_RUSTC) python3 $(t) &&) true
 	HOST_RUSTC=$(HOST_RUSTC) python3 tests/chip_test.py
+
+# The page sends the builds in web/assets/, so they have to be this source's: make web-assets copies them there, and
+# make test checks they're the same bytes as a fresh build.
+WEB_BOARDS := fm1 smk37
+web-assets: $(foreach b,$(WEB_BOARDS),build/m-unbricker-$(b).bin)
+	for b in $(WEB_BOARDS); do cp build/m-unbricker-$$b.bin web/assets/m-unbricker-$$b.bin; done
+web-check: $(foreach b,$(WEB_BOARDS),build/m-unbricker-$(b).bin)
+	@for b in $(WEB_BOARDS); do cmp -s build/m-unbricker-$$b.bin web/assets/m-unbricker-$$b.bin || \
+		{ echo "web/assets/m-unbricker-$$b.bin isn't this source's build: make web-assets"; exit 1; }; done
+	@echo "web/assets' builds are this source's"
 c-reference:
 	$(foreach t,$(TESTS),python3 $(t) --c &&) true
 	tests/c/build.sh --reference
@@ -131,4 +141,4 @@ art:
 clean:
 	rm -rf build
 FORCE:
-.PHONY: all clean fonts art preview test c-reference FORCE
+.PHONY: all clean fonts art preview test c-reference web-assets web-check FORCE
