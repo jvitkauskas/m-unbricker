@@ -166,8 +166,8 @@ export class Unit {
   }
 
   /** The identity: "FM-1_016", or "ota-FM-1_900" from an update loader or MIDI mode. */
-  async identity(ms = 1500) {
-    for (let tries = 0; tries < 3; tries++) {
+  async identity(ms = 1500, tries = 3) {
+    for (let i = 0; i < tries; i++) {
       const m = await this.#ask(HOST_COMMANDS.IDENTITY, new Uint8Array(0), ms);
       if (m?.command === HOST_COMMANDS.IDENTITY && m.body.length >= 1) {
         let text = "";
@@ -332,17 +332,24 @@ export const FINISH = Object.freeze({ APP: FINISH_APP, LOADER: FINISH_LOADER });
 
 const UNIT_NAMES = ["fm-1", "fm1", "minifm", "smk-37", "smk37", "felucca", "sloop", "snoop", "melodee", "choralroot", "baud"];
 
-/** Ports that look like a unit, each with both directions: the first port of a multi-port unit first. */
-export function findPorts(access) {
+/** Ports with both directions: those named like a unit, the first port of a multi-port unit first, or with `any`
+ * every port, those named like a unit first. A port's name can't be relied on: macOS keeps the name a device had
+ * before (m-bootloader's "FM-1 Update" shows as "Felucca Update" after Felucca, "Jangada Update" after Jangada). */
+export function findPorts(access, { any = false } = {}) {
   const outputs = [...access.outputs.values()].filter((p) => p.state !== "disconnected");
   const inputs = [...access.inputs.values()].filter((p) => p.state !== "disconnected");
-  const rank = (name) => (/private/i.test(name) ? 0 : /^midiout/i.test(name) ? 2 : 1);
+  const named = (name) => UNIT_NAMES.some((known) => name.toLowerCase().includes(known));
+  const rank = (name) => (named(name) ? 0 : 3) + (/private/i.test(name) ? 0 : /^midiout/i.test(name) ? 2 : 1);
   const found = [];
   for (const output of outputs) {
     const name = output.name ?? "";
-    if (!UNIT_NAMES.some((known) => name.toLowerCase().includes(known))) continue;
+    if (!any && !named(name)) continue;
     const input = inputs.find((p) => p.name === name) ?? inputs.find((p) => (p.name ?? "").startsWith(name.slice(0, 4)));
     if (input) found.push({ name, input, output });
   }
   return found.sort((a, b) => rank(a.name) - rank(b.name));
 }
+
+/** The names of the MIDI ports the browser sees, for messages. */
+export const portNames = (access) =>
+  [...access.outputs.values()].filter((p) => p.state !== "disconnected").map((p) => p.name ?? "?");
