@@ -1,82 +1,148 @@
 # SPDX-License-Identifier: MIT
-# M-Unbricker: a RAM app that turns a working FM-1 or SMK-37 into the unbricker of another.
-# `make` builds one per board it runs on: build/m-unbricker-fm1.bin, build/m-unbricker-smk37.bin, and one for
-# both, build/m-unbricker-any.bin, which reads which board it's on from the unit's flash (src/board.c).
+# M-Unbricker: a RAM app, one build per board it runs on (fm1, smk37) and one for both (any: board 0 in its trailer,
+# found at run time from the unit's flash, src/board.rs).
 #
-# Needs the pi32v2 LLVM toolchain (see README), unpacked in toolchain/ or at TOOLCHAIN=<directory>,
-# and Python 3.
+# It's Rust (src/main.rs), on m-bootloader's Rust crate (the m-bootloader submodule) for the chip's common drivers.
+# Needs the pi32v2 LLVM toolchain and the pi32v2 Rust compiler (see README), unpacked in toolchain/ and pi32v2-rust/
+# or at TOOLCHAIN=<directory> and PI32V2_RUST=<directory>, cargo and Python 3. `make test` and `make preview` need any
+# recent rustc for this computer (HOST_RUSTC), and the preview's contact sheets need Pillow.
+SHELL := /bin/bash
+.DEFAULT_GOAL := all
+.DELETE_ON_ERROR:
 TOOLCHAIN ?= toolchain
 CLANG := $(TOOLCHAIN)/bin/clang
-LD := $(TOOLCHAIN)/bin/ld.lld
+LINK := $(TOOLCHAIN)/bin/ld.lld
 OBJCOPY := $(TOOLCHAIN)/bin/llvm-objcopy
 OBJDUMP := $(TOOLCHAIN)/bin/llvm-objdump
 NM := $(TOOLCHAIN)/bin/llvm-nm
+AR := $(TOOLCHAIN)/bin/llvm-ar
+# The compiler has to be built on the toolchain's LLVM: the linker generates the code from its bitcode.
+PI32V2_RUST ?= pi32v2-rust
+RUSTC := $(PI32V2_RUST)/bin/rustc
+HOST_RUSTC ?= rustc
+CARGO ?= cargo
+MB := m-bootloader
 
-CFLAGS := -target pi32v2 -mcpu=r3 -Os -ffreestanding -fno-builtin \
-	-ffunction-sections -fdata-sections -fno-stack-protector \
-	-Wall -Wextra -Werror -Wno-unused-parameter -Isrc -Isrc/mbl -Ibuild
+BOARDS := fm1 smk37 any
+all: $(foreach b,$(BOARDS),build/m-unbricker-$(b).bin)
 
-SRC := src/main.c src/usbio.c src/husb.c src/bot.c src/jl.c src/writer.c src/ui.c src/lcd.c src/board.c \
-	src/mbl/hw.c src/mbl/rt.c
-vpath %.c src src/mbl
+# Rust's optimisation level: z, the smallest, with the inlining option of pi32v2-llvm 23.1.6-2, as m-bootloader and
+# m-apps have it. rustc writes bitcode, and the linker optimises the app as one program with the drivers and `core`.
+# A panic (a failed bounds check, say) is the compiler's trap, an illegal instruction.
+RUST_OPT ?= z
+ifeq ($(RUST_OPT),z)
+LINK += -mllvm -inline-minsize-hint-threshold=50
+RUST_HINT := -C llvm-args=-inline-minsize-hint-threshold=50
+endif
+RUST_LIB := lib/rustlib/pi32v2-unknown-none/lib
+RUST_FLAGS := --target pi32v2-unknown-none --edition 2024 -C opt-level=$(RUST_OPT) -C codegen-units=1 -C debuginfo=0 \
+	-C symbol-mangling-version=v0 -Zunstable-options -C panic=immediate-abort $(RUST_HINT) \
+	--remap-path-prefix=$(CURDIR)=. --sysroot build/rust/sysroot -Clinker-plugin-lto -Clto=fat
+APP_SRC := $(wildcard src/*.rs) src/mflr-loader-a.bin build/rescue_img.rs
+MB_SRC := $(wildcard $(MB)/rust/src/*.rs $(MB)/rust/src/*/*.rs)
 
-BOARD_fm1 := 1
-BOARD_smk37 := 2
-BOARD_any := 0
-
-all: build/m-unbricker-fm1.bin build/m-unbricker-smk37.bin build/m-unbricker-any.bin
+# What changes the Rust without changing a file: another compiler or linker builds it all again.
+build/rust/options: FORCE
+	@mkdir -p $(@D)
+	@{ echo 'RUST_OPT=$(RUST_OPT)'; $(RUSTC) -vV; $(LINK) --version; } > $@.new 2>&1; \
+		cmp -s $@.new $@ && rm $@.new || mv $@.new $@
+# Rust's core library for pi32v2, built once from the compiler's sources as bitcode (m-bootloader's rust/sysroot, an
+# empty crate that makes cargo build it).
+build/rust/sysroot.stamp: $(MB)/rust/sysroot/Cargo.toml Makefile build/rust/options
+	@mkdir -p build/rust/sysroot/$(RUST_LIB)
+	$(CARGO) clean --quiet --manifest-path $(MB)/rust/sysroot/Cargo.toml --target-dir build/rust/target
+	CARGO_TARGET_DIR=build/rust/target CARGO_PROFILE_RELEASE_OPT_LEVEL=$(RUST_OPT) RUSTC_BOOTSTRAP=1 RUSTC=$(RUSTC) RUSTFLAGS="-Csymbol-mangling-version=v0 -Zunstable-options -Cpanic=immediate-abort $(RUST_HINT) --remap-path-prefix=$(CURDIR)=. -Clto=fat" \
+		$(CARGO) build --quiet --release --locked --manifest-path $(MB)/rust/sysroot/Cargo.toml --target pi32v2-unknown-none -Zbuild-std=core
+	@# (wherever this cargo keeps them: under deps/ up to 1.99, under build/<crate>/ from 1.100)
+	for f in core compiler_builtins; do \
+		set -- $$(find build/rust/target/pi32v2-unknown-none/release -name "lib$$f-*.rlib"); \
+		[ $$# = 1 ] && cp "$$1" build/rust/sysroot/$(RUST_LIB)/lib$$f.rlib || exit 1; done
+	touch $@
+# A library's one object, for the linker.
+rlib_object = $(AR) p $(1) $$($(AR) t $(1) | grep '\.o$$') > $(2)
+build/rust/core.o: build/rust/sysroot.stamp
+	$(call rlib_object,build/rust/sysroot/$(RUST_LIB)/libcore.rlib,$@)
+build/rust/compiler_builtins.o: build/rust/sysroot.stamp
+	$(call rlib_object,build/rust/sysroot/$(RUST_LIB)/libcompiler_builtins.rlib,$@)
+# m-bootloader's crate, as a library: the same for every board, as M-Unbricker uses none of its board's own parts.
+build/rust/libmboot.rlib: $(MB_SRC) build/rust/sysroot.stamp Makefile
+	$(RUSTC) $(RUST_FLAGS) --crate-name mboot --crate-type rlib $(MB)/rust/src/lib.rs -o $@
+build/rust/mboot.o: build/rust/libmboot.rlib
+	$(call rlib_object,$<,$@)
+RUNTIME := build/rust/mboot.o build/rust/core.o build/rust/compiler_builtins.o
 
 # The rescue images, packed (tools/make_images.py): generated, as they are large.
-build/rescue_img.h: tools/make_images.py rescue/fm1/boot.bin rescue/smk37/boot.bin $(wildcard rescue/*/app.bin)
+build/rescue_img.rs: tools/make_images.py rescue/fm1/boot.bin rescue/smk37/boot.bin $(wildcard rescue/*/app.bin)
 	@mkdir -p build
-	@python3 tools/make_images.py rescue $@
-
-# The keys (src/mbl/keys.c) are one board's: built as they are for that board, and for both, once for each board
-# under other names, with src/keys_any.c choosing. The panel driver (src/lcd.c) chooses at run time with no DISP_BOARD.
-KEYS_fm1 := build/fm1/keys.o
-KEYS_smk37 := build/smk37/keys.o
-KEYS_any := build/any/keys_any.o build/any/keys_fm1.o build/any/keys_smk.o
-DISP_fm1 := -DDISP_BOARD=1
-DISP_smk37 := -DDISP_BOARD=2
-define KEYS_FOR
-build/any/keys_$(1).o: src/mbl/keys.c src/mbl/*.h
-	@mkdir -p build/any
-	@echo "  CC    $$< (any, $(1))"
-	@$$(CLANG) $$(CFLAGS) -DBOARD_ID=$(2) -Dplat_boot_keys=$(1)_plat_boot_keys -Dplat_menu_scan=$(1)_plat_menu_scan \
-		-Dplat_keys_off=$(1)_plat_keys_off -c $$< -o $$@
-endef
-$(eval $(call KEYS_FOR,fm1,1))
-$(eval $(call KEYS_FOR,smk,2))
+	python3 tools/make_images.py rescue $@
 
 define BOARD_RULES
-OBJ_$(1) := $$(patsubst %.c,build/$(1)/%.o,$$(notdir $$(SRC))) $$(KEYS_$(1)) build/$(1)/start.o
-build/$(1)/%.o: %.c src/*.h src/mbl/*.h build/rescue_img.h
-	@mkdir -p build/$(1)
-	@echo "  CC    $$< ($(1))"
-	@$$(CLANG) $$(CFLAGS) $$(DISP_$(1)) -DBOARD_ID=$$(BOARD_$(1)) -c $$< -o $$@
+build/$(1)/m-unbricker.o: $$(APP_SRC) build/rust/libmboot.rlib Makefile
+	@mkdir -p $$(@D)
+	$$(RUSTC) $$(RUST_FLAGS) --crate-name m_unbricker --crate-type lib --emit=obj --cfg 'board="$(1)"' \
+		--extern mboot=build/rust/libmboot.rlib -L build/rust src/main.rs -o $$@
 build/$(1)/start.o: src/start.S
-	@mkdir -p build/$(1)
-	@$$(CLANG) $$(CFLAGS) -c $$< -o $$@
-build/$(1)/m-unbricker.elf: $$(OBJ_$(1)) src/ram.ld
-	@$$(LD) --gc-sections -T src/ram.ld -Map build/$(1)/m-unbricker.map -o $$@ $$(OBJ_$(1))
+	@mkdir -p $$(@D)
+	$$(CLANG) -target pi32v2 -mcpu=r3 -c $$< -o $$@
+build/$(1)/m-unbricker.elf: build/$(1)/start.o build/$(1)/m-unbricker.o $$(RUNTIME) src/ram.ld
+	$$(LINK) --plugin-opt=O3 --relax --gc-sections -T src/ram.ld -Map build/$(1)/m-unbricker.map -o $$@ $$(filter %.o,$$^)
 build/m-unbricker-$(1).bin: build/$(1)/m-unbricker.elf tools/app_trailer.py
 	@$$(OBJCOPY) -O binary -j .image $$< build/$(1)/flat.bin
 	@$$(OBJDUMP) -d $$< > build/$(1)/m-unbricker.dis
 	@$$(NM) $$< | grep -E 'rk_(image_end|bss_end)' | tr '\n' ' '
 	@python3 tools/app_trailer.py build/$(1)/flat.bin $$@ $(1)
 endef
-$(eval $(call BOARD_RULES,fm1))
-$(eval $(call BOARD_RULES,smk37))
-$(eval $(call BOARD_RULES,any))
+$(foreach b,$(BOARDS),$(eval $(call BOARD_RULES,$(b))))
+
+# The programs for this computer: the preview and the tests, with m-bootloader's crate built for it.
+HOST_FLAGS := --edition 2024 -C opt-level=1 -C debuginfo=1 -C overflow-checks=on -C debug-assertions=on
+# What changes it without changing a file: another HOST_RUSTC.
+build/host/options: FORCE
+	@mkdir -p $(@D)
+	@$(HOST_RUSTC) -vV > $@.new 2>&1; cmp -s $@.new $@ && rm $@.new || mv $@.new $@
+build/host/libmboot.rlib: $(MB_SRC) Makefile build/host/options
+	@mkdir -p $(@D)
+	$(HOST_RUSTC) $(HOST_FLAGS) --crate-name mboot --crate-type rlib $(MB)/rust/src/lib.rs -o $@
+# build/host/<board>/<program>: tools/preview.rs, or tests/<program>.rs, for one board's build.
+host_program = $(HOST_RUSTC) $(HOST_FLAGS) --cfg 'board="$(1)"' --extern mboot=build/host/libmboot.rlib -L build/host
+build/host/%/preview: tools/preview.rs $(APP_SRC) build/host/libmboot.rlib Makefile
+	@mkdir -p $(@D)
+	$(call host_program,$*) $< -o $@
+
+# make preview: every page with the app's own renderer, into build/preview/<board>/<page>.png, and a contact sheet of
+# each board's (build/preview/pages-<board>.png).
+preview: build/host/fm1/preview build/host/smk37/preview
+	for b in fm1 smk37; do mkdir -p build/preview/$$b && build/host/$$b/preview build/preview/$$b || exit 1; done
+	python3 tools/preview.py
+
+# make test: the Rust against the C on this computer (tests/README.md says what each compares), with the computer's
+# clang for the simulated chip. The C's results are in tests/c-reference/ and tests/c-reference.txt; make c-reference
+# makes them again from the C (bd5ea96, from this repository's history).
+TESTS := tests/images_test.py tests/preview_test.py
+test: build/rescue_img.rs build/host/libmboot.rlib web-check
+	$(foreach t,$(TESTS),HOST_RUSTC=$(HOST_RUSTC) python3 $(t) &&) true
+	HOST_RUSTC=$(HOST_RUSTC) python3 tests/chip_test.py
+
+# The page sends the builds in web/assets/, so they have to be this source's: make web-assets copies them there, and
+# make test checks they're the same bytes as a fresh build.
+WEB_BOARDS := fm1 smk37
+web-assets: $(foreach b,$(WEB_BOARDS),build/m-unbricker-$(b).bin)
+	for b in $(WEB_BOARDS); do cp build/m-unbricker-$$b.bin web/assets/m-unbricker-$$b.bin; done
+web-check: $(foreach b,$(WEB_BOARDS),build/m-unbricker-$(b).bin)
+	@for b in $(WEB_BOARDS); do cmp -s build/m-unbricker-$$b.bin web/assets/m-unbricker-$$b.bin || \
+		{ echo "web/assets/m-unbricker-$$b.bin isn't this source's build: make web-assets"; exit 1; }; done
+	@echo "web/assets' builds are this source's"
+c-reference:
+	$(foreach t,$(TESTS),python3 $(t) --c &&) true
+	tests/c/build.sh --reference
 
 # Generated sources that are kept in the repository (they need DejaVu fonts and Pillow).
 fonts:
 	python3 tools/make_fonts.py
 art:
 	python3 tools/make_art.py
-preview: build/rescue_img.h
-	python3 tools/preview.py
 
 clean:
 	rm -rf build
-.PHONY: all clean fonts art preview
+FORCE:
+.PHONY: all clean fonts art preview test c-reference web-assets web-check FORCE
