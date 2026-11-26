@@ -198,12 +198,12 @@ scenario session-repair-fm1
 -- session 1 @463324
 -- plan write 4 erase 92 runs 1 @463324
 -- loader 1.3 key 980F flash 856014 io 4096 retries 0 @463324
-trace 463324 a19f152e6b8a1ac6cd38c5aa8d153e21af4cf09ddfbdd36cd5b7b81fe1399cb9
+trace 463324 24abf8e573627c616a4b0f05b94cf31c99d73f05f9ae7d4fa9df5f47d6fcca76
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
 keys sessions 1 latches 610 pressed-reads 1
 usb setups 8 address 1 config 1 commands 295 mode restarted loader ok bad-cbw 0
 jl reads 257 writes 4 bad-crc 0 faults 0
-flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash sha256 4f4eb65c5787482bebd377cc6e29637f1f15c053e48424eca7c182fe76ee1d9b
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
@@ -214,12 +214,12 @@ scenario session-repair-smk37
 -- session 1 @352675
 -- plan write 4 erase 124 runs 1 @352675
 -- loader 1.3 key 980F flash EB6014 io 4096 retries 0 @352675
-trace 352675 49d51f7439fc4d6c008be10ecea4720fa35fe9a32a9c444dd91f8bff2fb9b1e8
+trace 352675 e496537c5c6fd605003221cf35ebcf3898d6ec83a1f5431a4be72bee2f29b6fa
 panel fb 0bae46d6505b39ae53bea50670274a62fade8f4fabab342b7e01f379dd75512f on 1 commands 90 pixels 418560
 keys sessions 1 latches 23 pressed-reads 2
 usb setups 8 address 1 config 1 commands 297 mode restarted loader ok bad-cbw 0
 jl reads 255 writes 4 bad-crc 0 faults 0
-flash sha256 752822f38ed929ab8015bf6a89a3993991447b2ad19392ff49b310bc69ea25b9
+flash sha256 d5ac9dc92b25637817593335df1bdb209a08d1bc27d12d1729258cebb8030a99
 flash erased 00000-7FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-7FFFF:F 80000-FFFFF:=
@@ -230,12 +230,12 @@ scenario session-cross-fm1
 -- session 1 @357013
 -- plan write 4 erase 124 runs 1 @357013
 -- loader 1.3 key 980F flash EB6014 io 4096 retries 0 @357013
-trace 357013 9b137af11b1e4eb0a7c5ffec316d65481c4f4c1b40bc88c8ee9ca3b69a64afbf
+trace 357013 88d508c5ce2e3e64bd40ab7735d96d15bf82fee45a3d4f2e18939a9c8c78b9ec
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
 keys sessions 1 latches 34 pressed-reads 1
 usb setups 8 address 1 config 1 commands 297 mode restarted loader ok bad-cbw 0
 jl reads 255 writes 4 bad-crc 0 faults 0
-flash sha256 752822f38ed929ab8015bf6a89a3993991447b2ad19392ff49b310bc69ea25b9
+flash sha256 d5ac9dc92b25637817593335df1bdb209a08d1bc27d12d1729258cebb8030a99
 flash erased 00000-7FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-7FFFF:F 80000-FFFFF:=
@@ -246,12 +246,12 @@ scenario session-cross-smk37
 -- session 1 @354532
 -- plan write 4 erase 92 runs 1 @354532
 -- loader 1.3 key 980F flash 856014 io 4096 retries 0 @354532
-trace 354532 ec9071f66a400f493f3001517d0428042592e85061a0fa748f6ff9b0f9f94e33
+trace 354532 1e0a7a74cb19898271024537eda11e3da31a588b3f5a87903b0ea085ae4b09a7
 panel fb 0bae46d6505b39ae53bea50670274a62fade8f4fabab342b7e01f379dd75512f on 1 commands 90 pixels 418560
 keys sessions 1 latches 23 pressed-reads 2
 usb setups 8 address 1 config 1 commands 294 mode restarted loader ok bad-cbw 0
 jl reads 257 writes 4 bad-crc 0 faults 0
-flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash sha256 4f4eb65c5787482bebd377cc6e29637f1f15c053e48424eca7c182fe76ee1d9b
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
@@ -262,12 +262,12 @@ scenario session-nothing-fm1
 -- session 1 @355184
 -- plan write 0 erase 0 runs 0 @355184
 -- loader 1.3 key 980F flash B36014 io 4096 retries 0 @355184
-trace 355184 04100a3b16569142d1e13b0d0db7106e4c79f6202c60eb9513a981b680d2ebe8
+trace 355184 c7367d652a4d67a34155adc81986c823e912def82c11a032687c9704f2b6be83
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 70 pixels 349440
 keys sessions 1 latches 34 pressed-reads 1
 usb setups 8 address 1 config 1 commands 280 mode restarted loader ok bad-cbw 0
 jl reads 257 writes 0 bad-crc 0 faults 0
-flash sha256 9ad9056986dcdca6fefc58be246c3cde1cb21b0cd509b756060b4221fb47497e
+flash sha256 009317e11d9464dd36590a8e882096bb8c3160f611ca5f6aa552cdb319497d00
 flash erased none
 flash programmed none
 flash state 00000-FFFFF:=
@@ -358,12 +358,12 @@ scenario session-stall-fm1
 -- session 1 @383962
 -- plan write 4 erase 92 runs 1 @383962
 -- loader 1.3 key 980F flash 856014 io 4096 retries 1 @383962
-trace 383962 8eb18f7a7b11240cfe3e5633d13926702e11438566228f3ddae642a2367b050b
+trace 383962 23ea33545a6aea4edef68655b71820f3144d6173a397863e7364d0eb975508b7
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
 keys sessions 1 latches 34 pressed-reads 1
 usb setups 9 address 1 config 1 commands 295 mode restarted loader ok bad-cbw 0
 jl reads 258 writes 4 bad-crc 0 faults 1
-flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash sha256 4f4eb65c5787482bebd377cc6e29637f1f15c053e48424eca7c182fe76ee1d9b
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
@@ -374,12 +374,12 @@ scenario session-early-fm1
 -- session 1 @383788
 -- plan write 4 erase 92 runs 1 @383788
 -- loader 1.3 key 980F flash 856014 io 4096 retries 1 @383788
-trace 383788 95f2fd352cf896c5aac30c143402583099632ed4aa037e9b4efdfa75bc5c8841
+trace 383788 574754fec1d4c04f8f884ac8408954a42ebd92354f186b63845a6d52f4638a9b
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
 keys sessions 1 latches 34 pressed-reads 1
 usb setups 6 address 1 config 1 commands 295 mode restarted loader ok bad-cbw 0
 jl reads 258 writes 4 bad-crc 0 faults 1
-flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash sha256 4f4eb65c5787482bebd377cc6e29637f1f15c053e48424eca7c182fe76ee1d9b
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
@@ -390,12 +390,12 @@ scenario session-odd-fm1
 -- session 1 @358794
 -- plan write 4 erase 92 runs 1 @358794
 -- loader 1.3 key 980F flash 856014 io 4096 retries 0 @358794
-trace 358794 8031a5fa16c46bc1c6eef4d781343aceef4cccfe212d7ca428b5275e9b443c50
+trace 358794 c7eff72747b024a04761e88bf5bfdec398df0eb1cd2740bff1692db149f0eca8
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
 keys sessions 1 latches 34 pressed-reads 1
 usb setups 6 address 1 config 1 commands 294 mode restarted loader ok bad-cbw 0
 jl reads 257 writes 4 bad-crc 0 faults 0
-flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash sha256 4f4eb65c5787482bebd377cc6e29637f1f15c053e48424eca7c182fe76ee1d9b
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
@@ -406,12 +406,12 @@ scenario session-crc-fm1
 -- session 1 @361945
 -- plan write 4 erase 92 runs 1 @361945
 -- loader 1.3 key 980F flash 856014 io 4096 retries 0 @361945
-trace 361945 505eb7dd5d33fed3408786fb8f9d326ad533f9f8e8ec975ba3246976575d36f8
+trace 361945 52653bbe95ead158cca30facf246aee36d01d3ffe08912d71f32472c9e91ee52
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
 keys sessions 1 latches 34 pressed-reads 1
 usb setups 8 address 1 config 1 commands 305 mode restarted loader ok bad-cbw 0
 jl reads 257 writes 8 bad-crc 0 faults 1
-flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash sha256 4f4eb65c5787482bebd377cc6e29637f1f15c053e48424eca7c182fe76ee1d9b
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
@@ -422,12 +422,12 @@ scenario session-writefail-fm1
 -- session 0 @367807
 -- plan write 4 erase 92 runs 1 @367807
 -- loader 1.3 key 980F flash 856014 io 4096 retries 0 @367807
-trace 367807 7484850ff6a5effece93f1c7f0f301b5325d818aeeec08c508c604394c68697a
+trace 367807 a728bc38a10752a7d4cb893a4b439bce29766067d9f2464e571d1acb13fd88dc
 panel fb 9a5a5a0804236b62d51cd5f51f9cbf780b5a3f3815a6907acb57488b44d08650 on 1 commands 82 pixels 418560
 keys sessions 2 latches 68 pressed-reads 2
 usb setups 8 address 1 config 1 commands 301 mode loader loader ok bad-cbw 0
 jl reads 257 writes 8 bad-crc 0 faults 8
-flash sha256 68452a4905fdfcf2b0f57a8eb22ec9788275dca82c6a4631c6724eee0567ce52
+flash sha256 1c985421990d23095d90b3e14a4d7c02c9ec7e0792f890c20cdbbbb8a3830749
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
@@ -469,12 +469,12 @@ scenario session-noisy-fm1
 -- session 1 @363180
 -- plan write 4 erase 92 runs 1 @363180
 -- loader 1.3 key 980F flash 856014 io 4096 retries 0 @363180
-trace 363180 dd034ccf7babdb72f69014f6949416f5fd332a704a4bdb5f2b50277a4fd7dfb5
+trace 363180 4983003966e8ed7914f894e6350dc090202d6d5d7acf3c088bcec5b44353b2e1
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 82 pixels 418560
 keys sessions 1 latches 34 pressed-reads 1
 usb setups 8 address 1 config 1 commands 294 mode restarted loader ok bad-cbw 0
 jl reads 257 writes 4 bad-crc 0 faults 433
-flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash sha256 4f4eb65c5787482bebd377cc6e29637f1f15c053e48424eca7c182fe76ee1d9b
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=
@@ -487,13 +487,13 @@ scenario full-fm1
 -- session 1 @603542
 -- plan write 4 erase 92 runs 1 @603542
 -- loader 1.3 key 980F flash 856014 io 4096 retries 0 @603542
-trace 603542 ab62adc32eaa94d0824bd31c6ecfb4e3ee42f2424a995e550073fad70825bb6e
+trace 603542 f0a0d0f256e1053533aed2741e92854b2587ecc435831467734469ef934a6faa
 panel fb 551b525ca28fc5f60168b7b406fbe80469843d05d1fed5b337e8eef16dfa962c on 1 commands 106 pixels 718080
 keys sessions 4 latches 136 pressed-reads 4
 usbkey packets 3 other 0 false-acks 0 state gone ack-at-us 1503080 cal-pulses 1200 drop-at-us 2706630
 usb setups 8 address 1 config 1 commands 294 mode restarted loader ok bad-cbw 0
 jl reads 257 writes 4 bad-crc 0 faults 0
-flash sha256 d1329016c1a6d402b74ff243bec8428e4badf1372bdd5f7ba5c6e07c98874b39
+flash sha256 4f4eb65c5787482bebd377cc6e29637f1f15c053e48424eca7c182fe76ee1d9b
 flash erased 00000-5FFFF
 flash programmed 00000-03FFF
 flash state 00000-03FFF:X 04000-5FFFF:F 60000-FFFFF:=

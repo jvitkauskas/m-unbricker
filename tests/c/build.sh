@@ -3,6 +3,7 @@
 # Builds the simulated chip and the C driver for the host, from M-Unbricker's C at bd5ea96 (the repository's own
 # history), into build/:
 #   build/c-ref/        the C (src, rescue, tools) from `git archive`, ssync patched out, rescue_img.h generated
+#                       from this tree's rescue/ boot areas (the C's were m-bootloader 2.4's; the C reads any)
 #   build/chip/libchip.a  tests/chip/chip.c
 #   build/c-drive/drive-fm1, drive-smk37, drive-any   (BOARD_ID 1, 2, 0)
 #   build/preview-ref/fm1, smk37   tools/preview.c's raw pages (as tools/preview.py builds it, raws kept)
@@ -17,6 +18,7 @@ CFLAGS="-std=gnu11 -O1 -g -no-pie -fno-pie -w"
 rm -rf "$B/c-ref" "$B/c-drive"
 mkdir -p "$B/c-ref/gen" "$B/chip" "$B/c-drive"
 git -C "$ROOT" archive "$REV" src rescue tools | tar -x -C "$B/c-ref"
+for b in fm1 smk37; do cp "$ROOT/rescue/$b/boot.bin" "$B/c-ref/rescue/$b/boot.bin"; done
 python3 "$B/c-ref/tools/make_images.py" "$B/c-ref/rescue" "$B/c-ref/gen/rescue_img.h" >/dev/null
 # x86 has no ssync: keep it a compiler barrier
 sed -i 's/#define ssync() __asm__ volatile("ssync" ::: "memory")/#define ssync() __asm__ volatile("" ::: "memory")/' \

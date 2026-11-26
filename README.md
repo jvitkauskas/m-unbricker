@@ -116,9 +116,9 @@ m-flasher run-ram build/m-unbricker-fm1.bin --addr 0x01C30000
 | `tools/` | image packing, fonts, pictures, the RAM app trailer, the page preview |
 | `tests/` | the Rust against the C, on the computer ([tests/README.md](tests/README.md)) |
 
-**Not on units yet:** this Rust build and the 3.0 helper in `web/assets/stage-*.fwsc` haven't been tried on a unit.
-Don't deploy the page with them (`tools/deploy_web.sh`) until both boards have repaired each other with them, from
-the page and from the card. The page deployed now has the 2.4 helper and the C builds of the app.
+**Tested on units:** this Rust build, the 3.0 helper and the 3.0 rescue images, from the page: the FM-1 repaired
+the SMK-37 and the SMK-37 the FM-1, each from a normal start and from m-bootloader's MIDI mode, and each repaired unit
+came back with m-bootloader 3.0.
 
 ## Licence
 
